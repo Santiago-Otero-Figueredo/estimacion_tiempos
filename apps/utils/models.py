@@ -12,11 +12,12 @@ class EstimacionModel(models.Model):
         help_text='Fecha y hora en la que se ha creado el objeto'
     )
     modificado = models.DateTimeField(
-        'modificao a',
+        'modificado a',
         auto_now=True,
         help_text='Fecha y hora de la ultima modificación'
     )
-
+    esta_activo = models.BooleanField(default=True)
+    
     class Meta:
         """Meta option."""
 

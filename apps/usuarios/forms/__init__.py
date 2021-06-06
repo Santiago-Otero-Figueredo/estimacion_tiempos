@@ -1,0 +1,2 @@
+from .clientes import RegistrarClienteForm
+from .programadores import RegistrarProgramadorForm

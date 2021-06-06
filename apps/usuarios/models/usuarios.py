@@ -35,3 +35,7 @@ class Usuario(EstimacionModel, AbstractUser):
     def __str__(self):
         """Return username."""
         return self.username
+
+    def save(self):
+        self.username = self.email
+        return super().save()

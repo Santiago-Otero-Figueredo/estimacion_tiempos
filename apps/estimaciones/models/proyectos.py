@@ -12,6 +12,7 @@ class Proyecto(EstimacionModel):
         verbose_name="Proyectos asociados a un cliente",
         on_delete=models.PROTECT
     )
+    nombre = models.CharField(max_length=80)
     programadores = models.ManyToManyField(
         Programador, 
         through='ProyectoProgramador', 
@@ -20,12 +21,12 @@ class Proyecto(EstimacionModel):
         verbose_name="programadores asociados al proyecto"
     )
     fecha_inicio = models.DateTimeField(
-        'Iniciado a',
-        auto_now_add=True,
-        help_text='Fecha y hora en la que se inicio el proyecto'
+        'Iniciado a',        
+        help_text='Fecha y hora en la que se inicio el proyecto',
+        blank=True, null=True
     )
     fecha_finalizacion = models.DateTimeField(
-        'Finalizado a',
-        auto_now=True,
-        help_text='Fecha y hora de finalización del proyecto'
+        'Finalizado a',        
+        help_text='Fecha y hora de finalización del proyecto',
+        blank=True, null=True
     )

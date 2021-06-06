@@ -1,0 +1,48 @@
+{% extends "base_tablas.html" %}
+
+{% load bootstrap4 %}
+{% load static %}
+
+{% block titulo %}
+    Listado de proyectos
+{% endblock titulo %}
+
+{% block titulo_pagina %}
+    Listado de proyectos
+{% endblock titulo_pagina %}
+
+{% block miga_pan %}
+    <li class="breadcrumb-item"><a href="javascript:">Proyectos</a></li>    
+    <li class="breadcrumb-item active">Listado</li>
+{% endblock miga_pan %}
+
+{% block titulo_panel %}
+    Listado de proyectos
+{% endblock titulo_panel %}
+
+{% block contenido_panel %}
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-bordered table-hover datatable">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Cliente</th>
+                        <th>Fecha inicio</th>
+                        <th>fecha finalizado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for proyecto in proyectos %}
+                        <tr>
+                            <td>{{proyecto.nombre}}</td>
+                            <td>{{proyecto.cliente}}</td>
+                            <td>{{proyecto.fecha_inicio|default_if_none:"---" }}</td>
+                            <td class="text-center">{{proyecto.fecha_finalizado|default_if_none:"---" }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock contenido_panel %}
