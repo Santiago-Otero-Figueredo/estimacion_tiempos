@@ -1,0 +1,55 @@
+
+.btn_filtrar{
+    border: 1px solid #2E2FF4 !important;
+    color: #2E2FF4 !important;
+}
+
+.btn_volver{
+    border: 1px solid #2E2FF4 !important;
+    background-color: #2E2FF4 !important;
+    color: white !important;
+}
+
+.footer_configuracion{
+    z-index: 1020;
+    padding: 10px 0;    
+    border-top: 1px solid #b5bbc1;
+    line-height: 20px;
+    font-weight: 600;
+    color: #42484f;
+}
+
+.btn_filtrar:hover{
+    background-color: #2E2FF4 !important;
+    color: white !important;
+}
+
+.btn_volver{
+    background-color: #2E2FF4 !important;
+    color: white !important;
+}
+
+.btn_verde{
+    background-color: #41B300 !important;
+    color: white;
+}
+
+.opciones{
+    background-color: #10069F !important;
+    border: 1px solid #10069F !important;
+    color: white !important;
+}
+
+.sub-menu__acciones{
+    border: solid 1px #8c8e9e
+}
+
+.sub-menu__acciones .dropdown-item:hover{
+    color: #41B300;
+    background-color: transparent !important;
+}
+
+.btn-primary{
+    background-color: #f08031 !important;
+    border: 1px solid #f08031 !important;
+}

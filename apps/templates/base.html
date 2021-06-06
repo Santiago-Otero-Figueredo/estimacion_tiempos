@@ -1,0 +1,183 @@
+{% load bootstrap4 %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+    <title>{% block titulo %}{% endblock titulo %}</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="DAnalytics" name="author" />
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+	<!-- ================== BEGIN BASE CSS STYLE ================== -->
+
+    <link href="{% static 'css/open_sans.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/material_icons.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/google/app.min.css' %}" rel="stylesheet" />
+
+	<!-- ================== END BASE CSS STYLE ================== -->
+    <link href="{% static 'plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css' %}" rel="stylesheet" />
+    <link href="{% static 'plugins/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet"/>
+    <link href="{% static 'plugins/toastr/toastr.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/estilos_propios.css' %}?v4" rel="stylesheet" />
+    <link href="{% static 'plugins/bootstrap-calendar/css/bootstrap_calendar.css'%}" rel="stylesheet" />
+
+    {% block css %}{% endblock css %}
+    {{ form.media.css }} 
+
+</head>
+
+<body>
+	<!-- begin #page-loader -->
+	<div id="page-loader" class="fade show">
+		<span class="spinner"></span>
+	</div>
+	<!-- end #page-loader -->
+	
+	<!-- begin #page-container -->
+	<div id="page-container" class="page-container fade page-sidebar-fixed page-header-fixed page-with-wide-sidebar page-with-light-sidebar">
+		<!-- begin #header -->
+		<div id="header" class="header navbar-default">
+			<!-- begin navbar-header -->
+			<div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed navbar-toggle-left" data-click="sidebar-minify">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a href="index.html" class="navbar-brand">
+                    <img src="{% static 'img/logo/logo.png' %}">
+				</a>
+				<button type="button" class="navbar-toggle" data-click="sidebar-toggled">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+			<!-- end navbar-header --><!-- begin header-nav -->
+			<ul class="navbar-nav navbar-right">
+                <li class="dropdown navbar-user">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="d-none d-md-inline negro">{{request.user}}</span> <b class="caret"></b>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a href="" class="dropdown-item">Cambiar clave</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="" class="dropdown-item">Cerrar sesión</a>
+                    </div>
+                </li>
+			</ul>
+			<!-- end header-nav -->
+		</div>
+		
+		<!-- begin #sidebar -->
+		<div id="sidebar" class="sidebar">
+			<!-- begin sidebar scrollbar -->
+			<div data-scrollbar="true" data-height="100%">
+				<!-- begin sidebar user -->
+                <ul class="nav">
+                    <li class="nav-profile">
+                        <a href="javascript:;">
+                            <div class="cover with-shadow"></div>
+							<div class="image">
+								<img src="" alt="" />
+							</div>
+                            <div class="info">
+                                <b>Estimación de tiempos</b>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+				<!-- end sidebar user -->
+				<!-- begin sidebar nav -->
+				<ul class="nav"><li class="nav-header">Navegación</li>
+					{% include 'menus/base.html' %}
+				</ul>
+				<!-- end sidebar nav -->
+			</div>
+			<!-- end sidebar scrollbar -->
+		</div>
+		<div class="sidebar-bg"></div>
+		<!-- end #sidebar -->
+        <!-- begin #content -->
+		<div id="content" class="content">
+			<!-- begin breadcrumb -->
+			<ol class="breadcrumb float-xl-right">
+                {% block miga_pan %}
+                    <li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
+                    <li class="breadcrumb-item"><a href="javascript:;">Page Options</a></li>
+                    <li class="breadcrumb-item active">Blank Page</li>
+                {% endblock miga_pan %}
+			</ol>
+			<!-- end breadcrumb -->
+			<!-- begin page-header -->
+			<h1 class="page-header">{% block titulo_pagina %}{% endblock titulo_pagina %}</h1>
+			<!-- end page-header -->
+            {% block contenido %}
+                <!-- begin panel -->
+                <div class="panel panel-inverse">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">{% block titulo_panel %}{% endblock titulo_panel %}</h4>
+                        <div class="panel-heading-btn">
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        {% block contenido_panel %}{% endblock contenido_panel %}
+                    </div>
+                </div>
+                <!-- end panel -->
+            {% endblock contenido %}
+		</div>
+		<!-- end #content -->		
+		
+		<!-- begin scroll to top btn -->
+		<a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i class="fa fa-angle-up"></i></a>
+		<!-- end scroll to top btn -->
+
+		<div id="footer" class="footer" style="color: grey;">
+			Copyright &copy; 2021 Gestión de conocimiento.
+            <p>Desarrollado por <a href="https://danalyticspro.co/" target="_blank" style="color: grey;"><u>DAnalytics S.A.S</u></a></p> 
+		</div>
+		
+	</div>
+	<!-- end page container -->
+	
+	<!-- ================== BEGIN BASE JS ================== -->
+    <script src="{% static 'js/app.min.js' %}"></script>
+    <script src="{% static 'js/theme/google.min.js' %}"></script>
+	<!-- ================== END BASE JS ================== -->
+
+    <script src="{% static 'plugins/toastr/toastr.min.js' %}"></script>
+
+
+    {% block js %}{% endblock js %}
+    <script>
+        $(document).ready(function() {
+            {% for msg in messages %}
+                setTimeout(
+                    function() {
+                        toastr.options = {
+                            "closeButton": true,
+                            "progressBar": true,
+                            "showEasing": "swing",
+                            "extendedTimeOut": 5000,
+                            "timeOut": 3000,
+                            "progressBar": true
+                        }
+                        toastr["{{ msg.tags }}"]("{{msg}}")
+                    }, 500
+                );
+            {% endfor %}
+        });
+        $('.fecha').datepicker({
+            todayHighlight: true,
+            language: "es",
+            startView: 2,
+            format: "yyyy-mm-dd",
+        });
+    </script>
+    
+    {{ form.media.js }}
+</body>
+</html>

@@ -1,0 +1,99 @@
+
+{% load humanize %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
+
+    <title>Document</title>
+
+    <style>
+        .graficas_datos {
+            width: 100%;
+            height: 500px;
+        }        
+    </style>
+</head>
+<body>
+    <div class="row m-3">
+                
+        <table class="table table-striped table-bordered" style="width:100%" id="tabla_datos">
+            <thead>
+                <tr>
+                    <th>Tipo actividad</th>
+                    <th>Cantidad</th>
+                    <th>Promedio</th>
+                    <th>Derivación estándar</th>
+                    <th>Valor mínimo</th>
+                    <th>Valor máximo</th>
+                    <th>Cuartil 1 (25%)</th>
+                    <th>Cuartil 2 (50%)</th>
+                    <th>Cuartil 3 (75%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for datos in lista_datos %}     
+                <tr>    
+                    <td>{{datos.valor}}</td>                                           
+                    <td>{{datos.descripcion.count|floatformat:"0"|intcomma}}</td>                                           
+                    <td>{{datos.descripcion.mean|floatformat:"2"|intcomma}}</td>                                          
+                    <td>{{datos.descripcion.std|floatformat:"2"|intcomma }}</td>                                         
+                    <td>{{datos.descripcion.min|floatformat:"2"|intcomma }}</td>                                          
+                    <td>{{datos.descripcion.max|floatformat:"2"|intcomma }}</td>                                          
+                    <td>{{datos.descripcion.4|floatformat:"2"|intcomma }}</td>                                           
+                    <td>{{datos.descripcion.5|floatformat:"2"|intcomma }}</td>                                           
+                    <td>{{datos.descripcion.6|floatformat:"2"|intcomma }}</td>          
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>        
+    </div>
+
+    <div id="graficas">
+        {% for grafico in graficas%}
+            <div id="{{grafico.nombre}}" class="graficas_datos"></div>
+        {% endfor %}
+
+        <div id="compuesta" class="graficas_datos"></div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+
+
+    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+
+    
+
+    <script src="{% static 'js/graficas/grafica_barras_simple.js' %}"></script>
+    <script src="{% static 'js/graficas/grafica_barras_compuesta.js' %}"></script>
+    <script>
+        let datos = {{graficas|safe}}       
+
+        datos.forEach(function (grafica) {            
+            crear_grafica_barras_compuesta(grafica.nombre, grafica.grafica)
+        });
+
+        
+        
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#tabla_datos').DataTable();
+        } );
+    </script>
+</body>
+</html>

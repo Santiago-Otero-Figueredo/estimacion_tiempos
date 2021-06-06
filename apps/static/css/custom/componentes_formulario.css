@@ -1,0 +1,11 @@
+form input{
+    border: solid 1px black !important;
+}
+
+#id_comprobante{
+    border: solid 0px transparent !important;
+}
+
+.datepicker {            
+    z-index: 100000 !important;
+}

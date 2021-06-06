@@ -1,0 +1,48 @@
+{% load humanize %}
+<div class="col-3 border">
+    <h3>{{datos.valor}}</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Indicadores</th>
+                <th>Valor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Cantidad:</td>
+                <td>{{datos.descripcion.count|floatformat:"0"|intcomma}}</td>
+            </tr>
+            <tr>
+                <td>Promedio:</td>
+                <td>{{datos.descripcion.mean|floatformat:"2"|intcomma}}</td>
+            </tr>
+            <tr>
+                <td>Derivación estándar:</td>
+                <td>{{datos.descripcion.std|floatformat:"2"|intcomma }}</td>
+            </tr>
+            <tr>
+                <td>Valor mínimo:</td>
+                <td>{{datos.descripcion.min|floatformat:"2"|intcomma }}</td>
+            </tr>
+            <tr>
+                <td>Valor máximo:</td>
+                <td>{{datos.descripcion.max|floatformat:"2"|intcomma }}</td>
+            </tr>
+            <tr>
+                <td>Cuartil 1 (25%):</td>
+                <td>{{datos.descripcion.4|floatformat:"2"|intcomma }}</td>
+            </tr>
+            <tr>
+                <td>Cuartil 1 (50%):</td>
+                <td>{{datos.descripcion.5|floatformat:"2"|intcomma }}</td>
+            </tr>
+            <tr>
+                <td>Cuartil 1 (75%):</td>
+                <td>{{datos.descripcion.6|floatformat:"2"|intcomma }}</td>
+            </tr>
+        </tbody>
+    </table>
+        
+    
+</div>

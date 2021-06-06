@@ -1,0 +1,11 @@
+.DS_Store
+*.pyc
+*__pycache__
+.idea*
+
+config.json
+secrets.json
+
+apps/**/migrations/**
+!apps/**/migrations
+!apps/**/migrations/__init__.py

@@ -1,0 +1,101 @@
+{% load bootstrap4 %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <title>Iniciar sesión</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+    <!-- ================== BEGIN BASE CSS STYLE ================== -->
+    <link href="{% static 'css/roboto.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/material_icons.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/google/app.min.css' %}" rel="stylesheet" />
+    <!-- ================== END BASE CSS STYLE ================== -->
+    <link href="{% static 'plugins/toastr/toastr.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/estilos_propios.css' %}?v4" rel="stylesheet" />
+
+</head>
+<body class="pace-top">
+    <!-- begin #page-loader -->
+    <div id="page-loader" class="fade show">
+        <span class="spinner"></span>
+    </div>
+    <!-- end #page-loader -->
+    
+    <!-- begin #page-container -->
+    <div id="page-container" class="fade">
+        <!-- begin login -->
+        <div class="login login-with-news-feed">
+            <!-- begin news-feed -->
+            <div class="news-feed">
+                <div class="news-image" style="background-image: url({% static 'img/login-bg/login-bg-9.jpg' %})"></div>
+                <div class="news-caption">
+                </div>
+            </div>
+            <!-- end news-feed -->
+            <!-- begin right-content -->
+            <div class="right-content">
+                <!-- begin login-header -->
+                <div class="login-header">
+                    <img src="{% static 'img/logo/logo-admin-google.png' %}" width="260">
+                    <div class="brand">
+                    </div>
+                </div>
+                <!-- end login-header -->
+
+                <!-- begin login-content -->
+                <div class="login-content">
+                    <form class="margin-bottom-0" method="post">{% csrf_token %}
+                        {% bootstrap_form form %}
+
+                        <div class="login-buttons">
+                            <button type="submit" class="btn btn-primary btn-block btn-lg">Iniciar sesión</button>
+                        </div>
+                        <hr/>
+                    </form>
+                </div>
+                <!-- end login-content -->
+            </div>
+            <!-- end right-container -->
+        </div>
+        <!-- end login -->
+        
+        <!-- begin scroll to top btn -->
+        <a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i class="fa fa-angle-up"></i></a>
+        <!-- end scroll to top btn -->
+    </div>
+    <!-- end page container -->
+    
+    <!-- ================== BEGIN BASE JS ================== -->
+    <script src="{% static 'js/app.min.js' %}"></script>
+    <script src="{% static 'js/theme/google.min.js' %}"></script>
+    <!-- ================== END BASE JS ================== -->
+
+    <script src="{% static 'plugins/toastr/toastr.min.js' %}"></script>
+
+    <script>
+        $(document).ready(function() {
+            {% for msg in messages %}
+                $(document).ready(function(){
+                    setTimeout(function() {
+                        toastr.options = {
+                            "closeButton": true,
+                            "progressBar": true,
+                            "showEasing": "swing",
+                            "extendedTimeOut": 5000,
+                            "timeOut": 3000,
+                            "progressBar": true
+                        }
+                        toastr["{{ msg.tags }}"]("{{msg}}")
+                    }, 500);
+                });
+            {% endfor %}
+        });
+    </script>
+</body>
+</html>

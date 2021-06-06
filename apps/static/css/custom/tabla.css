@@ -1,0 +1,88 @@
+.dataTables_wrapper .btn-secondary{
+    background-color: #2E2FF4;
+    border: 1px solid #2E2FF4;
+}
+
+.dataTables_wrapper .custom-select{
+    border: 1px solid #2E2FF4;
+    color: #2E2FF4;
+}
+
+.dataTables_filter>label{
+    color: #2E2FF4 !important;
+    font-weight: 800;
+}
+
+.odd:hover, .even:hover{
+    border-bottom: solid 2px #41B300 !important;    
+}
+
+.odd:hover>.sorting_1, .even:hover>.sorting_1{
+    color: #41B300 !important;
+}
+
+.paginate_button.page-item>.page-link{
+    border: 0px transparent !important;
+}
+
+
+.paginate_button.page-item.active>.page-link{
+    background-color: #2E2FF4 !important;
+    border: 1px solid #2E2FF4 !important;
+}
+
+.paginate_button.page-item>a:hover{
+    border: 1px solid #2E2FF4 !important;
+    background-color: transparent !important;
+}
+
+.paginate_button.page-item.previous>a:hover, 
+.paginate_button.page-item.next>a:hover{
+    color: #2E2FF4 !important;
+    border: 0px solid transparent !important;
+    text-decoration: underline !important;   
+}
+
+.dataTables_info{
+    color: #41B300 !important;
+}
+
+
+.dataTables_paginate .previous.disabled:hover{
+    color: #2E2FF4 !important;    
+    text-decoration: underline !important;
+    cursor: pointer !important;
+}
+
+.dataTables_paginate .next.disabled:hover{
+    color: #2E2FF4 !important;    
+    text-decoration: underline !important;
+    cursor: pointer !important;
+}
+
+.dataTables_paginate .paginate_button.current{
+    background-color: #2E2FF4 !important;    
+    color: white !important;
+}
+
+
+.dataTables_paginate span{
+    background-color: transparent !important;
+}
+
+.contenedor-tabla{
+    min-width: 35rem;
+}
+
+.nombre_canal{    
+    border-bottom: 2px solid #2E2FF4;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+}
+
+
+
+form select{
+    border: 1px solid black !important;
+    border-radius: 5px !important;
+}

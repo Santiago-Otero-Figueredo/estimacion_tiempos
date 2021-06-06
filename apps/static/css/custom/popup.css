@@ -1,0 +1,33 @@
+.contenedor-tooltip{
+    font-weight: normal;
+    color: black;
+    text-decoration: none;
+    position: relative;
+    display: inline-block;
+}
+
+.contenedor-tooltip:hover .mensaje-tooltip{
+    display: inline-block;
+}
+
+
+
+.mensaje-tooltip{
+    display: none;
+    position: absolute;
+    width: 250px;
+    background-color: #0066d9;
+    line-height: 20px;
+    z-index: 500;
+    text-align: left;
+    color:white;
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    top: calc(50% - 0px);
+    left: -125px;
+    right: calc(50%);
+    
+    
+}
+
