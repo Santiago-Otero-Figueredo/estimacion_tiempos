@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% load bootstrap4 %}
+{% load static %}
+
+{% block titulo %}
+    Formulario de creación de proyecto
+{% endblock titulo %}
+
+{% block titulo_pagina %}
+    Formulario de creación de proyecto
+{% endblock titulo_pagina %}
+
+{% block miga_pan %}
+    <li class="breadcrumb-item"><a href="javascipt:">Proyectos</a></li>    
+    <li class="breadcrumb-item active">Registrar</li>
+{% endblock miga_pan %}
+
+{% block titulo_panel %}
+    Formulario de creación de proyecto
+{% endblock titulo_panel %}
+
+{% block contenido_panel %}
+    <form class="bloquear-ui-enviar" method="post" enctype="multipart/form-data">{% csrf_token %}
+        <div class="row">
+            <div class="col-12">
+                <h4 class="titulo">Información básica del proyecto</h4>
+            </div>
+        </div>
+        <div id="" class="row">
+            <p id="estimaciones_calculadas"></p>
+        </div>
+        <div>
+            {% bootstrap_form form %}
+        </div>
+        <div class="mt-3">
+            {% url 'estimaciones:listado_actividades' as url_volver%}
+            <hr>
+            {% include 'componentes/footer_botones.html' with  texto_volver="Volver" texto_accion="Registrar" url_volver=url_volver boton_volver=True boton_accion=True%}
+        </div>
+       
+    </form>
+{% endblock contenido_panel %}
+
+
+{% block js %}
+    {{ block.super }}
+    <script>
+        let url_peticion = "{% url 'estimaciones:api_obtener_actividades_comunes' %}"
+        console.log(url_peticion)
+        $("#id_funcionalidad").keyup(function(){
+            nombre_funcionalidad = $(this).val()
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: url_peticion,
+                data: {
+                    nombre: nombre_funcionalidad,
+                },
+                success: function (response) {
+                    actividades = response['actividades']
+                    let variable = ""
+                    actividades.forEach(elemento => {
+                        variable += elemento.tipo_actividad__nombre + ": " + elemento.tiempo_promedio + "\n"
+                    })
+                    $("#estimaciones_calculadas").text(variable)
+                },
+                error: function (e) {
+                    console.log("Error")
+                }
+            });
+        });
+    </script>
+{% endblock js %}
+

@@ -7,3 +7,5 @@ class RegistrarProyectoForm(forms.ModelForm):
     class Meta:
         model = Proyecto
         fields = ("cliente", "nombre", "esta_activo")
+    
+   

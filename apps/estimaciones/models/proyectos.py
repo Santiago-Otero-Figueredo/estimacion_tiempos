@@ -12,7 +12,7 @@ class Proyecto(EstimacionModel):
         verbose_name="Proyectos asociados a un cliente",
         on_delete=models.PROTECT
     )
-    nombre = models.CharField(max_length=80)
+    nombre = models.CharField(max_length=80, unique=True)
     programadores = models.ManyToManyField(
         Programador, 
         through='ProyectoProgramador', 
@@ -30,3 +30,15 @@ class Proyecto(EstimacionModel):
         help_text='Fecha y hora de finalización del proyecto',
         blank=True, null=True
     )
+
+    def __str__(self):
+        """Return username."""
+        return self.nombre
+
+    
+    @staticmethod
+    def buscar_por_nombre(nombre:str) -> 'Proyecto':
+        try:
+            return Proyecto.objects.get(nombre=nombre)
+        except Proyecto.DoesNotExist:
+            return None

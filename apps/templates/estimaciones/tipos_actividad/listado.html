@@ -1,0 +1,44 @@
+{% extends "base_tablas.html" %}
+
+{% load bootstrap4 %}
+{% load static %}
+
+{% block titulo %}
+    Listado de tipos de actividades
+{% endblock titulo %}
+
+{% block titulo_pagina %}
+    Listado de tipos de actividades
+{% endblock titulo_pagina %}
+
+{% block miga_pan %}
+    <li class="breadcrumb-item"><a href="javascript:">Tipos actividades</a></li>    
+    <li class="breadcrumb-item active">Listado</li>
+{% endblock miga_pan %}
+
+{% block titulo_panel %}
+    Listado de tipos de actividades
+{% endblock titulo_panel %}
+
+{% block contenido_panel %}
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-bordered table-hover datatable">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tipo_actividad in tipos_actividad %}
+                        <tr>
+                            <td>{{tipo_actividad.nombre}}</td>
+                            <td>{{tipo_actividad.esta_activo}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock contenido_panel %}

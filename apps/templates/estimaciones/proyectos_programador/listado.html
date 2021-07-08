@@ -1,0 +1,46 @@
+{% extends "base_tablas.html" %}
+
+{% load bootstrap4 %}
+{% load static %}
+
+{% block titulo %}
+    Listado de proyectos con programador
+{% endblock titulo %}
+
+{% block titulo_pagina %}
+    Listado de proyectos con programador
+{% endblock titulo_pagina %}
+
+{% block miga_pan %}
+    <li class="breadcrumb-item"><a href="javascript:">Proyectos con programador</a></li>    
+    <li class="breadcrumb-item active">Listado</li>
+{% endblock miga_pan %}
+
+{% block titulo_panel %}
+    Listado de proyectos con programador
+{% endblock titulo_panel %}
+
+{% block contenido_panel %}
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-bordered table-hover datatable">
+                <thead>
+                    <tr>                        
+                        <th>Programador</th>
+                        <th>Proyecto</th>                        
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for proyecto in proyectos_programador %}
+                        <tr>
+                            <td>{{proyecto.programador}}</td>
+                            <td>{{proyecto.proyecto}}</td>                            
+                            <td>{{proyecto.esta_activo}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock contenido_panel %}

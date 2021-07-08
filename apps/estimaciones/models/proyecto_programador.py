@@ -28,3 +28,27 @@ class ProyectoProgramador(EstimacionModel):
         auto_now=True,
         help_text='Fecha y hora de finalización del proyecto'
     )
+
+    @staticmethod
+    def crear_y_obtener(programador:'Programador', proyecto:'Proyecto') -> 'TipoActividad':
+
+        if ProyectoProgramador.existe(programador, proyecto):
+            return ProyectoProgramador.buscar_por_programador_y_proyecto(programador, proyecto)
+        else:
+            ProyectoProgramador.objects.create(programador=programador, proyecto=proyecto)
+       
+
+    @staticmethod
+    def existe(programador:'Programador', proyecto:'Proyecto') -> bool:
+        try:
+            ProyectoProgramador.objects.get(programador=programador, proyecto=proyecto)
+            return True
+        except ProyectoProgramador.DoesNotExist:
+            return False
+
+    @staticmethod
+    def buscar_por_programador_y_proyecto(programador:'Programador', proyecto:'Proyecto') -> "ProyectoProgramador":
+        try:
+            return ProyectoProgramador.objects.get(programador=programador, proyecto=proyecto)
+        except ProyectoProgramador.DoesNotExist:
+            return None

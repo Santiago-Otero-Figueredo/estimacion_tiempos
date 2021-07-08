@@ -2,13 +2,19 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
+from django.db.models.fields import CharField
 
 
 # Utilities
 from apps.utils.models import EstimacionModel
 
-class Usuario(EstimacionModel, AbstractUser):
 
+
+class Usuario(EstimacionModel, AbstractUser):
+    PROGRAMADOR = 'Programador'
+    CLIENTE = 'Cliente'
+    
+    tipo = models.CharField(max_length=15, blank=True)
     email = models.EmailField(
         'Correo electrónico',
         unique=True,
@@ -31,7 +37,7 @@ class Usuario(EstimacionModel, AbstractUser):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
-
+   
     def __str__(self):
         """Return username."""
         return self.username
@@ -39,3 +45,6 @@ class Usuario(EstimacionModel, AbstractUser):
     def save(self):
         self.username = self.email
         return super().save()
+
+    
+    

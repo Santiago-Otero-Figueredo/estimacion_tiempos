@@ -60,12 +60,13 @@ DJANGO_APPS = [
 
 THIRD_PARTY_APPS = [
     'bootstrap4',
+    'rest_framework',
 ]
 
 LOCAL_APPS = [
     'apps.usuarios',
     'apps.prueba',
-    'apps.estimaciones',    
+    'apps.estimaciones',
 ]
 
 # Application definition
@@ -151,6 +152,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+DIRECCION_HOST = get_secret('DIRECCION_HOST'),
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/

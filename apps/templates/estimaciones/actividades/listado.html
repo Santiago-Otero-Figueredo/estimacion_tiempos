@@ -1,0 +1,50 @@
+{% extends "base_tablas.html" %}
+
+{% load bootstrap4 %}
+{% load static %}
+
+{% block titulo %}
+    Listado de actividades
+{% endblock titulo %}
+
+{% block titulo_pagina %}
+    Listado de actividades
+{% endblock titulo_pagina %}
+
+{% block miga_pan %}
+    <li class="breadcrumb-item"><a href="javascript:">Actividades</a></li>    
+    <li class="breadcrumb-item active">Listado</li>
+{% endblock miga_pan %}
+
+{% block titulo_panel %}
+    Listado de actividades
+{% endblock titulo_panel %}
+
+{% block contenido_panel %}
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-bordered table-hover datatable">
+                <thead>
+                    <tr>
+                        <th>Tipo de actividad</th>
+                        <th>Funcionalidad</th>
+                        <th>Tiempo estimado</th>
+                        <th>Tiempo real</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for actividad in actividades %}
+                        <tr>
+                            <td>{{actividad.tipo_actividad}}</td>
+                            <td>{{actividad.funcionalidad}}</td>
+                            <td>{{actividad.tiempo_estimado}}</td>
+                            <td>{{actividad.tiempo_real}}</td>
+                            <td>{{actividad.esta_activo}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock contenido_panel %}
