@@ -2,19 +2,29 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
-from django.db.models.fields import CharField
-
 
 # Utilities
 from apps.utils.models import EstimacionModel
 
 
-
 class Usuario(EstimacionModel, AbstractUser):
-    PROGRAMADOR = 'Programador'
-    CLIENTE = 'Cliente'
-    
-    tipo = models.CharField(max_length=15, blank=True)
+
+    tipo_documento = models.ForeignKey(
+        'TipoDocumento',
+        related_name="usuarios_asociados_documento",
+        verbose_name="Tipo del documento",
+        on_delete=models.SET_NULL,
+        null=True
+    )
+
+    tipo_usuario = models.ForeignKey(
+        'TipoUsuario',
+        related_name="usuarios_asociados_tipo",
+        verbose_name="Tipo del documento",
+        on_delete=models.SET_NULL,
+        null=True
+    )
+
     email = models.EmailField(
         'Correo electrónico',
         unique=True,
@@ -36,7 +46,7 @@ class Usuario(EstimacionModel, AbstractUser):
     )
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
+    REQUIRED_FIELDS = ['username', 'first_name', 'last_name', 'password1', 'password2']
    
     def __str__(self):
         """Return username."""
@@ -46,5 +56,3 @@ class Usuario(EstimacionModel, AbstractUser):
         self.username = self.email
         return super().save()
 
-    
-    

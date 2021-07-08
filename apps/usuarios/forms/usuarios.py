@@ -1,10 +1,11 @@
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm
 
 from apps.usuarios.models import Usuario
-from django.contrib.auth.forms import AuthenticationForm
 
 
 class FormularioInicioSesion(AuthenticationForm):
+
     username = forms.CharField(error_messages={
         'required': 'Este campo es requerido',
         'invalid': 'Introduzca un correo valido'

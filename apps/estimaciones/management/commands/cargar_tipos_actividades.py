@@ -13,7 +13,6 @@ class Command(BaseCommand):
         
         gestor = GestorLectorExcel("F:\\santiago\\Datos Personales\\Documentos pasantia\\proyecto\\estimacion_tiempos\\_data\\Jira_kairosteam.xlsx")
         
-        
         data_frame = gestor.obtener_dataframe()
         lista_tipos = data_frame['Summary'].unique()
         for tipo in lista_tipos:
