@@ -1,0 +1,14 @@
+{% url 'estimaciones:obtener_estimaciones_actividades' as listado_estimacion_actividades %}
+
+<li class="has-sub {% if listado_estimacion_actividades in request.path %}active{% endif %}" id="menu_clientes">
+    <a href="javascript:;">
+        <b class="caret"></b>
+        <i class="fas fa-users"></i>
+        <span>Estimaciones</span>
+    </a>
+    <ul class="sub-menu">
+        <li class="{% if listado_estimacion_actividades in request.path %}active{% endif %}">
+            <a href="{{listado_estimacion_actividades}}">Listado</a>
+        </li>
+    </ul>
+</li>

@@ -1,16 +1,10 @@
 from django.db import models
 
 from apps.usuarios.models.usuarios import Usuario
-
+from apps.usuarios.models.tipos_usuarios import TipoUsuario
 class Programador(Usuario):
+    pass
 
-    @staticmethod
-    def buscar_por_username(username:str) -> 'Programador':
-        try:
-            return Programador.objects.get(username=username)
-        except Programador.DoesNotExist:
-            return None
-    
-    def save(self):
-        self.tipo = Usuario.PROGRAMADOR
-        return super().save()
+    def save(self, *args, **kwargs):
+        self.tipo_usuario = TipoUsuario.buscar_por_identificador(1)
+        return super().save(*args, **kwargs)

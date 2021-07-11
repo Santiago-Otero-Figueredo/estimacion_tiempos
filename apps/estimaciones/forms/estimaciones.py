@@ -1,0 +1,37 @@
+from django import forms
+
+from apps.usuarios.models.programadores import Programador
+from apps.estimaciones.models.proyectos import Proyecto
+from apps.estimaciones.models.actividades import TipoActividad
+
+class FiltroEstimacionesForm(forms.Form):
+
+    proyecto = forms.ModelChoiceField(label="Proyecto",queryset=Proyecto.obtener_activos(), required=False)
+    programador = forms.ModelChoiceField(label="Programador",queryset=Programador.obtener_activos(), required=False)
+    tipo_actividad = forms.ModelChoiceField(label="Tipo actividad",queryset=TipoActividad.obtener_activos(), required=False)
+    
+    fecha_inicio = forms.DateField(
+                input_formats=['%Y-%m-%d'],
+                widget=forms.TextInput(
+                        attrs={
+                            'class':'datepicker',
+                            'placeholder': 'Fecha inicio',
+                        }
+                    ),
+                label="", required=False)
+    fecha_fin = forms.DateField(
+                input_formats=['%Y-%m-%d'],
+                widget=forms.TextInput(
+                        attrs={
+                            'class':'datepicker',
+                            'placeholder': 'Fecha fin'
+                        }
+                    ),
+                label="", required=False)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['proyecto'].empty_label = 'Todos'
+        self.fields['programador'].empty_label = 'Todos'
+        self.fields['tipo_actividad'].empty_label = 'Todos'

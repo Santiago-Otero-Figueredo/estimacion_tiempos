@@ -1,5 +1,5 @@
 
-.btn_filtrar{
+.btn_accion_formulario{
     border: 1px solid #2E2FF4 !important;
     color: #2E2FF4 !important;
 }
@@ -19,7 +19,7 @@
     color: #42484f;
 }
 
-.btn_filtrar:hover{
+.btn_accion_formulario:hover{
     background-color: #2E2FF4 !important;
     color: white !important;
 }

@@ -9,7 +9,8 @@ from .views import (RegistrarProyecto,
                     ListadoActividad,
                     RegistrarTipoActividad,
                     ListadoTipoActividad,
-                    ObtenerActividadesComunes)
+                    ObtenerActividadesComunes,
+                    ObtenerEstimacionesActividades)
 
 
 app_name = 'estimaciones'
@@ -27,5 +28,8 @@ urlpatterns = [
     path('registrar-tipo-actividad/', RegistrarTipoActividad.as_view(), name='registrar_tipo_actividad'),
     path('listado-tipos-actividades/', ListadoTipoActividad.as_view(), name='listado_tipos_actividades'),
 
+    path('obtener-estimaciones-actividades/', ObtenerEstimacionesActividades.as_view(), name='obtener_estimaciones_actividades'),
+    
     path('obtener-actividades-comunes/', ObtenerActividadesComunes.as_view(), name='api_obtener_actividades_comunes'),
+
 ]

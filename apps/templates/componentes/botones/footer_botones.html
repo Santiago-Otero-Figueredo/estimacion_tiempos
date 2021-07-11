@@ -1,0 +1,12 @@
+<div class='mx-2 row {% if boton_volver == True %}justify-content-between{%else%}justify-content-end{% endif %}'>
+    {% if boton_volver == True %}
+        <a class="btn btn_volver" href="{{url_volver}}">
+            <i class="fa fa-angle-left"></i> {{texto_volver}}
+        </a>
+    {% endif %}
+    {% if boton_accion == True %}
+        {% include 'componentes/botones/boton_accion_formulario.html' with  texto_accion="Registrar"%}
+    {% endif %}
+</div>
+
+

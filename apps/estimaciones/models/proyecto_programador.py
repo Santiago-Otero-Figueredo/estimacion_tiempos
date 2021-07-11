@@ -7,17 +7,17 @@ from apps.estimaciones.models.proyectos import Proyecto
 
 class ProyectoProgramador(EstimacionModel):
     programador = models.ForeignKey(
-        Programador, 
-        related_name='proyectos_programador_programador', 
+        Programador,
+        related_name='proyectos_programador_programador',
         verbose_name="Programador",
         on_delete=models.PROTECT
     )
     proyecto = models.ForeignKey(
-        Proyecto, 
-        related_name='proyectos_programador_proyecto', 
+        Proyecto,
+        related_name='proyectos_programador_proyecto',
         verbose_name="Proyecto",
         on_delete=models.PROTECT
-    )    
+    )
     fecha_inicio = models.DateTimeField(
         'Iniciado a',
         auto_now_add=True,

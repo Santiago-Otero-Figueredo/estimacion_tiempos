@@ -63,6 +63,7 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     'bootstrap4',
     'rest_framework',
+    'django_select2',
 ]
 
 LOCAL_APPS = [
@@ -157,9 +158,11 @@ USE_TZ = True
 DIRECCION_HOST = get_secret('DIRECCION_HOST'),
 
 # Variables encargadas del inicio y cierre de sesion
-LOGIN_REDIRECT_URL = reverse_lazy('inicio')
+LOGIN_REDIRECT_URL = 'inicio'
 LOGIN_URL = reverse_lazy('usuarios:iniciar_sesion')
-LOGOUT_URL = reverse_lazy('usuarios:iniciar_sesion')
+LOGOUT_REDIRECT_URL = reverse_lazy('usuarios:iniciar_sesion')
+
+#Configuración para elementos de conexión con JIRA
 
 
 # Static files (CSS, JavaScript, Images)

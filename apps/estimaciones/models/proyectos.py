@@ -7,26 +7,26 @@ from apps.usuarios.models.programadores import Programador
 
 class Proyecto(EstimacionModel):
     cliente = models.ForeignKey(
-        Cliente, 
+        Cliente,
         related_name='proyectos_cliente', 
         verbose_name="Proyectos asociados a un cliente",
         on_delete=models.PROTECT
     )
     nombre = models.CharField(max_length=80, unique=True)
     programadores = models.ManyToManyField(
-        Programador, 
-        through='ProyectoProgramador', 
-        related_name="proyecto_programador", 
-        blank=True, 
+        Programador,
+        through='ProyectoProgramador',
+        related_name="proyecto_programador",
+        blank=True,
         verbose_name="programadores asociados al proyecto"
     )
     fecha_inicio = models.DateTimeField(
-        'Iniciado a',        
+        'Iniciado a',
         help_text='Fecha y hora en la que se inicio el proyecto',
         blank=True, null=True
     )
     fecha_finalizacion = models.DateTimeField(
-        'Finalizado a',        
+        'Finalizado a',
         help_text='Fecha y hora de finalización del proyecto',
         blank=True, null=True
     )

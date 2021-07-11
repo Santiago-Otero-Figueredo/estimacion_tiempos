@@ -1,29 +1,15 @@
 from abc import ABCMeta, abstractmethod
 import pandas as pd
 
-class GestorLectorArchivo(metaclass=ABCMeta):    
+class GestorLectorArchivo(metaclass=ABCMeta):
     _ruta_archivo = None
     _dataframe = None
 
-    def __init__(self, ruta_archivo, *args, **kwargs):        
+    def __init__(self, ruta_archivo, *args, **kwargs):
         self._ruta_archivo = ruta_archivo
-        self.obtener_dataframe_de_archivo_excel()
-        
 
-    def obtener_dataframe_de_archivo_excel(self) -> 'Dataframe':
-        """
-            Retorna un dataframe usando un archivo de excel como parámetro
 
-            Parámetros:
-                archivo: archivo de excel que contiene la información 
 
-            Retorno:
-                Dataframe: dataframe
-        """        
-
-        self._dataframe = pd.read_excel(self._ruta_archivo, engine='openpyxl')       
-        cols = self._dataframe.columns[~self._dataframe.columns.str.startswith('Unnamed:')]
-        self._dataframe = self._dataframe[cols].dropna(how='all')
 
 
     def obtener_dataframe(self) -> 'Dataframe':
@@ -37,15 +23,15 @@ class GestorLectorArchivo(metaclass=ABCMeta):
     def obtener_descripcion_columna(self, columna_datos:str, columna_info:str):
         lista_datos = list()
         lista_valores = self.obtener_valores_columna(columna_datos)
-        for valor in lista_valores:           
+        for valor in lista_valores:
             
-            df = self._dataframe[self._dataframe[columna_datos].isin([valor])]            
-            df = df[[columna_datos, columna_info, 'Issue key']]            
-            df = self.eliminar_ceros(df)            
+            df = self._dataframe[self._dataframe[columna_datos].isin([valor])]
+            df = df[[columna_datos, columna_info, 'Issue key']]
+            df = self.eliminar_ceros(df)
             df_atipicos = self.obtener_valores_atipicos(df, columna_info)
             df_sin_atipicos = self.eliminar_valores_atipicos(df, columna_info)
             
-            if not df.empty:                
+            if not df.empty:
                 lista_datos.append({'valor':valor, 'descripcion':df_sin_atipicos[columna_info].describe()})
         return lista_datos
     
@@ -62,7 +48,7 @@ class GestorLectorArchivo(metaclass=ABCMeta):
         maximo = q3+1.5*iqr
         return (minimo, maximo)
 
-    def eliminar_valores_atipicos(self, data_frame, columna_info):        
+    def eliminar_valores_atipicos(self, data_frame, columna_info):
         minimo, maximo = self.obtener_rangos_atipicos(data_frame, columna_info)
         df = data_frame.loc[(data_frame[columna_info] > minimo) & (data_frame[columna_info] < maximo)]
         return df
@@ -108,19 +94,3 @@ class GestorLectorArchivo(metaclass=ABCMeta):
         for index, value in df.items():            
             lista_datos.append({'actividad':index, 'cantidad':value})
         return lista_datos
-
-       
-
-    
-
-        
-    @abstractmethod
-    def modificar_dataframe(self) -> None:
-        """implementa la extracción del contenido"""
-        raise NotImplementedError
-
-
-    @abstractmethod
-    def registrar_precios_desde_dataframe(self) -> None:
-        """implementa la extracción del contenido"""
-        raise NotImplementedError

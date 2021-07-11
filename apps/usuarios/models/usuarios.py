@@ -37,7 +37,7 @@ class Usuario(EstimacionModel, AbstractUser):
         regex=r'\+?1?\d{7,10}$',
         message="El numero de teléfono debe tener entre 7 y 10 digitos:"
     )
-    phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True)
+    phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True, verbose_name='Teléfono celular')
 
     is_verified = models.BooleanField(
         'Esta verificado',
@@ -52,7 +52,14 @@ class Usuario(EstimacionModel, AbstractUser):
         """Return username."""
         return self.username
 
-    def save(self):
+    @classmethod
+    def buscar_por_username(cls, username:str) -> 'Usuario':
+        try:
+            return cls.objects.get(username=username)
+        except cls.DoesNotExist:
+            return cls.objects.none()
+
+    def save(self, *args, **kwargs):
         self.username = self.email
-        return super().save()
+        return super().save(*args, **kwargs)
 

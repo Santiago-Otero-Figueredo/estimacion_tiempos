@@ -16,10 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from apps.usuarios.views import PaginaInicio
+
 urlpatterns = [
-    path('/', admin.site.urls),
+    path('', PaginaInicio.as_view(), name='inicio'),
     path('admin/', admin.site.urls),
+    path("select2/", include("django_select2.urls")),
     path('usuarios/', include('apps.usuarios.urls', namespace='usuarios')),
-    path('estimaciones/', include('apps.estimaciones.urls', namespace='estimaciones')),    
+    path('estimaciones/', include('apps.estimaciones.urls', namespace='estimaciones')),
     path('pruebas/', include('apps.prueba.urls', namespace='pruebas')),
 ]

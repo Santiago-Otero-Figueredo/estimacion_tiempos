@@ -8,10 +8,10 @@ class Command(BaseCommand):
     help = 'Carga los tipos de documentos'
 
     def handle(self, *args, **kwargs):
-        tipos = pd.read_csv("_data/cargar_inicio_proyecto/1_tipos/tipos_documentos.csv")
-        for _, ciudad in tipos.iterrows():
-            nombre = ciudad['nombre']
-            identificador = ciudad['identificador']
+        tipos = pd.read_csv("_data/cargar_inicio_proyecto/1_tipos/1_tipos_documentos.csv")
+        for _, documento in tipos.iterrows():
+            nombre = documento['nombre']
+            identificador = documento['identificador']
             if not TipoDocumento.existe_por_identificador(identificador):
                 TipoDocumento.objects.create(
                     nombre=nombre.capitalize(),

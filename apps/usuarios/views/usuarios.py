@@ -3,21 +3,31 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import redirect
+from django.views.generic.base import TemplateView
+
+from apps.utils.clases.jira.ConexionJira import Jira
 
 from apps.usuarios.forms import FormularioInicioSesion
+
+class PaginaInicio(TemplateView):
+    template_name = 'usuarios/sesion/pagina_inicio.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        print("#-----------------------------")
+        #jira = Jira()
+        #print(jira.consultar_historias_usuarios())
+        print("#-----------------------------")
+        return super().dispatch(request, *args, **kwargs)
+
 
 class InicioSesion(LoginView):
     template_name = 'usuarios/sesion/inicio_sesion.html'
     form_class = FormularioInicioSesion
     redirect_authenticated_user = True
 
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return redirect('usuarios:iniciar_sesion')
-        return super().dispatch(request, *args, **kwargs)
 
 class CerrarSesion(LogoutView):
-    template_name = 'usuarios/sesion/inicio_sesion.html'
+    pass
 
 @login_required
 def logout(request):

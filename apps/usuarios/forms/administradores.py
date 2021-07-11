@@ -1,10 +1,10 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from apps.usuarios.models.programadores import Programador
+from apps.usuarios.models.administradores import Administrador
 
-class RegistrarProgramadorForm(UserCreationForm):
+class RegistrarAdministradorForm(UserCreationForm):
     
     class Meta:
-        model = Programador
+        model = Administrador
         fields = ("first_name", "last_name", "email", "phone_number")

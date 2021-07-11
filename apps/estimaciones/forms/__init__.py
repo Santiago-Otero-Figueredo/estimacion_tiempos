@@ -2,3 +2,4 @@ from .proyectos import RegistrarProyectoForm
 from .proyectos_programador import RegistrarProyectoProgramadorForm
 from .actividades import RegistrarActividadForm
 from .tipos_actividad import RegistrarTipoActividadForm
+from .estimaciones import FiltroEstimacionesForm

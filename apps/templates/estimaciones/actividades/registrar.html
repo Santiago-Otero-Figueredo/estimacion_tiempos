@@ -12,7 +12,7 @@
 {% endblock titulo_pagina %}
 
 {% block miga_pan %}
-    <li class="breadcrumb-item"><a href="javascipt:">Proyectos</a></li>    
+    <li class="breadcrumb-item"><a href="javascipt:">Proyectos</a></li>
     <li class="breadcrumb-item active">Registrar</li>
 {% endblock miga_pan %}
 
@@ -27,8 +27,25 @@
                 <h4 class="titulo">Información básica del proyecto</h4>
             </div>
         </div>
-        <div id="" class="row">
-            <p id="estimaciones_calculadas"></p>
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <table id="tabla_estimaciones" class="table table-bordered table-responsive">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Tipo de actividad</th>
+                            <th>Cantidad registros</th>
+                            <th>Tiempo promedio (minutos)</th>
+                            <th>Tiempo mínimo (minutos)</th>
+                            <th>Tiempo máximo (minutos)</th>
+                            <th>Desviación estándar (minutos)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="estimaciones_calculadas">
+                    
+                    </tbody>
+
+                </table>
+            </div>
         </div>
         <div>
             {% bootstrap_form form %}
@@ -36,7 +53,7 @@
         <div class="mt-3">
             {% url 'estimaciones:listado_actividades' as url_volver%}
             <hr>
-            {% include 'componentes/footer_botones.html' with  texto_volver="Volver" texto_accion="Registrar" url_volver=url_volver boton_volver=True boton_accion=True%}
+            {% include 'componentes/botones/footer_botones.html' with  texto_volver="Volver" texto_accion="Registrar" url_volver=url_volver boton_volver=True boton_accion=True%}
         </div>
        
     </form>
@@ -46,30 +63,89 @@
 {% block js %}
     {{ block.super }}
     <script>
+        ocultar_tabla()
+
         let url_peticion = "{% url 'estimaciones:api_obtener_actividades_comunes' %}"
         console.log(url_peticion)
         $("#id_funcionalidad").keyup(function(){
             nombre_funcionalidad = $(this).val()
-            $.ajax({
-                type: "GET",
-                dataType: "json",
-                url: url_peticion,
-                data: {
-                    nombre: nombre_funcionalidad,
-                },
-                success: function (response) {
-                    actividades = response['actividades']
-                    let variable = ""
-                    actividades.forEach(elemento => {
-                        variable += elemento.tipo_actividad__nombre + ": " + elemento.tiempo_promedio + "\n"
-                    })
-                    $("#estimaciones_calculadas").text(variable)
-                },
-                error: function (e) {
-                    console.log("Error")
-                }
-            });
+            if(nombre_funcionalidad != ""){
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    url: url_peticion,
+                    data: {
+                        nombre: nombre_funcionalidad,
+                    },
+                    success: function (response) {
+                        actividades = response['actividades']
+                        let variable = ""
+                        mostrar_tabla()
+                        limpiar_tabla()
+                        actividades.forEach(elemento => {
+                            creacion_estructura_tabla(elemento)
+                        })
+                        
+                        
+                    },
+                    error: function (e) {
+                        console.log("Error")
+                    }
+                });
+            }else{
+                limpiar_tabla()
+                ocultar_tabla()
+            }
         });
+
+        // Creacion de tabla para obtener estimaciones
+        function creacion_estructura_tabla(elemento){
+            let cuerpo_estimaciones = document.getElementById("estimaciones_calculadas")
+            let fila_encabezado = document.createElement('tr')
+            let celda_nombre = document.createElement('td')
+            let celda_cantidad = document.createElement('td')
+            let celda_promedio = document.createElement('td')
+            let celda_minimo = document.createElement('td')
+            let celda_maximo = document.createElement('td')
+            let desviacion_estadar = document.createElement('td')
+
+            celda_nombre.innerHTML = elemento.nombre
+            celda_cantidad.innerHTML = elemento.cantidad
+            celda_promedio.innerHTML = elemento.promedio
+            celda_minimo.innerHTML = elemento.minimo
+            celda_maximo.innerHTML = elemento.maximo
+            desviacion_estadar.innerHTML = elemento.desviacion
+
+            fila_encabezado.appendChild(celda_nombre)
+            fila_encabezado.appendChild(celda_cantidad)
+            fila_encabezado.appendChild(celda_promedio)
+            fila_encabezado.appendChild(celda_minimo)
+            fila_encabezado.appendChild(celda_maximo)
+            fila_encabezado.appendChild(desviacion_estadar)
+
+            cuerpo_estimaciones.appendChild(fila_encabezado)
+        }
+
+        function limpiar_tabla(){
+            let cuerpo_estimaciones = document.getElementById("estimaciones_calculadas")
+            let filas = cuerpo_estimaciones.getElementsByTagName('tr')
+            
+            let total_filas = filas.length;
+
+            for (var indice=total_filas-1; indice>=0; indice--) {
+                cuerpo_estimaciones.removeChild(filas[indice]);
+            }
+        }
+
+        function ocultar_tabla(){
+            let tabla_estimaciones = document.getElementById('tabla_estimaciones')
+            tabla_estimaciones.style.display = 'none'
+        }
+
+        function mostrar_tabla(){
+            let tabla_estimaciones = document.getElementById('tabla_estimaciones')
+            tabla_estimaciones.style.display = 'block'
+        }
     </script>
 {% endblock js %}
 
