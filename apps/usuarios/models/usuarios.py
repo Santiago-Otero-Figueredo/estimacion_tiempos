@@ -53,11 +53,25 @@ class Usuario(EstimacionModel, AbstractUser):
         return self.username
 
     @classmethod
+    def buscar_por_id(cls, id_elemento:int) -> 'Usuario':
+        try:
+            return cls.objects.get(pk=id_elemento)
+        except cls.DoesNotExist:
+            return cls.objects.none()
+
+
+    @classmethod
+    def existe_por_id(cls, id_elemento:int) -> bool:
+        return cls.objects.filter(pk=id_elemento).exists()
+
+
+    @classmethod
     def buscar_por_username(cls, username:str) -> 'Usuario':
         try:
             return cls.objects.get(username=username)
         except cls.DoesNotExist:
             return cls.objects.none()
+
 
     def save(self, *args, **kwargs):
         self.username = self.email

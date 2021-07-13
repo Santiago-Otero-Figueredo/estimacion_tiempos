@@ -78,15 +78,14 @@
                         nombre: nombre_funcionalidad,
                     },
                     success: function (response) {
+                        console.log(response['actividades'])
                         actividades = response['actividades']
                         let variable = ""
                         mostrar_tabla()
                         limpiar_tabla()
-                        actividades.forEach(elemento => {
-                            creacion_estructura_tabla(elemento)
-                        })
-                        
-                        
+                        for (let [key, value] of Object.entries(actividades)) {
+                            creacion_estructura_tabla(value);
+                        }
                     },
                     error: function (e) {
                         console.log("Error")

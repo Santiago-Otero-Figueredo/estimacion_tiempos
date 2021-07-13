@@ -4,7 +4,7 @@ from django.db.models import Avg, Q
 from apps.utils.models import EstimacionModel
 
 from apps.estimaciones.models.tipos_actividades import TipoActividad
-from apps.estimaciones.models.proyecto_programador import ProyectoProgramador
+from apps.estimaciones.models.proyectos_empleados import ProyectoEmpleado
 
 
 class Actividad(EstimacionModel):
@@ -15,11 +15,11 @@ class Actividad(EstimacionModel):
         verbose_name="Tipo de actividad asociado",
         default=1
     )
-    proyecto_programador = models.ForeignKey(
-        ProyectoProgramador,
+    proyecto_empleado = models.ForeignKey(
+        ProyectoEmpleado,
         on_delete=models.SET_NULL,
-        related_name="actividad_proyecto_programador",
-        verbose_name="Proyecto y programador asociados",
+        related_name="actividad_proyecto_empleado",
+        verbose_name="Proyecto y empleado asociados",
         null=True
     )
     identificador = models.CharField(max_length=20, verbose_name="Identificador único según el tipo de insumo", null=True, blank=True)

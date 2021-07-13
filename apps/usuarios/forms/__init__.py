@@ -1,4 +1,4 @@
-from .clientes import RegistrarClienteForm
-from .programadores import RegistrarProgramadorForm
+from .empresas import RegistrarEmpresaForm
+from .trabajadores import RegistrarTrabajadorForm
 from .administradores import RegistrarAdministradorForm
 from .usuarios import FormularioInicioSesion

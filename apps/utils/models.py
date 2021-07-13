@@ -54,6 +54,19 @@ class TiposModel(EstimacionModel):
 
 
     @classmethod
+    def buscar_por_id(cls, id_elemento:int) -> 'TiposModel':
+        try:
+            return cls.objects.get(pk=id_elemento)
+        except cls.DoesNotExist:
+            return cls.objects.none()
+
+
+    @classmethod
+    def existe_por_id(cls, id_elemento:int) -> bool:
+        return cls.objects.filter(pk=id_elemento).exists()
+
+
+    @classmethod
     def buscar_por_identificador(cls, identificador:int) -> 'TiposModel':
         try:
             return cls.objects.get(identificador=identificador)

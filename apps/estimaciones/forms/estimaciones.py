@@ -1,13 +1,13 @@
 from django import forms
 
-from apps.usuarios.models.programadores import Programador
+from apps.usuarios.models.empleados import Empleado
 from apps.estimaciones.models.proyectos import Proyecto
 from apps.estimaciones.models.actividades import TipoActividad
 
 class FiltroEstimacionesForm(forms.Form):
 
     proyecto = forms.ModelChoiceField(label="Proyecto",queryset=Proyecto.obtener_activos(), required=False)
-    programador = forms.ModelChoiceField(label="Programador",queryset=Programador.obtener_activos(), required=False)
+    empleado = forms.ModelChoiceField(label="Programador",queryset=Empleado.obtener_activos(), required=False)
     tipo_actividad = forms.ModelChoiceField(label="Tipo actividad",queryset=TipoActividad.obtener_activos(), required=False)
     
     fecha_inicio = forms.DateField(
@@ -33,5 +33,5 @@ class FiltroEstimacionesForm(forms.Form):
         super().__init__(*args, **kwargs)
 
         self.fields['proyecto'].empty_label = 'Todos'
-        self.fields['programador'].empty_label = 'Todos'
+        self.fields['empleado'].empty_label = 'Todos'
         self.fields['tipo_actividad'].empty_label = 'Todos'

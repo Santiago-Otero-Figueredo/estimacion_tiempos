@@ -46,6 +46,7 @@ class ObtenerActividadesComunes(APIView):
         df_sin_atipicos = eliminar_valores_atipicos(df, 'tiempo_real')
         lista_de_estimaciones = obtener_describe_dataframe(df_sin_atipicos, ['tipo_actividad__nombre'], 'tiempo_real')
 
+        print(lista_de_estimaciones)
         return Response({
             "actividades": lista_de_estimaciones,
         })

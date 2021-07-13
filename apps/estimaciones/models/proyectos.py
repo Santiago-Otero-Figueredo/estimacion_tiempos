@@ -2,23 +2,23 @@ from django.db import models
 
 from apps.utils.models import EstimacionModel
 
-from apps.usuarios.models.clientes import Cliente
-from apps.usuarios.models.programadores import Programador
+from apps.usuarios.models.empresas import Empresa
+from apps.usuarios.models.empleados import Empleado
 
 class Proyecto(EstimacionModel):
-    cliente = models.ForeignKey(
-        Cliente,
-        related_name='proyectos_cliente', 
-        verbose_name="Proyectos asociados a un cliente",
+    empresa = models.ForeignKey(
+        Empresa,
+        related_name='proyectos_empresa', 
+        verbose_name="Proyectos asociados a una empresa",
         on_delete=models.PROTECT
     )
     nombre = models.CharField(max_length=80, unique=True)
-    programadores = models.ManyToManyField(
-        Programador,
-        through='ProyectoProgramador',
-        related_name="proyecto_programador",
+    empleados = models.ManyToManyField(
+        Empleado,
+        through='ProyectoEmpleado',
+        related_name="proyecto_empleado",
         blank=True,
-        verbose_name="programadores asociados al proyecto"
+        verbose_name="Empleados asociados al proyecto"
     )
     fecha_inicio = models.DateTimeField(
         'Iniciado a',

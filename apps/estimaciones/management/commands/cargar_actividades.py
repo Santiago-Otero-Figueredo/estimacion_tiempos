@@ -5,9 +5,9 @@ from apps.prueba.utils import GestorLectorExcel
 
 from apps.estimaciones.models.tipos_actividades import TipoActividad
 from apps.estimaciones.models.proyectos import Proyecto
-from apps.estimaciones.models.proyecto_programador import ProyectoProgramador
+from apps.estimaciones.models.proyectos_empleados import ProyectoEmpleado
 
-from apps.usuarios.models.programadores import Programador
+from apps.usuarios.models.empleados import Empleado
 
 
 class Command(BaseCommand):
@@ -23,9 +23,9 @@ class Command(BaseCommand):
             try:
                 tipo_actividad = TipoActividad.buscar_por_nombre(row['Summary'])
                 proyecto = Proyecto.buscar_por_nombre(row['Proyecto'].capitalize())
-                programador = Programador.buscar_por_username(row['Assignee'])
-                if programador:
-                    proyecto_programador = ProyectoProgramador.crear_y_obtener(programador, proyecto)
+                empleado = Empleado.buscar_por_username(row['Correo'])
+                if empleado:
+                    proyecto_empleado = ProyectoEmpleado.crear_y_obtener(empleado, proyecto)
                     key_historia = str(row['Issue key'])
                     funcionalidad = str(row['Descripcion'])
 
@@ -35,7 +35,7 @@ class Command(BaseCommand):
                     Actividad.objects.create(
                         tipo_actividad=tipo_actividad,
                         identificador=key_historia,
-                        proyecto_programador=proyecto_programador,
+                        proyecto_empleado=proyecto_empleado,
                         funcionalidad=funcionalidad,
                         tiempo_estimado=tiempo_estimado,
                         tiempo_real=tiempo_real

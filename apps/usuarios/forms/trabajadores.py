@@ -1,10 +1,10 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-from apps.usuarios.models.clientes import Cliente
+from apps.usuarios.models.trabajadores import Trabajador
 
-class RegistrarClienteForm(UserCreationForm):
+class RegistrarTrabajadorForm(UserCreationForm):
     
     class Meta:
-        model = Cliente
+        model = Trabajador
         fields = ("first_name", "last_name", "email", "phone_number")

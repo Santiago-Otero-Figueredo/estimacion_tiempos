@@ -1,21 +1,23 @@
 {% extends "base_tablas.html" %}
 
+{% load bootstrap4 %}
+{% load static %}
+
 {% block titulo %}
-    Listado de clientes
+    Listado de proyectos con trabajador asignado
 {% endblock titulo %}
 
 {% block titulo_pagina %}
-    Listado de clientes
+    Listado de proyectos con trabajador asignado
 {% endblock titulo_pagina %}
 
 {% block miga_pan %}
-    <li class="breadcrumb-item"><a href="javascript:">Usuarios</a></li>
-    <li class="breadcrumb-item"><a href="">Clientes</a></li>
+    <li class="breadcrumb-item"><a href="javascript:">Proyectos con trabajador asignado</a></li>
     <li class="breadcrumb-item active">Listado</li>
 {% endblock miga_pan %}
 
 {% block titulo_panel %}
-    Listado de clientes
+    Listado de proyectos con trabajador asignado
 {% endblock titulo_panel %}
 
 {% block contenido_panel %}
@@ -24,17 +26,17 @@
             <table class="table table-bordered table-hover datatable">
                 <thead>
                     <tr>
-                        <th>Email</th>
-                        <th>Teléfono</th>
-                        <th>Verificado</th>
+                        <th>Trabajador</th>
+                        <th>Proyecto</th>
+                        <th>Estado</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for cliente in clientes %}
+                    {% for proyecto in proyectos_empleados %}
                         <tr>
-                            <td>{{cliente.email}}</td>
-                            <td>{{cliente.phone_number}}</td>
-                            <td>{{cliente.is_verified}}</td>
+                            <td>{{proyecto.empleado}}</td>
+                            <td>{{proyecto.proyecto}}</td>
+                            <td>{{proyecto.esta_activo}}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

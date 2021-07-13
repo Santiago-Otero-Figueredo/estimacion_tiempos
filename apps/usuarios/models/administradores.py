@@ -1,7 +1,7 @@
-from apps.usuarios.models.usuarios import Usuario
+from apps.usuarios.models.empleados import Empleado
 from apps.usuarios.models.tipos_usuarios import TipoUsuario
 
-class Administrador(Usuario):
+class Administrador(Empleado):
     pass
 
     def save(self, *args, **kwargs):

@@ -3,8 +3,8 @@ from django.urls import path
 
 from .views import (RegistrarProyecto,
                     ListadoProyecto,
-                    RegistrarProyectoProgramador,
-                    ListadoProyectoProgramador,
+                    RegistrarProyectoEmpleado,
+                    ListadoProyectosEmpleados,
                     RegistrarActividad,
                     ListadoActividad,
                     RegistrarTipoActividad,
@@ -19,8 +19,8 @@ urlpatterns = [
     path('registrar-proyecto/', RegistrarProyecto.as_view(), name='registrar_proyecto'),
     path('listado-proyectos/', ListadoProyecto.as_view(), name='listado_proyectos'),
 
-    path('registrar-proyecto-programador/', RegistrarProyectoProgramador.as_view(), name='registrar_proyecto_programador'),
-    path('listado-proyectos-programador/', ListadoProyectoProgramador.as_view(), name='listado_proyectos_programador'),
+    path('registrar-proyecto-empleado/', RegistrarProyectoEmpleado.as_view(), name='registrar_proyecto_empleado'),
+    path('listado-proyectos-empleado/', ListadoProyectosEmpleados.as_view(), name='listado_proyecto_empleados'),
 
     path('registrar-actividad/', RegistrarActividad.as_view(), name='registrar_actividad'),
     path('listado-actividades/', ListadoActividad.as_view(), name='listado_actividades'),

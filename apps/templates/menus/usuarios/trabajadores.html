@@ -1,0 +1,18 @@
+{% url 'usuarios:registrar_trabajador' as registrar_trabajador %}
+{% url 'usuarios:listado_trabajadores' as listado_trabajadores %}
+
+<li class="has-sub {% if registrar_trabajador in request.path or listado_trabajadores in request.path%}active{% endif %}" id="menu_clientes">
+    <a href="javascript:;">
+        <b class="caret"></b>
+        <i class="fas fa-users"></i>
+        <span>Trabajadores</span>
+    </a>
+    <ul class="sub-menu">
+        <li class="{% if listado_trabajadores in request.path %}active{% endif %}">
+            <a href="{{listado_trabajadores}}">Listado</a>
+        </li>
+        <li class="{% if registrar_trabajador in request.path %}active{% endif %}">
+            <a href="{{registrar_trabajador}}">Registro</a>
+        </li>
+    </ul>
+</li>

@@ -80,8 +80,8 @@ class ObtenerEstimacionesActividades(FormView):
 
         if 'proyecto' in self.request.GET:
             initial['proyecto'] = self.request.GET['proyecto']
-        if 'programador' in self.request.GET:
-            initial['programador'] = self.request.GET['programador']
+        if 'empleado' in self.request.GET:
+            initial['empleado'] = self.request.GET['empleado']
         if 'tipo_actividad' in self.request.GET:
             initial['tipo_actividad'] = self.request.GET['tipo_actividad']
         if 'fecha_inicio' in self.request.GET:
@@ -92,12 +92,11 @@ class ObtenerEstimacionesActividades(FormView):
         return initial
 
     def aplicar_filtros(self):
-        print("############################")
         filtro = dict()
         if 'proyecto' in self.request.GET and not self.request.GET["proyecto"] == "":
-            filtro['proyecto_programador__proyecto__pk'] = self.request.GET['proyecto']
-        if 'programador' in self.request.GET and not self.request.GET["programador"] == "":
-            filtro['proyecto_programador__programador__pk'] = self.request.GET['programador']
+            filtro['proyecto_empleado__proyecto__pk'] = self.request.GET['proyecto']
+        if 'empleado' in self.request.GET and not self.request.GET["empleado"] == "":
+            filtro['proyecto_empleado__empleado__pk'] = self.request.GET['empleado']
         if 'tipo_actividad' in self.request.GET and not self.request.GET["tipo_actividad"] == "":
             filtro['tipo_actividad__pk'] = self.request.GET['tipo_actividad']
         if 'fecha_inicio' in self.request.GET and not self.request.GET["fecha_inicio"] == "":
