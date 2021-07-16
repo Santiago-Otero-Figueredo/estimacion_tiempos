@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% load bootstrap4 %}
+{% load static %}
+
+{% block titulo %}
+    Formulario de creación de proyecto
+{% endblock titulo %}
+
+{% block titulo_pagina %}
+    Formulario de creación de proyecto
+{% endblock titulo_pagina %}
+
+{% block miga_pan %}
+    <li class="breadcrumb-item"><a href="javascipt:">Proyectos</a></li>    
+    <li class="breadcrumb-item active">Registrar</li>
+{% endblock miga_pan %}
+
+{% block titulo_panel %}
+    Formulario de creación de proyecto
+{% endblock titulo_panel %}
+
+{% block contenido_panel %}
+    <form autocomplete="off" class="bloquear-ui-enviar" method="post" enctype="multipart/form-data">{% csrf_token %}
+        <div class="row">
+            <div class="col-12">
+                <h4 class="titulo">Información básica del proyecto</h4>
+            </div>
+        </div>
+        <div>
+            {% bootstrap_form form %}
+        </div>
+        <div>
+            <hr>
+            {{ formset.management_form }}
+            <div class="row justify-content-center formulario_principal">
+                <h3 class="titulo_tablas">Registro de los contactos</h3>
+                <table class="table table-bordered table-hover datatable">
+                    <thead>
+                        <tr class="text-center">
+                            <th>#</th>
+                            <th>nombres</th>
+                            <th>apellidos</th>
+                            <th>correo_electronico</th>
+                            <th>phone_number</th>
+                            <th>cargo</th>
+                            <th>Eliminar fila</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="text-center">
+                        {% for form in formset %}
+                            <tr class="fila_contacto" id="fila_contacto_{{forloop.counter0}}">
+                                <th class="text-center indice">{{forloop.counter}}</th>
+                                <th>{% bootstrap_field form.nombres layout='inline' %}</th>
+                                <th>{% bootstrap_field form.apellidos layout='inline' %}</th>
+                                <th>{% bootstrap_field form.correo_electronico layout='inline' %}</th>
+                                <th>{% bootstrap_field form.phone_number layout='inline' %}</th>
+                                <th>{% bootstrap_field form.cargo layout='inline' %}</th>
+                               
+                                <th class="text-center">
+                                    <button class="mt-2 btn btn-xs btn-danger borrar_estructura"><i class="fa fa-minus"></i></button>
+                                </th>        
+                            </tr>
+                            {% for hidden in form.hidden_fields %}
+                                {{ hidden }}
+                            {% endfor %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="row col-12 justify-content-center mb-3">
+                    <button class="btn btn-sm btn-success px-4 clonar_fila">Agregar elemento</button>
+                </div>
+            </div>
+        </div>
+        <div class="mt-3">
+            {% url 'proyectos:listado_proyectos' as url_volver%}
+            <hr>
+            {% include 'componentes/botones/footer_botones.html' with  texto_volver="Volver" texto_accion="Registrar" url_volver=url_volver boton_volver=True boton_accion=True%}
+        </div>
+       
+    </form>
+{% endblock contenido_panel %}
+{% block js %}
+    {{block.super}}
+    <script>
+        $(".datepicker").datepicker({
+            language: "es",
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'yy-mm-dd',
+        });
+    </script>
+    <script>
+        let nombre = "contacto"
+        let id_formulario = "id_contacto"
+        let clase_formulario = "fila_contacto"
+    </script>
+    <script src="{% static 'js/custom/formularios/fromset.js' %}"></script>
+{% endblock js %}

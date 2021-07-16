@@ -17,6 +17,6 @@ class RegistrarEmpresa(MensajeMixin, CreateView):
 
 class ListadoEmpresas(ListView):
     model = Empresa
-    context_object_name = "empresa"
+    context_object_name = "empresas"
     template_name = "usuarios/empresas/listado.html"
     

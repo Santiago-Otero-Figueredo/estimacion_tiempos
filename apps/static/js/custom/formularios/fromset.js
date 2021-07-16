@@ -59,17 +59,16 @@ function actualizar_elementos(cantidad){
 
 
 $('.borrar_estructura').on('click', function(e) {
-        
+    
     if(typeof cantidad_maxima != 'undefined'){        
         let total = $(`#${id_formulario}-TOTAL_FORMS`).val();                    
         actualizar_elementos(parseInt(total-1))
         verificar_limite(total-1)
     }   
     e.preventDefault();
+    
     eliminarFilaPartidaContable($(this));
-    debe = 0;
-    haber = 0;
-    $(':input[type="number"]').each(function( index ) {                
+    $(':input[type="number"]').each(function( index ) {
         dato = $(this);
         cambiar_valores();
     });  
@@ -80,7 +79,7 @@ $('.borrar_estructura').on('click', function(e) {
 function eliminarFilaPartidaContable(boton) {
     
     let total = parseInt($(`#${id_formulario}-TOTAL_FORMS`).val());
-    
+    console.log("#############---", total)
     if (total > 1){ // no se puede eliminar la base
         boton.parent().parent().remove();
         let filas_de_partidas_contables = $(`.${clase_formulario}`);

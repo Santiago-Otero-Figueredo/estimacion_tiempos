@@ -33,6 +33,17 @@ class EstimacionModel(models.Model):
     def obtener_todos(cls):
         return cls.objects.all()
 
+    @classmethod
+    def buscar_por_id(cls, id_elemento:int) -> 'Usuario':
+        try:
+            return cls.objects.get(pk=id_elemento)
+        except cls.DoesNotExist:
+            return cls.objects.none()
+
+    @classmethod
+    def existe_por_id(cls, id_elemento:int) -> bool:
+        return cls.objects.filter(pk=id_elemento).exists()
+
 
 class TiposModel(EstimacionModel):
     identificador = models.PositiveIntegerField(
@@ -90,6 +101,13 @@ class TiposModel(EstimacionModel):
     @classmethod
     def existe_por_nombre(cls, nombre:str) -> bool:
         return cls.objects.filter(nombre=nombre).exists()
+
+    @classmethod
+    def obtener_identificador_mayor(cls) -> bool:
+        elemento = cls.objects.order_by('identificador').first()
+        if elemento:
+            return elemento.identificador
+        return 0
 
 
 

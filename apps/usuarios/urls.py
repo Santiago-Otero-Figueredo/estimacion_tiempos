@@ -6,6 +6,8 @@ from .views import (RegistrarEmpresa,
                     ListadoTrabajadores,
                     ListadoAdministradores,
                     RegistrarAdministrador,
+                    RegistrarCargo,
+                    ListadoCargos,
                     InicioSesion,
                     CerrarSesion)
 
@@ -23,5 +25,8 @@ urlpatterns = [
 
     path('registrar-administradores/', RegistrarAdministrador.as_view(), name='registrar_administrador'),
     path('listado-administradores/', ListadoAdministradores.as_view(), name='listado_administradores'),
+
+    path('registrar-cargo/', RegistrarCargo.as_view(), name='registrar_cargo'),
+    path('listado-cargos/', ListadoCargos.as_view(), name='listado_cargos'),
 ]
 

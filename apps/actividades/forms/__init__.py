@@ -1,0 +1,2 @@
+from .actividades import RegistrarActividadForm
+from .tipos_actividad import RegistrarTipoActividadForm

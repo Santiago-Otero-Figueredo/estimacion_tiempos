@@ -24,17 +24,24 @@
             <table class="table table-bordered table-hover datatable">
                 <thead>
                     <tr>
+                        <th>Nombres</th>
+                        <th>Apellidos</th>
                         <th>Email</th>
                         <th>Teléfono</th>
-                        <th>Verificado</th>
+                        <th>Cargo actual</th>
+                        <th>Fecha creación</th>
                     </tr>
                 </thead>
                 <tbody>
+                    {{empresas}}
                     {% for empresa in empresas %}
                         <tr>
+                            <td>{{empresa.first_name}}</td>
+                            <td>{{empresa.last_name}}</td>
                             <td>{{empresa.email}}</td>
                             <td>{{empresa.phone_number}}</td>
-                            <td>{{empresa.is_verified}}</td>
+                            <td>-</td>
+                            <td>{{empresa.creado}}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

@@ -23,6 +23,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("select2/", include("django_select2.urls")),
     path('usuarios/', include('apps.usuarios.urls', namespace='usuarios')),
+    path('actividades/', include('apps.actividades.urls', namespace='actividades')),
+    path('proyectos/', include('apps.proyectos.urls', namespace='proyectos')),
     path('estimaciones/', include('apps.estimaciones.urls', namespace='estimaciones')),
     path('pruebas/', include('apps.prueba.urls', namespace='pruebas')),
 ]

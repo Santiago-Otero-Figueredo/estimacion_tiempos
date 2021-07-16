@@ -1,8 +1,8 @@
 from django import forms
 
 from apps.usuarios.models.empleados import Empleado
-from apps.estimaciones.models.proyectos import Proyecto
-from apps.estimaciones.models.actividades import TipoActividad
+from apps.proyectos.models.proyectos import Proyecto
+from apps.actividades.models.actividades import TipoActividad
 
 class FiltroEstimacionesForm(forms.Form):
 

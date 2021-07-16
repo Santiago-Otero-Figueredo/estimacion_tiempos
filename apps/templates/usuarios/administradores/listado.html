@@ -24,17 +24,23 @@ Listado de personal del departamento administrativo
             <table class="table table-bordered table-hover datatable">
                 <thead>
                     <tr>
+                        <th>Nombres</th>
+                        <th>Apellidos</th>
                         <th>Email</th>
                         <th>Teléfono</th>
-                        <th>Verificado</th>
+                        <th>Cargo actual</th>
+                        <th>Fecha creación</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for administrador in administradores %}
                         <tr>
+                            <td>{{administrador.first_name}}</td>
+                            <td>{{administrador.last_name}}</td>
                             <td>{{administrador.email}}</td>
                             <td>{{administrador.phone_number}}</td>
-                            <td>{{administrador.is_verified}}</td>
+                            <td>{{administrador.obtener_ultimo_cargo}}</td>
+                            <td>{{administrador.creado}}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

@@ -14,6 +14,14 @@ class RegistrarAdministrador(MensajeMixin, CreateView):
     mensaje_exito = "Administrador registrado correctamente"
     mensaje_error = "Error al registrar el administrador, por favor verificar los datos"
 
+    def form_valid(self, form):
+        """If the form is valid, save the associated model."""
+        elemento = form.save(commit=False)
+        elemento.save()
+        elemento.cargos.add(form.cleaned_data['cargos'])
+
+        return super().form_valid(form)
+
 
 class ListadoAdministradores(ListView):
     model = Administrador

@@ -1,9 +1,6 @@
-from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView
-from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
 
-from apps.estimaciones.models.actividades import Actividad
+from apps.actividades.models.actividades import Actividad
 from apps.estimaciones.forms.estimaciones import FiltroEstimacionesForm
 from apps.utils.clases.pandas.gestor_pandas import (
     GestorLectorQueryset,
@@ -11,10 +8,6 @@ from apps.utils.clases.pandas.gestor_pandas import (
     eliminar_valores_atipicos,
     obtener_describe_dataframe,
 )
-
-from datetime import datetime
-
-import pandas as pd
 
 
 class ObtenerEstimacionesActividades(FormView):
@@ -88,7 +81,6 @@ class ObtenerEstimacionesActividades(FormView):
             initial['fecha_inicio'] = self.request.GET['fecha_inicio']
         if 'fecha_fin' in self.request.GET:
             initial['fecha_fin'] = self.request.GET['fecha_fin']
-
         return initial
 
     def aplicar_filtros(self):

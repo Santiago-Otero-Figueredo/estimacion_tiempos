@@ -6,6 +6,7 @@ from django.core.validators import RegexValidator
 # Utilities
 from apps.utils.models import EstimacionModel
 
+from django.core.validators import MaxValueValidator
 
 class Usuario(EstimacionModel, AbstractUser):
 
@@ -16,6 +17,8 @@ class Usuario(EstimacionModel, AbstractUser):
         on_delete=models.SET_NULL,
         null=True
     )
+
+    numero_documento = models.CharField(max_length=15, blank=True, verbose_name='Número de documento del usuario')
 
     tipo_usuario = models.ForeignKey(
         'TipoUsuario',
@@ -47,22 +50,11 @@ class Usuario(EstimacionModel, AbstractUser):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name', 'password1', 'password2']
-   
+
+
     def __str__(self):
         """Return username."""
         return self.username
-
-    @classmethod
-    def buscar_por_id(cls, id_elemento:int) -> 'Usuario':
-        try:
-            return cls.objects.get(pk=id_elemento)
-        except cls.DoesNotExist:
-            return cls.objects.none()
-
-
-    @classmethod
-    def existe_por_id(cls, id_elemento:int) -> bool:
-        return cls.objects.filter(pk=id_elemento).exists()
 
 
     @classmethod

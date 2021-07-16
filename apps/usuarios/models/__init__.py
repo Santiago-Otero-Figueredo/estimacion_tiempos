@@ -5,3 +5,5 @@ from .empresas import Empresa
 from .administradores import Administrador
 from .tipos_documentos import TipoDocumento
 from .tipos_usuarios import TipoUsuario
+from .tipos_cargos import TipoCargo
+from .tipos_cargo_empelado import CargoEmpleado
