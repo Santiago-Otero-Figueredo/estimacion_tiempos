@@ -15,7 +15,7 @@ class PaginaInicio(TemplateView):
     def dispatch(self, request, *args, **kwargs):
         print("#-----------------------------")
         jira = Jira()
-        #jira.consultar_historias_usuarios()
+        #jira.consultar_historias_usuarios('PRIAL')
         jira.consultar_todos_los_proyectos()
         print("#-----------------------------")
         return super().dispatch(request, *args, **kwargs)

@@ -55,88 +55,94 @@ class Jira:
                     'nombre':proyecto['name']
                 }
             )
-        print(lista_proyectos)
-        print("-----------------------------")
-      
+
         return lista_proyectos
 
-    def consultar_historias_usuarios(self) -> 'list<dict>':
+    def consultar_historias_usuarios(self, proyecto:str) -> 'list<dict>':
 
         url = '{}/rest/api/3/search/'.format(self.__url)
         existen_elementos = True
         lista_historias_consultadas = list()
-        inicio = 0
-        maximo = 100
-        while(existen_elementos):
-            query = {
-                'jql': 'project = KT',
-                'startAt':inicio,
-                'maxResults':maximo
-            }
+        if proyecto:
+            inicio = 0
+            maximo = 100
+            while(existen_elementos):
+                query = {
+                    'jql': 'project = {}'.format(proyecto),
+                    'startAt':inicio,
+                    'maxResults':maximo
+                }
 
-            response = self.enviar_peticion_get(url, query)
+                response = self.enviar_peticion_get(url, query)
 
-            data = response.json()
-            hisorias = data['issues']
-            if len(hisorias) == 0:
-                existen_elementos = False
-                break
+                data = response.json()
+                hisorias = data['issues']
+                if len(hisorias) == 0:
+                    existen_elementos = False
+                    break
 
-            for historia in hisorias:
-                key = historia['key']
-                
-                campos =historia['fields']
-                tiempo_total = campos['timespent']
-                if tiempo_total is None:
-                    tiempo_total = 0
-                
-                tiempo_estimado = 0
+                for historia in hisorias:
+                    key = historia['key']
+                    
+                    campos = historia['fields']
+                    tiempo_total = campos['aggregatetimespent']
+                    if tiempo_total is None:
+                        continue
+                    
+                    tiempo_estimado = campos['aggregatetimeoriginalestimate']
+                    if tiempo_estimado is None:
+                        continue
+                    if key == 'PRIAL-440':
+                        
+                        print(tiempo_total, tiempo_estimado)
+                        print(campos)
 
-                if campos['aggregatetimeoriginalestimate']:
-                    tiempo_total = campos['aggregatetimeoriginalestimate']
-                fecha_creacion = campos['created']
+                    fecha_creacion = campos['created']
 
-                if campos['customfield_10020']:
-                    fecha_inicio = campos['customfield_10020'][0]['startDate']
-                    fecha_finalizacion = campos['customfield_10020'][0]['endDate']
-                else:
-                    fecha_inicio = ''
-                    fecha_finalizacion = ''
-
-                if campos['assignee']:
-                    if 'emailAddress' in campos['assignee'].keys():
-                        correo_usuario_asignado = campos['assignee']['emailAddress']
+                    if campos['customfield_10020']:
+                        if 'startDate' in campos['customfield_10020'][0] and 'startDate' in campos['customfield_10020'][0]:
+                            fecha_inicio = campos['customfield_10020'][0]['startDate']
+                            fecha_finalizacion = campos['customfield_10020'][0]['startDate']
+                        else:
+                            continue
                     else:
-                        correo_usuario_asignado = ""
-                    nombre_usuario_asignado = campos['assignee']['displayName']
-                else:
-                    correo_usuario_asignado = ''
-                    nombre_usuario_asignado = ''
-                if campos['status']:
-                    estado = campos['status']['name']
-                else:                
-                    estado = ''
+                        fecha_inicio = ''
+                        fecha_finalizacion = ''
 
-                nombre_actividad = campos['summary']
-                
-                lista_historias_consultadas.append(
-                    {
-                        'key':key,
-                        'nombre_actividad':nombre_actividad,
-                        'tiempo_total':tiempo_total,
-                        'tiempo_estimado':tiempo_estimado,
-                        'correo_usuario_asignado':correo_usuario_asignado,
-                        'nombre_usuario_asignado':nombre_usuario_asignado,
-                        'fecha_creacion':fecha_creacion,
-                        'fecha_inicio':fecha_inicio,
-                        'fecha_finalizacion':fecha_finalizacion,
-                        'estado':estado
-                    }
-                )
-                print(key, nombre_actividad)
-            inicio = maximo
-            maximo += 100
-            print("### length: ", len(lista_historias_consultadas))
+                    if campos['assignee']:
+                        if 'emailAddress' in campos['assignee'].keys():
+                            correo_usuario_asignado = campos['assignee']['emailAddress']
+                        else:
+                            correo_usuario_asignado = ""
+                        nombre_usuario_asignado = campos['assignee']['displayName']
+                    else:
+                        correo_usuario_asignado = ''
+                        nombre_usuario_asignado = ''
+                    if campos['status']:
+                        estado = campos['status']['name']
+                    else:                
+                        estado = ''
+
+                    nombre_actividad = campos['summary']
+                    
+                    lista_historias_consultadas.append(
+                        {
+                            'key':key,
+                            'nombre_actividad':nombre_actividad,
+                            'tiempo_total':float(tiempo_total/60),
+                            'tiempo_estimado':float(tiempo_estimado/60),
+                            'correo_usuario_asignado':correo_usuario_asignado,
+                            'nombre_usuario_asignado':nombre_usuario_asignado,
+                            'fecha_creacion':fecha_creacion,
+                            'fecha_inicio':fecha_inicio,
+                            'fecha_finalizacion':fecha_finalizacion,
+                            'estado':estado
+                        }
+                    )
+                    #print(key, nombre_actividad)
+                inicio = maximo
+                maximo += 100
+                print("### length: ", len(lista_historias_consultadas))
         return lista_historias_consultadas
 
 

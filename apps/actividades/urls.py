@@ -5,6 +5,7 @@ from .views import (
                     ListadoActividad,
                     RegistrarTipoActividad,
                     ListadoTipoActividad,
+                    ImportarActividadesJIRA,
                     ObtenerActividadesComunes,
                     )
 
@@ -20,4 +21,5 @@ urlpatterns = [
 
     path('obtener-actividades-comunes/', ObtenerActividadesComunes.as_view(), name='api_obtener_actividades_comunes'),
 
+    path('importar-actividades-jira/', ImportarActividadesJIRA.as_view(), name='importar_actividades_jira'),
 ]

@@ -1,0 +1,70 @@
+{% extends "base_tablas.html" %}
+
+{% load bootstrap4 %}
+{% load static %}
+
+{% block titulo %}
+    Listado de actividades obtenidas de JIRA
+{% endblock titulo %}
+
+{% block titulo_pagina %}
+    Listado de actividades obtenidas de JIRA
+{% endblock titulo_pagina %}
+
+{% block miga_pan %}
+    <li class="breadcrumb-item"><a href="javascript:">Actividades</a></li>
+    <li class="breadcrumb-item active">Importación JIRA</li>
+{% endblock miga_pan %}
+
+{% block titulo_panel %}
+    Listado de actividades obtenidas de JIRA
+{% endblock titulo_panel %}
+
+{% block contenido_panel %}
+    <div class="row">
+        <div class="col-12 row border mx-2 justify-content-center">
+            <form method="GET" autocomplete="off" class="row py-3">
+                <div class="col-xl-12">
+                    {% bootstrap_field form.nombre_proyecto %}
+                </div>
+                <div class="col-xl-12 text-center">
+                    {% include 'componentes/botones/boton_accion_formulario.html' with  texto_accion="Aplicar filtros"%}
+                </div>
+            </form>
+        </div>
+        <div class="col-12 mt-3">
+            <table class="table table-bordered table-hover datatable">
+                <thead class="text-center">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Tiempo real (Minutos)</th>
+                        <th>Tiempo estimado (Minutos)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for actividad in actividades %}
+                        <tr class="text-right">
+                            <td class="text-left">{{actividad.nombre_actividad}}</td>
+                            <td>{{actividad.tiempo_total|floatformat:2}}</td>
+                            <td>{{actividad.tiempo_estimado|floatformat:2}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock contenido_panel %}
+
+{% block js %}
+    {{block.super}}
+    <script>
+        $(".datepicker").datepicker({
+            language: "es",
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'yy-mm-dd',
+            minDate: new Date(2021,07,11),
+            maxDate: new Date(2021,08,1)
+        });
+    </script>
+{% endblock js %}
