@@ -68,7 +68,7 @@ class Jira:
             maximo = 100
             while(existen_elementos):
                 query = {
-                    'jql': 'project = {}'.format(proyecto),
+                    'jql': 'project = {} AND status=Done AND originalEstimate is not EMPTY AND timespent>0'.format(proyecto),
                     'startAt':inicio,
                     'maxResults':maximo
                 }
@@ -83,63 +83,33 @@ class Jira:
 
                 for historia in hisorias:
                     key = historia['key']
-                    
                     campos = historia['fields']
                     tiempo_total = campos['aggregatetimespent']
-                    if tiempo_total is None:
-                        continue
-                    
                     tiempo_estimado = campos['aggregatetimeoriginalestimate']
-                    if tiempo_estimado is None:
+                    if tiempo_total == 0 or tiempo_estimado == 0:
                         continue
-                    if key == 'PRIAL-440':
-                        
-                        print(tiempo_total, tiempo_estimado)
-                        print(campos)
-
                     fecha_creacion = campos['created']
-
-                    if campos['customfield_10020']:
-                        if 'startDate' in campos['customfield_10020'][0] and 'startDate' in campos['customfield_10020'][0]:
-                            fecha_inicio = campos['customfield_10020'][0]['startDate']
-                            fecha_finalizacion = campos['customfield_10020'][0]['startDate']
-                        else:
-                            continue
-                    else:
-                        fecha_inicio = ''
-                        fecha_finalizacion = ''
-
-                    if campos['assignee']:
-                        if 'emailAddress' in campos['assignee'].keys():
-                            correo_usuario_asignado = campos['assignee']['emailAddress']
-                        else:
-                            correo_usuario_asignado = ""
-                        nombre_usuario_asignado = campos['assignee']['displayName']
-                    else:
-                        correo_usuario_asignado = ''
-                        nombre_usuario_asignado = ''
-                    if campos['status']:
-                        estado = campos['status']['name']
-                    else:                
-                        estado = ''
-
+                    if campos['customfield_10020'] is None or not 'endDate' in campos['customfield_10020'][0]:
+                        continue
+                    fecha_inicio = campos['customfield_10020'][0].pop('startDate', fecha_creacion)
+                    fecha_finalizacion = campos['customfield_10020'][0]['endDate']
                     nombre_actividad = campos['summary']
-                    
+                    nombre_usuario_asignado = 'Sin asignar'
+                    if campos['assignee']:
+                        if 'displayName' in campos['assignee'].keys():
+                            nombre_usuario_asignado = campos['assignee']['displayName']
                     lista_historias_consultadas.append(
                         {
                             'key':key,
                             'nombre_actividad':nombre_actividad,
                             'tiempo_total':float(tiempo_total/60),
                             'tiempo_estimado':float(tiempo_estimado/60),
-                            'correo_usuario_asignado':correo_usuario_asignado,
                             'nombre_usuario_asignado':nombre_usuario_asignado,
                             'fecha_creacion':fecha_creacion,
                             'fecha_inicio':fecha_inicio,
                             'fecha_finalizacion':fecha_finalizacion,
-                            'estado':estado
                         }
                     )
-                    #print(key, nombre_actividad)
                 inicio = maximo
                 maximo += 100
                 print("### length: ", len(lista_historias_consultadas))

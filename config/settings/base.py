@@ -67,11 +67,13 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
+    'apps.core',
     'apps.usuarios',
     'apps.actividades',
     'apps.proyectos',
     'apps.prueba',
     'apps.estimaciones',
+    'apps.extra_tags',
 ]
 
 # Application definition

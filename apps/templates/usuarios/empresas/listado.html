@@ -1,5 +1,7 @@
 {% extends "base_tablas.html" %}
 
+{% load extra_tags %}
+
 {% block titulo %}
     Listado de empresas
 {% endblock titulo %}
@@ -25,23 +27,25 @@
                 <thead>
                     <tr>
                         <th>Nombres</th>
-                        <th>Apellidos</th>
                         <th>Email</th>
                         <th>Teléfono</th>
-                        <th>Cargo actual</th>
                         <th>Fecha creación</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{empresas}}
                     {% for empresa in empresas %}
                         <tr>
                             <td>{{empresa.first_name}}</td>
-                            <td>{{empresa.last_name}}</td>
                             <td>{{empresa.email}}</td>
                             <td>{{empresa.phone_number}}</td>
-                            <td>-</td>
                             <td>{{empresa.creado}}</td>
+                            <td class="text-center">
+                                {% url 'usuarios:modificar_empresa' empresa.pk as op_1 %}
+                                
+                                {% convertir_elementos_a_lista op_1 'Modificar' as lista %}
+                                {% include 'componentes/menu_opciones/menu_opciones.html' with  opciones=lista %}
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>

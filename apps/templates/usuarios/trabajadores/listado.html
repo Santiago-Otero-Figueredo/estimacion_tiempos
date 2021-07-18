@@ -1,5 +1,7 @@
 {% extends "base_tablas.html" %}
 
+{% load extra_tags %}
+
 {% block titulo %}
     Listado de trabajadores
 {% endblock titulo %}
@@ -30,6 +32,7 @@
                         <th>Teléfono</th>
                         <th>Cargo actual</th>
                         <th>Fecha creación</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,8 +42,15 @@
                             <td>{{trabajador.last_name}}</td>
                             <td>{{trabajador.email}}</td>
                             <td>{{trabajador.phone_number}}</td>
-                            <td>-</td>
+                            <td>{{trabajador.obtener_ultimo_cargo.nombre|default:'-'}}</td>
                             <td>{{trabajador.creado}}</td>
+                            <td class="text-center">
+                                {% url 'usuarios:modificar_trabajador' trabajador.pk as op_1 %}
+                                {% url 'usuarios:asignar_cargo_trabajador' trabajador.pk as op_2 %}
+                                
+                                {% convertir_elementos_a_lista op_1 'Modificar' op_2 'Asignar cargo' as lista %}
+                                {% include 'componentes/menu_opciones/menu_opciones.html' with  opciones=lista %}
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>

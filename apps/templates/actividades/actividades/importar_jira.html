@@ -36,15 +36,19 @@
             <table class="table table-bordered table-hover datatable">
                 <thead class="text-center">
                     <tr>
+                        <th>Key</th>
                         <th>Nombre</th>
+                        <th>Asignado</th>
                         <th>Tiempo real (Minutos)</th>
                         <th>Tiempo estimado (Minutos)</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for actividad in actividades %}
-                        <tr class="text-right">
+                        <tr class="text-center">
+                            <td >{{actividad.key}}</td>
                             <td class="text-left">{{actividad.nombre_actividad}}</td>
+                            <td class="text-left">{{actividad.nombre_usuario_asignado}}</td>
                             <td>{{actividad.tiempo_total|floatformat:2}}</td>
                             <td>{{actividad.tiempo_estimado|floatformat:2}}</td>
                         </tr>

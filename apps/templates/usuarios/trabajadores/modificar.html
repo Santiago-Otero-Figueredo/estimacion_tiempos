@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% load bootstrap4 %}
+{% load static %}
+
+{% block titulo %}
+    Formulario de modificación del trabajador
+{% endblock titulo %}
+
+{% block titulo_pagina %}
+    Formulario de modificación del trabajador
+{% endblock titulo_pagina %}
+
+{% block miga_pan %}
+    <li class="breadcrumb-item"><a href="javascipt:">Usuarios</a></li>
+    <li class="breadcrumb-item"><a href="javascipt:">Trabajadores</a></li>
+    <li class="breadcrumb-item">Modificar</li>
+    <li class="breadcrumb-item active">{{form.instance}}</li>
+
+{% endblock miga_pan %}
+
+{% block titulo_panel %}
+    Formulario de modificación del trabajador
+{% endblock titulo_panel %}
+
+{% block contenido_panel %}
+    <form class="bloquear-ui-enviar" method="post" enctype="multipart/form-data">{% csrf_token %}
+        <div class="row">
+            <div class="col-12">
+                <h4 class="titulo">Información básica del programador</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-6">
+                {% bootstrap_field form.tipo_documento %}
+            </div>
+            <div class="col-xl-6">
+                {% bootstrap_field form.numero_documento %}
+            </div>
+            <div class="col-xl-6">
+                {% bootstrap_field form.first_name %}
+            </div>
+            <div class="col-xl-6">
+                {% bootstrap_field form.last_name %}
+            </div>
+            <div class="col-xl-6">
+                {% bootstrap_field form.email %}
+            </div>
+            <div class="col-xl-6">
+                {% bootstrap_field form.phone_number %}
+            </div>
+            <div class="col-xl-12">
+                {% bootstrap_field form.esta_activo %}
+            </div>
+        </div>
+        <div class="mt-3">
+            {% url 'usuarios:listado_trabajadores' as url_volver%}
+            <hr>
+            {% include 'componentes/botones/footer_botones.html' with  texto_volver="Volver" texto_accion="Registrar" url_volver=url_volver boton_volver=True boton_accion=True%}
+        </div>
+       
+    </form>
+{% endblock contenido_panel %}

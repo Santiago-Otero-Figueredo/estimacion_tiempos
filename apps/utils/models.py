@@ -2,6 +2,9 @@
 
 # Django
 from django.db import models
+from django.utils import timezone
+
+from django.core.exceptions import ObjectDoesNotExist
 
 class EstimacionModel(models.Model):
 
@@ -25,6 +28,11 @@ class EstimacionModel(models.Model):
         get_latest_by = 'creado'
         ordering = ['-creado', '-modificado']
 
+    def save(self, *args, **kwargs):
+        self.modificado = timezone.now()
+        return super().save(*args, **kwargs)
+
+
     @classmethod
     def obtener_activos(cls):
         return cls.objects.filter(esta_activo=True)
@@ -34,15 +42,25 @@ class EstimacionModel(models.Model):
         return cls.objects.all()
 
     @classmethod
-    def buscar_por_id(cls, id_elemento:int) -> 'Usuario':
+    def buscar_por_id(cls, id_elemento:int) -> 'EstimacionModel':
         try:
             return cls.objects.get(pk=id_elemento)
-        except cls.DoesNotExist:
+        except ObjectDoesNotExist:
             return cls.objects.none()
 
     @classmethod
     def existe_por_id(cls, id_elemento:int) -> bool:
         return cls.objects.filter(pk=id_elemento).exists()
+
+
+    def desactivar_elemento(self) -> None:
+        self.esta_activo = False
+        self.save()
+
+
+    def activar_elemento(self) -> None:
+        self.esta_activo = True
+        self.save()
 
 
 class TiposModel(EstimacionModel):
@@ -63,25 +81,11 @@ class TiposModel(EstimacionModel):
     def __str__(self):
         return self.nombre
 
-
-    @classmethod
-    def buscar_por_id(cls, id_elemento:int) -> 'TiposModel':
-        try:
-            return cls.objects.get(pk=id_elemento)
-        except cls.DoesNotExist:
-            return cls.objects.none()
-
-
-    @classmethod
-    def existe_por_id(cls, id_elemento:int) -> bool:
-        return cls.objects.filter(pk=id_elemento).exists()
-
-
     @classmethod
     def buscar_por_identificador(cls, identificador:int) -> 'TiposModel':
         try:
             return cls.objects.get(identificador=identificador)
-        except cls.DoesNotExist:
+        except ObjectDoesNotExist:
             return cls.objects.none()
 
 
@@ -94,7 +98,7 @@ class TiposModel(EstimacionModel):
     def buscar_por_nombre(cls, nombre:str) -> 'TiposModel':
         try:
             return cls.objects.get(nombre=nombre)
-        except cls.DoesNotExist:
+        except ObjectDoesNotExist:
             return cls.objects.none()
 
 

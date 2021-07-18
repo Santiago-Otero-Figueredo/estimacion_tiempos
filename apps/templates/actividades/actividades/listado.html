@@ -1,5 +1,6 @@
 {% extends "base_tablas.html" %}
 
+{% load extra_tags %}
 {% load bootstrap4 %}
 {% load static %}
 
@@ -12,7 +13,7 @@
 {% endblock titulo_pagina %}
 
 {% block miga_pan %}
-    <li class="breadcrumb-item"><a href="javascript:">Actividades</a></li>    
+    <li class="breadcrumb-item"><a href="javascript:">Actividades</a></li>
     <li class="breadcrumb-item active">Listado</li>
 {% endblock miga_pan %}
 
@@ -33,6 +34,7 @@
                         <th>Tiempo estimado</th>
                         <th>Tiempo real</th>
                         <th>Estado</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,6 +49,12 @@
                             <td>{{actividad.tiempo_estimado}}</td>
                             <td>{{actividad.tiempo_real}}</td>
                             <td>{{actividad.esta_activo}}</td>
+                            <td class="text-center">
+                                {% url 'actividades:modificar_actividad' actividad.pk as op_1 %}
+                                
+                                {% convertir_elementos_a_lista op_1 'Modificar' as lista %}
+                                {% include 'componentes/menu_opciones/menu_opciones.html' with  opciones=lista %}
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>

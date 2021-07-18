@@ -22,6 +22,7 @@ urlpatterns = [
     path('', PaginaInicio.as_view(), name='inicio'),
     path('admin/', admin.site.urls),
     path("select2/", include("django_select2.urls")),
+    path('core/', include('apps.core.urls', namespace='core')),
     path('usuarios/', include('apps.usuarios.urls', namespace='usuarios')),
     path('actividades/', include('apps.actividades.urls', namespace='actividades')),
     path('proyectos/', include('apps.proyectos.urls', namespace='proyectos')),

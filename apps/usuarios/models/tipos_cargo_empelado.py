@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 from apps.utils.models import EstimacionModel
 
@@ -27,6 +28,10 @@ class CargoEmpleado(EstimacionModel):
         help_text='Fecha y hora en la que se realizo un cambio de cargo al trabajador'
     )
 
+    def save(self, *args, **kwargs):
+        self.fecha_cambio_cargo = timezone.now()
+        return super().save(*args, **kwargs)
+
     @staticmethod
     def crear_y_obtener(empleado:'Empleado', cargo:'TipoCargo') -> 'TipoActividad':
 
@@ -53,4 +58,3 @@ class CargoEmpleado(EstimacionModel):
     @staticmethod
     def buscar_por_empleado(empleado:'Empleado') -> "Queryset<CargoEmpleado>":
         return CargoEmpleado.objects.filter(empleado=empleado)
-        

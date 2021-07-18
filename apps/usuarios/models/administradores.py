@@ -5,5 +5,5 @@ class Administrador(Empleado):
     pass
 
     def save(self, *args, **kwargs):
-        self.tipo_usuario = TipoUsuario.buscar_por_identificador(3)
+        self.tipo_usuario = TipoUsuario.obtener_tipo_administrador()
         return super().save(*args, **kwargs)

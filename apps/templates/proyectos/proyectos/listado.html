@@ -1,5 +1,6 @@
 {% extends "base_tablas.html" %}
 
+{% load extra_tags %}
 {% load bootstrap4 %}
 {% load static %}
 
@@ -12,7 +13,7 @@
 {% endblock titulo_pagina %}
 
 {% block miga_pan %}
-    <li class="breadcrumb-item"><a href="javascript:">Proyectos</a></li>    
+    <li class="breadcrumb-item"><a href="javascript:">Proyectos</a></li>
     <li class="breadcrumb-item active">Listado</li>
 {% endblock miga_pan %}
 
@@ -29,7 +30,8 @@
                         <th>Nombre</th>
                         <th>Empresa</th>
                         <th>Fecha inicio</th>
-                        <th>fecha finalizado</th>
+                        <th>Fecha finalizado</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,7 +40,13 @@
                             <td>{{proyecto.nombre}}</td>
                             <td>{{proyecto.empresa}}</td>
                             <td>{{proyecto.fecha_inicio|default_if_none:"---" }}</td>
-                            <td class="text-center">{{proyecto.fecha_finalizado|default_if_none:"---" }}</td>
+                            <td>{{proyecto.fecha_finalizacion|default_if_none:"---" }}</td>
+                            <td class="text-center">
+                                {% url 'proyectos:modificar_proyecto' proyecto.pk as op_1 %}
+                                
+                                {% convertir_elementos_a_lista op_1 'Modificar' as lista %}
+                                {% include 'componentes/menu_opciones/menu_opciones.html' with  opciones=lista %}
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>

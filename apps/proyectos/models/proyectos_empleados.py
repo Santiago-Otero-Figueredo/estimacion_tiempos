@@ -29,6 +29,9 @@ class ProyectoEmpleado(EstimacionModel):
         help_text='Fecha y hora de finalización del proyecto'
     )
 
+    def __str__(self) -> str:
+        return "{}-{}".format(self.proyecto, self.empleado)
+
     @staticmethod
     def crear_y_obtener(empleado:'Empleado', proyecto:'Proyecto') -> 'TipoActividad':
 

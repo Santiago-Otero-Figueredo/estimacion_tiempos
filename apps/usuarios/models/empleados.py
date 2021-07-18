@@ -18,11 +18,17 @@ class Empleado(Usuario):
         return self.empleados_cargos
 
     def obtener_ultimo_cargo(self):
-        cargo = self.cargos.order_by('-creado').first()
+        cargo = self.cargos.order_by('-cargos_empleado_proyecto__fecha_cambio_cargo').first()
         if cargo:
-            return cargo.nombre
-        else:
-            return None
+            return cargo
+        return None
+
+    def obtener_cargos_por_orden_ascendente(self):
+        return self.cargos.order_by('-cargos_empleado_proyecto__fecha_cambio_cargo').values(
+            'nombre',
+            'cargos_empleado_proyecto__fecha_cambio_cargo',
+            'cargos_empleado_proyecto__fecha_asignado'
+            )
 
 
 

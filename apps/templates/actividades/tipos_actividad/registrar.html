@@ -27,11 +27,16 @@
                 <h4 class="titulo">Información básica del tipo de actividad</h4>
             </div>
         </div>
-        <div>
-            {% bootstrap_form form %}
+        <div class="row">
+            <div class="col-xl-12">
+                {% bootstrap_field form.nombre %}
+            </div>
+            <div class="col-xl-12">
+                {% bootstrap_field form.descripcion %}
+            </div>
         </div>
         <div class="mt-3">
-            {% url 'estimaciones:listado_tipos_actividades' as url_volver%}
+            {% url 'actividades:listado_tipos_actividades' as url_volver%}
             <hr>
             {% include 'componentes/botones/footer_botones.html' with  texto_volver="Volver" texto_accion="Registrar" url_volver=url_volver boton_volver=True boton_accion=True%}
         </div>

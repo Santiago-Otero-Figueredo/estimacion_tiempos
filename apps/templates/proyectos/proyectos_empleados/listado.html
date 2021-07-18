@@ -1,5 +1,6 @@
 {% extends "base_tablas.html" %}
 
+{% load extra_tags %}
 {% load bootstrap4 %}
 {% load static %}
 
@@ -29,6 +30,7 @@
                         <th>Trabajador</th>
                         <th>Proyecto</th>
                         <th>Estado</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,6 +39,12 @@
                             <td>{{proyecto.empleado}}</td>
                             <td>{{proyecto.proyecto}}</td>
                             <td>{{proyecto.esta_activo}}</td>
+                            <td class="text-center">
+                                {% url 'proyectos:modificar_proyecto_empleado' proyecto.pk as op_1 %}
+                                
+                                {% convertir_elementos_a_lista op_1 'Modificar' as lista %}
+                                {% include 'componentes/menu_opciones/menu_opciones.html' with  opciones=lista %}
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>

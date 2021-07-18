@@ -1,5 +1,5 @@
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, UpdateView
 from django.views.generic.edit import FormView
 
 from rest_framework.views import APIView
@@ -19,7 +19,7 @@ from apps.utils.clases.pandas.gestor_pandas import (
 from apps.utils.mixin import MensajeMixin
 from apps.utils.clases.jira.ConexionJira import Jira
 
-
+from braces.views import LoginRequiredMixin
 
 class RegistrarActividad(MensajeMixin, CreateView):
     model = Actividad
@@ -27,7 +27,16 @@ class RegistrarActividad(MensajeMixin, CreateView):
     success_url = reverse_lazy("actividades:listado_actividades")
     template_name = "actividades/actividades/registrar.html"
     mensaje_exito = "La actividad ha sido registrada correctamente"
-    mensaje_error = "Error registrar actividad, por favor verificar los datos"
+    mensaje_error = "Error al registrar actividad, por favor verificar los datos"
+
+
+class ModificarActividad(LoginRequiredMixin, UpdateView):
+    model = Actividad
+    form_class = RegistrarActividadForm
+    template_name = "actividades/actividades/modificar.html"
+    success_url = reverse_lazy("actividades:listado_actividades")
+    mensaje_exito = "La actividad ha sido modificada correctamente"
+    mensaje_error = "Error al modificada actividad, por favor verificar los datos"
 
 
 class ListadoActividad(ListView):

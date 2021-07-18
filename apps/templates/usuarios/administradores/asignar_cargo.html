@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% load bootstrap4 %}
+{% load static %}
+
+{% block titulo %}
+    Formulario de asignación e cargo a personal administrativo
+{% endblock titulo %}
+
+{% block titulo_pagina %}
+    Formulario de asignación e cargo a personal administrativo
+{% endblock titulo_pagina %}
+
+{% block miga_pan %}
+    <li class="breadcrumb-item"><a href="javascipt:">Usuarios</a></li>
+    <li class="breadcrumb-item"><a href="javascipt:">Departamento administrativo</a></li>
+    <li class="breadcrumb-item">Asignar</li>
+    <li class="breadcrumb-item active">{{form.instance}}</li>
+{% endblock miga_pan %}
+
+{% block titulo_panel %}
+    Formulario de asignación e cargo a personal administrativo
+{% endblock titulo_panel %}
+
+{% block contenido_panel %}
+    <form class="bloquear-ui-enviar" autocomplete="off" method="post" enctype="multipart/form-data">{% csrf_token %}
+        <div class="row" >
+            <div class="col-xl-12 col-md-6">
+                {% bootstrap_field form.cargos %}
+            </div>
+            <div class="col-xl-12 mt-3">
+                {% url 'usuarios:listado_administradores' as url_volver%}
+                {% include 'componentes/botones/footer_botones.html' with texto_volver="Volver" texto_accion="Asignar cargo" url_volver=url_volver boton_volver=True boton_accion=True%}
+            </div>
+        </div>
+        <hr>
+        <div class="row mt-2">
+            <div class="col-12">
+                <h3 class="text-center">Histórico de cargos</h3>
+            </div>
+            <table class="table table-bordered table-hover datatable">
+                <thead>
+                    <tr>
+                        <th>Nombres</th>
+                        <th>Fecha asignado</th>
+                        <th>Fecha cambio cargo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cargo in form.instance.obtener_cargos_por_orden_ascendente %}
+                        <tr>
+                            <td>{{cargo.nombre}}</td>
+                            <td>{{cargo.cargos_empleado_proyecto__fecha_asignado}}</td>
+                            <td>{{cargo.cargos_empleado_proyecto__fecha_cambio_cargo}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </form>
+{% endblock contenido_panel %}

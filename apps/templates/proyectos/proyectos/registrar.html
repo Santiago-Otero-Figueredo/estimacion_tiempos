@@ -27,8 +27,29 @@
                 <h4 class="titulo">Información básica del proyecto</h4>
             </div>
         </div>
-        <div>
-            {% bootstrap_form form %}
+        <div class="row">
+            <div class="row col-xl-8 col-md-12">
+                <div class="col-md-12">
+                    {% bootstrap_field form.empresa %}
+                </div>
+                <div class="col-md-6">
+                    {% bootstrap_field form.nombre %}
+                </div>
+                <div class="col-md-6">
+                    {% bootstrap_field form.identificador_jira %}
+                </div>
+                <div class="col-xl-6">
+                    {% bootstrap_field form.fecha_inicio %}
+                </div>
+                <div class="col-xl-6">
+                    {% bootstrap_field form.fecha_finalizacion %}
+                </div>
+            </div>
+            <div class="row col-xl-4 col-md-12">
+                <div class="col-12">
+                    {% bootstrap_field form.descripcion %}
+                </div>
+            </div>
         </div>
         <div>
             <hr>

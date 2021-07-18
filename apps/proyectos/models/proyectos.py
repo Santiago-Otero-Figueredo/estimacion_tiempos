@@ -9,7 +9,7 @@ class Proyecto(EstimacionModel):
     empresa = models.ForeignKey(
         Empresa,
         related_name='proyectos_empresa', 
-        verbose_name="Proyectos asociados a una empresa",
+        verbose_name="Empresas asociadas al proyecto",
         on_delete=models.PROTECT
     )
     empleados = models.ManyToManyField(
@@ -19,7 +19,8 @@ class Proyecto(EstimacionModel):
         blank=True,
         verbose_name="Empleados asociados al proyecto"
     )
-    nombre = models.CharField(max_length=80, unique=True)
+    identificador_jira = models.CharField(max_length=80, unique=True, verbose_name="Identificador del proyecto JIRA")
+    nombre = models.CharField(max_length=80, unique=True, verbose_name="Nombre del proyecto")
     descripcion = models.TextField(verbose_name='Descripción', null=True, blank=True)
     fecha_inicio = models.DateTimeField(
         'Iniciado a',

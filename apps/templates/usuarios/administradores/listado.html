@@ -1,5 +1,7 @@
 {% extends "base_tablas.html" %}
 
+{% load extra_tags %}
+
 {% block titulo %}
     Listado de personal del departamento administrativo
 {% endblock titulo %}
@@ -30,6 +32,7 @@ Listado de personal del departamento administrativo
                         <th>Teléfono</th>
                         <th>Cargo actual</th>
                         <th>Fecha creación</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,8 +42,15 @@ Listado de personal del departamento administrativo
                             <td>{{administrador.last_name}}</td>
                             <td>{{administrador.email}}</td>
                             <td>{{administrador.phone_number}}</td>
-                            <td>{{administrador.obtener_ultimo_cargo}}</td>
+                            <td>{{administrador.obtener_ultimo_cargo.nombre|default:'-'}}</td>
                             <td>{{administrador.creado}}</td>
+                            <td class="text-center">
+                                {% url 'usuarios:modificar_administrador' administrador.pk as op_1 %}
+                                {% url 'usuarios:asignar_cargo_administrador' administrador.pk as op_2 %}
+                                
+                                {% convertir_elementos_a_lista op_1 'Modificar' op_2 'Asignar cargo' as lista %}
+                                {% include 'componentes/menu_opciones/menu_opciones.html' with  opciones=lista %}
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>

@@ -5,7 +5,7 @@ from ..models.proyectos import Proyecto
 
 class RegistrarProyectoForm(forms.ModelForm):
     
-    fecha_inicio = forms.DateField(
+    fecha_inicio = forms.DateTimeField(
                 input_formats=['%Y-%m-%d'],
                 widget=forms.TextInput(
                         attrs={
@@ -14,7 +14,7 @@ class RegistrarProyectoForm(forms.ModelForm):
                         }
                     ),
                 label="", required=False)
-    fecha_finalizacion = forms.DateField(
+    fecha_finalizacion = forms.DateTimeField(
                 input_formats=['%Y-%m-%d'],
                 widget=forms.TextInput(
                         attrs={
@@ -25,11 +25,11 @@ class RegistrarProyectoForm(forms.ModelForm):
                 label="", required=False)
     class Meta:
         model = Proyecto
-        fields = ("empresa", "nombre", "descripcion", "fecha_inicio", "fecha_finalizacion", "esta_activo")
+        fields = ("empresa", "nombre", "identificador_jira", "descripcion", "fecha_inicio", "fecha_finalizacion", "esta_activo")
         widgets = {
             'descripcion': forms.Textarea(
                 attrs={
-                    'rows': 4,
+                    'rows': 7,
                     'cols': 22,
                     'style':'resize:none;'
                 }

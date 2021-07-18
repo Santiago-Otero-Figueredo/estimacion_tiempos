@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% load bootstrap4 %}
+{% load static %}
+
+{% block titulo %}
+    Formulario de asignación de proyecto y programador
+{% endblock titulo %}
+
+{% block titulo_pagina %}
+    Formulario de asignación de proyecto y programador
+{% endblock titulo_pagina %}
+
+{% block miga_pan %}
+    <li class="breadcrumb-item"><a href="javascipt:">Proyectos con programador</a></li>
+    <li class="breadcrumb-item active">Modificar</li>
+    <li class="breadcrumb-item active">{{form.instance}}</li>
+{% endblock miga_pan %}
+
+{% block titulo_panel %}
+    Formulario de asignación de proyecto y programador
+{% endblock titulo_panel %}
+
+{% block contenido_panel %}
+    <form class="bloquear-ui-enviar" method="post" enctype="multipart/form-data">{% csrf_token %}
+        <div class="row">
+            <div class="col-12">
+                <h4 class="titulo">Información básica de asignación de proyecto y programador</h4>
+            </div>
+        </div>
+        <div>
+            {% bootstrap_form form %}
+        </div>
+        <div class="mt-3">
+            {% url 'proyectos:listado_proyecto_empleados' as url_volver%}
+            <hr>
+            {% include 'componentes/botones/footer_botones.html' with  texto_volver="Volver" texto_accion="Registrar" url_volver=url_volver boton_volver=True boton_accion=True%}
+        </div>
+    </form>
+{% endblock contenido_panel %}

@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, UpdateView
 
 from ..models.proyectos import Proyecto
 from ..models.contactos_proyecto import ContactoProyecto
@@ -10,7 +10,7 @@ from ..forms import (RegistrarProyectoForm,
 
 from apps.utils.mixin import MensajeMixin
 
-
+from braces.views import LoginRequiredMixin
 
 class RegistrarProyecto(MensajeMixin, CreateView):
     model = Proyecto
@@ -43,7 +43,7 @@ class RegistrarProyecto(MensajeMixin, CreateView):
                     errores += ('{}'.format(','.join(errors)))
 
             messages.error(self.request, "{}, {}".format(self.mensaje_error,errores))
-            return redirect('estimaciones:registrar_proyecto')
+            return redirect('proyectos:registrar_proyecto')
 
     def formset_valid(self, formset):
 
@@ -53,6 +53,16 @@ class RegistrarProyecto(MensajeMixin, CreateView):
             contacto.save()
             
         return self.form_valid(self.get_form())
+
+
+class ModificarProyecto(LoginRequiredMixin, UpdateView):
+    model = Proyecto
+    form_class = RegistrarProyectoForm
+    template_name = "proyectos/proyectos/modificar.html"
+    success_url = reverse_lazy("proyectos:listado_proyectos")
+    mensaje_exito = "Proyecto modificado correctamente"
+    mensaje_error = "Error al modificar el proyecto, por favor verificar los datos"
+
 
 class ListadoProyecto(ListView):
     model = Proyecto

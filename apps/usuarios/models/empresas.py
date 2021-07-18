@@ -6,5 +6,5 @@ class Empresa(Usuario):
 
 
     def save(self, *args, **kwargs):
-        self.tipo_usuario = TipoUsuario.buscar_por_identificador(2)
+        self.tipo_usuario = TipoUsuario.obtener_tipo_empresa()
         return super().save(*args, **kwargs)

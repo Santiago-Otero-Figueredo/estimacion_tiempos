@@ -1,0 +1,12 @@
+{% load extra_tags %}
+<div class="btn-group">
+    <button type="button" class="btn btn-sm btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Acciones  <i class="fas fa-sort-down"></i>
+    </button>
+    <div class="dropdown-menu sub-menu__acciones">
+        {% for opcion in opciones %}
+            {% obtener_icono opcion.nombre as icono%}
+            <a class="dropdown-item" href="{{opcion.url}}"><i class="{{icono}}"></i> {{opcion.nombre}}</a>
+        {% endfor %}
+    </div>
+</div> 

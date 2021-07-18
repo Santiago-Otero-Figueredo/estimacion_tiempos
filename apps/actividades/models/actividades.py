@@ -37,17 +37,8 @@ class Actividad(EstimacionModel):
     tiempo_estimado = models.PositiveIntegerField('Tiempo estimado (minutos)')
     tiempo_real = models.PositiveIntegerField('Tiempo real (minutos)')
 
-
-    """@staticmethod
-    def obtener_actividades_por_nombre(nombre:str) -> 'Queryset<Actividad>':
-
-        return Actividad.objects.filter(
-            Q(funcionalidad__icontains=nombre) |
-            Q(tipo_actividad__nombre__icontains=nombre)
-        ).values(
-            "tipo_actividad__nombre",
-        ).annotate(tiempo_promedio=Avg('tiempo_real')
-        ).order_by('-tiempo_promedio')"""
+    def __str__(self) -> str:
+        return "{}".format(self.identificador)
     
     @staticmethod
     def obtener_actividades_por_nombre(nombre:str) -> 'Queryset<Actividad>':

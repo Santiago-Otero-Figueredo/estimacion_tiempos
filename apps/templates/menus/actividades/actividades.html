@@ -2,6 +2,7 @@
 {% url 'actividades:registrar_actividad' as registrar_actividad %}
 {% url 'actividades:listado_actividades' as listado_actividades %}
 
+
 <li class="has-sub {% if importar_actividades_jira in request.path or registrar_actividad in request.path or listado_actividades in request.path%}active{% endif %}" id="menu_clientes">
     <a href="javascript:;">
         <b class="caret"></b>

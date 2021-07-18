@@ -1,5 +1,6 @@
 {% extends "base_tablas.html" %}
 
+{% load extra_tags %}
 {% load bootstrap4 %}
 {% load static %}
 
@@ -28,6 +29,8 @@
                     <tr>
                         <th>Nombre</th>
                         <th>Estado</th>
+                        <th>Descripción</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,10 +38,19 @@
                         <tr>
                             <td>{{tipo_actividad.nombre}}</td>
                             <td>{{tipo_actividad.esta_activo}}</td>
+                            <td>{{tipo_actividad.descripcion|default:'Sin descripción'}}</td>
+                            <td class="text-center">
+                                {% url 'actividades:modificar_tipo_actividad' tipo_actividad.pk as op_1 %}
+                                                               
+                                {% convertir_elementos_a_lista op_1 'Modificar' as lista %}
+                                {% include 'componentes/menu_opciones/menu_opciones.html' with  opciones=lista %}
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
+
+    
 {% endblock contenido_panel %}

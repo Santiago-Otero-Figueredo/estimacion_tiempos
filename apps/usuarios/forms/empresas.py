@@ -1,9 +1,8 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
 
 from apps.usuarios.models.empresas import Empresa
 
-class RegistrarEmpresaForm(UserCreationForm):
+class RegistrarEmpresaForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -12,4 +11,5 @@ class RegistrarEmpresaForm(UserCreationForm):
 
     class Meta:
         model = Empresa
-        fields = ("tipo_documento", "numero_documento", "first_name", "last_name", "email", "phone_number")
+        fields = ("tipo_documento", "numero_documento", "first_name", "email", "phone_number", "esta_activo")
+
