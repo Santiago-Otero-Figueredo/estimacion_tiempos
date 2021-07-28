@@ -6,7 +6,9 @@ from apps.utils.mixin import MensajeMixin
 
 from apps.usuarios.forms import RegistrarCargoForm
 
-class RegistrarCargo(MensajeMixin, CreateView):
+from braces.views import LoginRequiredMixin
+
+class RegistrarCargo(LoginRequiredMixin, MensajeMixin, CreateView):
     model = TipoCargo
     form_class = RegistrarCargoForm
     success_url = reverse_lazy("usuarios:listado_cargos")
@@ -15,7 +17,7 @@ class RegistrarCargo(MensajeMixin, CreateView):
     mensaje_error = "Error al registrar el cargo, por favor verificar los datos"
 
 
-class ListadoCargos(ListView):
+class ListadoCargos(LoginRequiredMixin, ListView):
     model = TipoCargo
     context_object_name = "cargos"
     template_name = "usuarios/cargos/listado.html"

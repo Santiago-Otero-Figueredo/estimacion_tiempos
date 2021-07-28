@@ -10,7 +10,8 @@ class Proyecto(EstimacionModel):
         Empresa,
         related_name='proyectos_empresa', 
         verbose_name="Empresas asociadas al proyecto",
-        on_delete=models.PROTECT
+        on_delete=models.SET_NULL,
+        null=True
     )
     empleados = models.ManyToManyField(
         Empleado,
@@ -38,6 +39,17 @@ class Proyecto(EstimacionModel):
         return self.nombre
 
     
+    @staticmethod
+    def existe_por_identificador_jira(identificador:str) -> bool:
+        return Proyecto.objects.filter(identificador_jira=identificador).exists()
+
+    @staticmethod
+    def buscar_por_identificador_jira(identificador:str) -> bool:
+        try:
+            return Proyecto.objects.get(identificador_jira=identificador)
+        except Proyecto.DoesNotExist:
+            return Proyecto.objects.none()
+
     @staticmethod
     def buscar_por_nombre(nombre:str) -> 'Proyecto':
         try:

@@ -20,12 +20,6 @@ class RegistrarAdministradorForm(UserCreationForm):
 
 class ModificarAdministradorForm(UserChangeForm):
 
-    cargos = forms.ModelChoiceField(queryset=TipoCargo.obtener_activos())
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        del self.fields['cargos']
-        
-
     class Meta:
         model = Administrador
         fields = ("tipo_documento", "numero_documento", "first_name", "last_name", "email", "phone_number", "esta_activo")

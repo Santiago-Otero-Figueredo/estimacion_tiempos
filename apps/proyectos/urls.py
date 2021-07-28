@@ -1,6 +1,7 @@
 from django.urls import path
 
-from .views import (RegistrarProyecto,
+from .views import (ImportarProeyctosJIRA,
+                    RegistrarProyecto,
                     ListadoProyecto,
                     ModificarProyecto,
                     RegistrarProyectoEmpleado,
@@ -11,6 +12,9 @@ from .views import (RegistrarProyecto,
 app_name = 'proyectos'
 
 urlpatterns = [
+    
+    path('importar-proyectos-jira/', ImportarProeyctosJIRA.as_view(), name='importar_proyectos_jira'),
+
     path('registrar-proyecto/', RegistrarProyecto.as_view(), name='registrar_proyecto'),
     path('modificar-proyecto/<int:pk>', ModificarProyecto.as_view(), name='modificar_proyecto'),
     path('listado-proyectos/', ListadoProyecto.as_view(), name='listado_proyectos'),

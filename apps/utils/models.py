@@ -101,6 +101,11 @@ class TiposModel(EstimacionModel):
         except ObjectDoesNotExist:
             return cls.objects.none()
 
+    
+    @classmethod
+    def buscar_por_lista_ids(cls, lista_ids:'list<int>') -> 'TiposModel':
+        return cls.objects.filter(pk__in=lista_ids)
+
 
     @classmethod
     def existe_por_nombre(cls, nombre:str) -> bool:

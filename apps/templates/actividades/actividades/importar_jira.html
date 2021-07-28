@@ -28,7 +28,12 @@
                     {% bootstrap_field form.nombre_proyecto %}
                 </div>
                 <div class="col-xl-12 text-center">
-                    {% include 'componentes/botones/boton_accion_formulario.html' with  texto_accion="Aplicar filtros"%}
+                    <button class="btn btn-outline-primary btn_accion_formulario mx-3" type="submit" name="filtro">
+                        Aplicar filtro <i class="fa fa-angle-right"></i>
+                    </button>
+                    <button class="btn btn-outline-primary btn_accion_formulario mx-3" type="submit" name="importar">
+                        Importar actividades <i class="fa fa-angle-right"></i>
+                    </button>
                 </div>
             </form>
         </div>
@@ -47,7 +52,7 @@
                     {% for actividad in actividades %}
                         <tr class="text-center">
                             <td >{{actividad.key}}</td>
-                            <td class="text-left">{{actividad.nombre_actividad}}</td>
+                            <td class="text-left" style="max-width: 300px;">{{actividad.nombre_actividad}}</td>
                             <td class="text-left">{{actividad.nombre_usuario_asignado}}</td>
                             <td>{{actividad.tiempo_total|floatformat:2}}</td>
                             <td>{{actividad.tiempo_estimado|floatformat:2}}</td>

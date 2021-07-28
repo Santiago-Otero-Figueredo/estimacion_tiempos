@@ -11,7 +11,7 @@ from apps.usuarios.forms import RegistrarAdministradorForm, ModificarAdministrad
 
 from braces.views import LoginRequiredMixin
 
-class RegistrarAdministrador(MensajeMixin, CreateView):
+class RegistrarAdministrador(LoginRequiredMixin, MensajeMixin, CreateView):
     model = Administrador
     form_class = RegistrarAdministradorForm
     success_url = reverse_lazy("usuarios:listado_administradores")
@@ -32,7 +32,7 @@ class RegistrarAdministrador(MensajeMixin, CreateView):
         return initial
 
 
-class ModificarAdministrador(LoginRequiredMixin, UpdateView):
+class ModificarAdministrador(LoginRequiredMixin, MensajeMixin, UpdateView):
     model = Administrador
     form_class = ModificarAdministradorForm
     template_name = "usuarios/administradores/modificar.html"
@@ -41,7 +41,7 @@ class ModificarAdministrador(LoginRequiredMixin, UpdateView):
     mensaje_error = "Error al modificar el administrador, por favor verificar los datos"
 
 
-class AsignarCargoAdministrador(LoginRequiredMixin, UpdateView):
+class AsignarCargoAdministrador(LoginRequiredMixin, MensajeMixin, UpdateView):
     model = Administrador
     form_class = AsignarCargoForm
     template_name = "usuarios/administradores/asignar_cargo.html"
@@ -66,7 +66,7 @@ class AsignarCargoAdministrador(LoginRequiredMixin, UpdateView):
         return redirect("usuarios:listado_administradores")
 
 
-class ListadoAdministradores(ListView):
+class ListadoAdministradores(LoginRequiredMixin, ListView):
     model = Administrador
     context_object_name = "administradores"
     template_name = "usuarios/administradores/listado.html"

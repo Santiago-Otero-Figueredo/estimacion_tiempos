@@ -49,7 +49,13 @@
         </div>
         <div class="row">
             <div class="col-xl-6 col-md-12">
-                {% bootstrap_field form.tipo_actividad %}
+                {% bootstrap_field form.tipos_lugares %}
+            </div>
+            <div class="col-xl-6 col-md-12">
+                {% bootstrap_field form.tipos_acciones %}
+            </div>
+            <div class="col-xl-6 col-md-12">
+                {% bootstrap_field form.tipos_tareas %}
             </div>
             <div class="col-xl-6 col-md-12">
                 {% bootstrap_field form.funcionalidad %}
@@ -119,7 +125,14 @@
             let celda_maximo = document.createElement('td')
             let desviacion_estadar = document.createElement('td')
 
-            celda_nombre.innerHTML = elemento.nombre
+            elemento.nombre.split(' ').forEach( elemento => {
+                let tipo = document.createElement('b')
+                tipo.style = 'border: none; background-color: lightblue; color: black; font-weight: 500;'
+                tipo.className = 'border rounded py-1 px-2 mx-1'
+                tipo.innerHTML = elemento.charAt(0).toUpperCase() + elemento.slice(1) //capitalize
+                celda_nombre.appendChild(tipo)
+            })
+
             celda_cantidad.innerHTML = elemento.cantidad
             celda_promedio.innerHTML = elemento.promedio
             celda_minimo.innerHTML = elemento.minimo

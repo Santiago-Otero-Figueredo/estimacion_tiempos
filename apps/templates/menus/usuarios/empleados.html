@@ -1,0 +1,18 @@
+{% url 'usuarios:listado_empleados' as listado_empleados %}
+{% url 'usuarios:importar_empleados' as importar_empleados %}
+
+<li class="has-sub {% if importar_empleados in request.path or listado_empleados in request.path %}active{% endif %}" id="menu_clientes">
+    <a href="javascript:;">
+        <b class="caret"></b>
+        <i class="fas fa-users"></i>
+        <span>Empleados</span>
+    </a>    
+    <ul class="sub-menu">
+        <li class="{% if importar_empleados in request.path %}active{% endif %}">
+            <a href="{{importar_empleados}}">Importar desde JIRA</a>
+        </li>
+        <li class="{% if listado_empleados in request.path %}active{% endif %}">
+            <a href="{{listado_empleados}}">Listado</a>
+        </li>
+    </ul>
+</li>

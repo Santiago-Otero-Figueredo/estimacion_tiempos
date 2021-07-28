@@ -1,20 +1,22 @@
 from django.db import models
-from django.db.models import Q
+from django.db.models import Q, Count
+from django.contrib.postgres.fields import ArrayField
 
 from ..models.tipos_actividades import TipoActividad
 
 from apps.proyectos.models.proyectos_empleados import ProyectoEmpleado
 from apps.utils.models import EstimacionModel
+from .caminos_actividades import CaminoActividad
 
 
 class Actividad(EstimacionModel):
-    tipo_actividad = models.ForeignKey(
+    tipos_actividades = models.ManyToManyField(
         TipoActividad,
-        on_delete=models.SET_DEFAULT,
         related_name="actividades_del_tipo_actividad",
         verbose_name="Tipo de actividad asociado",
-        default=1
+        through=CaminoActividad
     )
+    slug_tipos = models.CharField(max_length=255, verbose_name="Descripción de los tipos asociados a la actividad", null=True, blank=True)
     proyecto_empleado = models.ForeignKey(
         ProyectoEmpleado,
         on_delete=models.SET_NULL,
@@ -39,15 +41,48 @@ class Actividad(EstimacionModel):
 
     def __str__(self) -> str:
         return "{}".format(self.identificador)
-    
+
     @staticmethod
     def obtener_actividades_por_nombre(nombre:str) -> 'Queryset<Actividad>':
         """ Retorna las actividades que contengan el nombre recibido en la funcionalidad """
 
         return Actividad.objects.filter(
             Q(funcionalidad__icontains=nombre) |
-            Q(tipo_actividad__nombre__icontains=nombre)
+            Q(funcionalidad__trigram_similar=nombre) |
+            Q(slug_tipos__icontains=nombre) |
+            Q(tipos_actividades__nombre__icontains=nombre)
+
         ).values(
-            'identificador', 'tipo_actividad__nombre', 'fecha_inicio',
-            'fecha_finalizacion', 'tiempo_estimado', 'tiempo_real'
+            'tipos_actividades__nombre', 'tiempo_estimado', 'tiempo_real', 'slug_tipos'
         )
+
+
+    @staticmethod
+    def obtener_por_identificador_jira(identificador:str) -> 'Actividad':
+        
+        try:
+            return Actividad.objects.get(identificador=identificador)
+        except Actividad.DoesNotExist:
+            return Actividad.objects.none()
+
+    @staticmethod
+    def obtener_actividades_sin_tipos() -> 'Actividad':
+        return Actividad.objects.filter(tipos_actividades__isnull=True)
+
+
+    def obtener_actividades_similares(nombre_actividad:str) -> 'Actividad':
+
+        actividades_similares = Actividad.objects.exclude(slug_tipos__isnull=True).exclude(slug_tipos__exact='').filter(
+            Q(funcionalidad__icontains=nombre_actividad) |
+            Q(funcionalidad__trigram_similar=nombre_actividad) |
+            Q(slug_tipos__icontains=nombre_actividad) |
+            Q(tipos_actividades__nombre__icontains=nombre_actividad)
+        ).values(
+            'slug_tipos'
+        ).annotate(total=Count('slug_tipos')).order_by('-total').values('pk', 'slug_tipos', 'total').first()
+        tipo_similares = TipoActividad.objects.none()
+        if actividades_similares:
+            actividad_mayor_similitud = Actividad.objects.get(pk=actividades_similares['pk'])
+            tipo_similares = actividad_mayor_similitud.tipos_actividades.all()
+
+        return tipo_similares

@@ -22,8 +22,9 @@
     <link href="{% static 'css/estilos_propios.css' %}?v4" rel="stylesheet" />
     <link href="{% static 'plugins/bootstrap-calendar/css/bootstrap_calendar.css'%}" rel="stylesheet" />
 
-    {% block css %}{% endblock css %}
     {{ form.media.css }} 
+    {% block css %}{% endblock css %}
+    
 
 </head>
 
@@ -152,6 +153,7 @@
 
 
     {% block js %}{% endblock js %}
+  
     <script>
         $(document).ready(function() {
             {% for msg in messages %}
@@ -171,6 +173,13 @@
             {% endfor %}
         });        
     </script>
+    <script>
+        $(window).resize(function() {
+            $('.select2').css('width', "100%");
+        });
+    </script>
+
+
     
     {{ form.media.js }}
 </body>

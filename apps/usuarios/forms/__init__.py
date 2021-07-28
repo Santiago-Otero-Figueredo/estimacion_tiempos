@@ -3,3 +3,4 @@ from .trabajadores import RegistrarTrabajadorForm, ModificarTrabajadorForm, Asig
 from .administradores import RegistrarAdministradorForm, ModificarAdministradorForm, AsignarCargoForm
 from .usuarios import FormularioInicioSesion
 from .tipos_cargos import RegistrarCargoForm
+from .empleados import ModificarEmpleadoForm

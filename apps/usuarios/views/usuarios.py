@@ -9,7 +9,9 @@ from apps.utils.clases.jira.ConexionJira import Jira
 
 from apps.usuarios.forms import FormularioInicioSesion
 
-class PaginaInicio(TemplateView):
+from braces.views import LoginRequiredMixin
+
+class PaginaInicio(LoginRequiredMixin, TemplateView):
     template_name = 'usuarios/sesion/pagina_inicio.html'
 
     def dispatch(self, request, *args, **kwargs):
@@ -27,11 +29,5 @@ class InicioSesion(LoginView):
     redirect_authenticated_user = True
 
 
-class CerrarSesion(LogoutView):
+class CerrarSesion(LoginRequiredMixin, LogoutView):
     pass
-
-@login_required
-def logout(request):
-    logout(request)
-    messages.success(request, "Sesión cerrada correctamente")
-    return redirect('inicio')

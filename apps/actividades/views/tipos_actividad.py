@@ -8,7 +8,7 @@ from apps.utils.mixin import MensajeMixin
 
 from braces.views import LoginRequiredMixin
 
-class RegistrarTipoActividad(MensajeMixin, CreateView):
+class RegistrarTipoActividad(LoginRequiredMixin, MensajeMixin, CreateView):
     model = TipoActividad
     form_class = RegistrarTipoActividadForm
     success_url = reverse_lazy("actividades:listado_tipos_actividades")
@@ -17,7 +17,7 @@ class RegistrarTipoActividad(MensajeMixin, CreateView):
     mensaje_error = "Error al registrar el tipo de actividad, por favor verificar los datos"
 
 
-class ModificarTipoActividad(LoginRequiredMixin, UpdateView):
+class ModificarTipoActividad(LoginRequiredMixin, MensajeMixin, UpdateView):
     model = TipoActividad
     form_class = RegistrarTipoActividadForm
     template_name = "actividades/tipos_actividad/modificar.html"
@@ -26,7 +26,7 @@ class ModificarTipoActividad(LoginRequiredMixin, UpdateView):
     mensaje_error = "Error al modificar el tipo de actividad, por favor verificar los datos"
 
 
-class ListadoTipoActividad(ListView):
+class ListadoTipoActividad(LoginRequiredMixin, ListView):
     model = TipoActividad
     context_object_name = "tipos_actividad"
     template_name = "actividades/tipos_actividad/listado.html"

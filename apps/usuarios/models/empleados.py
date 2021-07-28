@@ -5,6 +5,7 @@ from apps.usuarios.models.tipos_cargos import TipoCargo
 from apps.usuarios.models.usuarios import Usuario
 
 class Empleado(Usuario):
+    identificador_jira = models.CharField(max_length=80, verbose_name="Identificador único de JIRA", default='')
     cargos = models.ManyToManyField(
         TipoCargo,
         through='CargoEmpleado',
@@ -13,7 +14,14 @@ class Empleado(Usuario):
         verbose_name="Cargos asociados al empleado"
     )
 
+    @classmethod
+    def obtener_identificadores(cls) -> 'list<str>':
+        return list(cls.objects.values_list('identificador_jira', flat=True))
     
+    @staticmethod
+    def obtener_empleados_sin_tipo() -> 'Queryset<Empleado>':
+        return Empleado.objects.filter(tipo_usuario__isnull=True)
+
     def obtener_cargos(self):
         return self.empleados_cargos
 

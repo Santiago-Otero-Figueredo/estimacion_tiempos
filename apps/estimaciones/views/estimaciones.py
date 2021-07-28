@@ -1,6 +1,8 @@
 from django.views.generic.edit import FormView
 
 from apps.actividades.models.actividades import Actividad
+from apps.actividades.models.estructuras import Estructura
+
 from apps.estimaciones.forms.estimaciones import FiltroEstimacionesForm
 from apps.utils.clases.pandas.gestor_pandas import (
     GestorLectorQueryset,
@@ -18,27 +20,39 @@ class ObtenerEstimacionesActividades(FormView):
     def get_context_data(self, **kwargs) -> 'QuerySet[T]':
         context = super().get_context_data(**kwargs)
         filtros = self.aplicar_filtros()
-        print(filtros)
-        actividades = list(Actividad.obtener_todos().filter(**filtros).values(
-            #'proyecto_programador__proyecto__nombre',
-            #'proyecto_programador__proyecto__cliente__first_name',
-            #'proyecto_programador__proyecto__programadores',
-            'tipo_actividad__nombre',
-            #'fecha_inicio',
-            #'fecha_finalizacion',
-            'tiempo_estimado',
-            'tiempo_real'
+
+        filtros_lugares = filtros.pop('tipos_lugares', Estructura.obtener_actividades_lugar().values_list('pk', flat=True))
+        filtros_acciones = filtros.pop('tipos_acciones', Estructura.obtener_actividades_accion().values_list('pk', flat=True))
+        filtros_tareas = filtros.pop('tipos_tareas', Estructura.obtener_actividades_tarea().values_list('pk', flat=True))
+        filtros_adicional = filtros.pop('tipos_adicional', Estructura.obtener_actividades_tarea().values_list('pk', flat=True))
+
+
+        actividades = list(Actividad.obtener_todos().filter(
+                    tipos_actividades__pk__in=filtros_lugares
+                ).filter(
+                    tipos_actividades__pk__in=filtros_acciones
+                ).filter(
+                    tipos_actividades__pk__in=filtros_tareas
+                ).filter(
+                    tipos_actividades__pk__in=filtros_adicional
+                ).filter(
+                    **filtros
+                ).values(
+                    'tipos_actividades__nombre',
+                    'tiempo_estimado',
+                    'tiempo_real',
+                    'slug_tipos'
+                )
             )
-        )
 
         lector = GestorLectorQueryset(actividades)
         df = lector.obtener_dataframe()
         df = eliminar_ceros(df)
         df_sin_atipicos = eliminar_valores_atipicos(df, 'tiempo_real')
-        lista_de_tiempos_reales = obtener_describe_dataframe(df_sin_atipicos, ['tipo_actividad__nombre'], 'tiempo_real')
+        lista_de_tiempos_reales = obtener_describe_dataframe(df_sin_atipicos, ['slug_tipos'], 'tiempo_real')
 
         df_sin_atipicos = eliminar_valores_atipicos(df, 'tiempo_estimado')
-        lista_de_estimaciones = obtener_describe_dataframe(df_sin_atipicos, ['tipo_actividad__nombre'], 'tiempo_estimado')
+        lista_de_estimaciones = obtener_describe_dataframe(df_sin_atipicos, ['slug_tipos'], 'tiempo_estimado')
 
         lista_descripcion_tiempos = list()
         for tipo, informacion_real in lista_de_tiempos_reales.items():
@@ -75,8 +89,14 @@ class ObtenerEstimacionesActividades(FormView):
             initial['proyecto'] = self.request.GET['proyecto']
         if 'empleado' in self.request.GET:
             initial['empleado'] = self.request.GET['empleado']
-        if 'tipo_actividad' in self.request.GET:
-            initial['tipo_actividad'] = self.request.GET['tipo_actividad']
+        if 'tipos_lugares' in self.request.GET:
+            initial['tipos_lugares'] = self.request.GET.getlist('tipos_lugares')
+        if 'tipos_acciones' in self.request.GET:
+            initial['tipos_acciones'] = self.request.GET.getlist('tipos_acciones')
+        if 'tipos_tareas' in self.request.GET:
+            initial['tipos_tareas'] = self.request.GET.getlist('tipos_tareas')
+        if 'tipos_adicional' in self.request.GET:
+            initial['tipos_adicional'] = self.request.GET.getlist('tipos_adicional')
         if 'fecha_inicio' in self.request.GET:
             initial['fecha_inicio'] = self.request.GET['fecha_inicio']
         if 'fecha_fin' in self.request.GET:
@@ -89,12 +109,21 @@ class ObtenerEstimacionesActividades(FormView):
             filtro['proyecto_empleado__proyecto__pk'] = self.request.GET['proyecto']
         if 'empleado' in self.request.GET and not self.request.GET["empleado"] == "":
             filtro['proyecto_empleado__empleado__pk'] = self.request.GET['empleado']
-        if 'tipo_actividad' in self.request.GET and not self.request.GET["tipo_actividad"] == "":
-            filtro['tipo_actividad__pk'] = self.request.GET['tipo_actividad']
+
+        if 'tipos_lugares' in self.request.GET:
+            filtro['tipos_lugares'] = self.request.GET.getlist('tipos_lugares')
+        if 'tipos_acciones' in self.request.GET:
+            filtro['tipos_acciones'] = self.request.GET.getlist('tipos_acciones')
+        if 'tipos_tareas' in self.request.GET:
+            filtro['tipos_tareas'] = self.request.GET.getlist('tipos_tareas')
+        if 'tipos_adicional' in self.request.GET:
+            filtro['tipos_adicional'] = self.request.GET.getlist('tipos_adicional')
+
         if 'fecha_inicio' in self.request.GET and not self.request.GET["fecha_inicio"] == "":
             filtro['fecha_inicio__gte'] = self.request.GET['fecha_inicio']
         if 'fecha_fin' in self.request.GET and not self.request.GET["fecha_fin"] == "":
             filtro['fecha_finalizacion__lte'] = self.request.GET['fecha_fin']
+            
         return filtro
 
 

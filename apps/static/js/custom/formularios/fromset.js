@@ -34,46 +34,49 @@ function clonarFilaIndividuo(selector) {
     return (total-1)
 }
 
-$('.clonar_fila').on('click', function(e) {
-    console.log("###################")
-    e.preventDefault();    
-    
-    if(typeof cantidad_maxima != 'undefined'){        
-        let total = $(`#${id_formulario}-TOTAL_FORMS`).val();
+if (boton_agregar != false){
+    $('.clonar_fila').on('click', function(e) {
+        console.log("###################")
+        e.preventDefault();    
         
-        if(cantidad_maxima > total){
+        if(typeof cantidad_maxima != 'undefined'){
+            let total = $(`#${id_formulario}-TOTAL_FORMS`).val();
+            
+            if(cantidad_maxima > total){
+                clonarFilaIndividuo(`#${clase_formulario}_0`);
+                actualizar_elementos(parseInt(total)+1)
+            }
+            verificar_limite(total)
+        }else{        
             clonarFilaIndividuo(`#${clase_formulario}_0`);
-            actualizar_elementos(parseInt(total)+1)            
-        }
-        verificar_limite(total)
-    }else{        
-        clonarFilaIndividuo(`#${clase_formulario}_0`);
-    }        
-    
-});
+        }        
+        
+    });
+}
 
 function actualizar_elementos(cantidad){
     let elemento_cantidad_actual = document.getElementById("cantidad_actual")
     elemento_cantidad_actual.innerHTML = cantidad            
 }
 
-
-$('.borrar_estructura').on('click', function(e) {
-    
-    if(typeof cantidad_maxima != 'undefined'){        
-        let total = $(`#${id_formulario}-TOTAL_FORMS`).val();                    
-        actualizar_elementos(parseInt(total-1))
-        verificar_limite(total-1)
-    }   
-    e.preventDefault();
-    
-    eliminarFilaPartidaContable($(this));
-    $(':input[type="number"]').each(function( index ) {
-        dato = $(this);
-        cambiar_valores();
-    });  
-    
-});
+if (boton_eliminar != false){
+    $('.borrar_estructura').on('click', function(e) {
+        
+        if(typeof cantidad_maxima != 'undefined'){        
+            let total = $(`#${id_formulario}-TOTAL_FORMS`).val();                    
+            actualizar_elementos(parseInt(total-1))
+            verificar_limite(total-1)
+        }   
+        e.preventDefault();
+        
+        eliminarFilaPartidaContable($(this));
+        $(':input[type="number"]').each(function( index ) {
+            dato = $(this);
+            cambiar_valores();
+        });  
+        
+    });
+}
 
 
 function eliminarFilaPartidaContable(boton) {

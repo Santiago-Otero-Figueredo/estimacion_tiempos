@@ -1,8 +1,8 @@
 {% extends "base_tablas.html" %}
 
+{% load extra_tags %}
 {% load bootstrap4 %}
 {% load static %}
-
 
 {% block titulo %}
     Listado de actividades
@@ -25,14 +25,23 @@
     <div class="row">
         <div class="col-12 row border mx-2 justify-content-center">
             <form method="GET" autocomplete="off" class="row py-3">
-                <div class="col-xl-4">
+                <div class="col-xl-6">
                     {% bootstrap_field form.proyecto %}
                 </div>
-                <div class="col-xl-4">
+                <div class="col-xl-6">
                     {% bootstrap_field form.empleado %}
                 </div>
-                <div class="col-xl-4">
-                    {% bootstrap_field form.tipo_actividad %}
+                <div class="col-xl-3">
+                    {% bootstrap_field form.tipos_lugares %}
+                </div>
+                <div class="col-xl-3">
+                    {% bootstrap_field form.tipos_acciones %}
+                </div>
+                <div class="col-xl-3">
+                    {% bootstrap_field form.tipos_tareas %}
+                </div>
+                <div class="col-xl-3">
+                    {% bootstrap_field form.tipos_adicional %}
                 </div>
                 <div class="col-xl-6">
                     {% bootstrap_field form.fecha_inicio %}
@@ -70,7 +79,14 @@
                 <tbody>
                     {% for actividad in tipos_actividades %}
                         <tr class="text-right">
-                            <td class="text-left">{{actividad.nombre}}</td>
+                            <td class="text-left">
+                                {% for nombre in actividad.nombre|split  %}
+                                    <b class="border rounded py-1 px-2 mx-1" style="border: none; background-color: lightblue; color: black; font-weight: 500;">
+                                        {{nombre|title }}
+                                    </b>
+                                
+                                {% endfor %}
+                            </td>
                             <td>{{actividad.cantidad}}</td>
                             <td>{{actividad.promedio.estimado|floatformat:2}}</td>
                             <td>{{actividad.promedio.real|floatformat:2}}</td>
@@ -100,5 +116,16 @@
             minDate: new Date(2021,07,11),
             maxDate: new Date(2021,08,1)
         });
+    </script>
+    <script>
+        /*
+        $("#js-example-basic-multiple").select2({
+            language: {
+                inputTooShort: function(args) {
+                    return "";
+                }
+            }
+        })
+        */
     </script>
 {% endblock js %}

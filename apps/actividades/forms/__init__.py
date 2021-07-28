@@ -1,2 +1,2 @@
-from .actividades import RegistrarActividadForm, FiltroElementosJIRAForm
+from .actividades import RegistrarActividadForm, FiltroElementosJIRAForm, AsignarActividadForm, AsignarActividadFormSet
 from .tipos_actividad import RegistrarTipoActividadForm

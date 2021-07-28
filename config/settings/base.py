@@ -58,6 +58,7 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'django.contrib.admin',
+    'django.contrib.postgres',
 ]
 
 THIRD_PARTY_APPS = [
@@ -166,8 +167,9 @@ LOGIN_REDIRECT_URL = 'inicio'
 LOGIN_URL = reverse_lazy('usuarios:iniciar_sesion')
 LOGOUT_REDIRECT_URL = reverse_lazy('usuarios:iniciar_sesion')
 
-#Configuración para elementos de conexión con JIRA
+#Configuración para máxima cantidad de elementos de formulario
 
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 6144
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/

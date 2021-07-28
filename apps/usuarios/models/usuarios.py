@@ -1,7 +1,10 @@
 # Django
 from django.db import models
+from django.db.models import Value as V
+from django.db.models.functions import Concat
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
+
 
 # Utilities
 from apps.utils.models import EstimacionModel
@@ -23,7 +26,7 @@ class Usuario(EstimacionModel, AbstractUser):
     tipo_usuario = models.ForeignKey(
         'TipoUsuario',
         related_name="usuarios_asociados_tipo",
-        verbose_name="Tipo del documento",
+        verbose_name="Tipo de usuario",
         on_delete=models.SET_NULL,
         null=True
     )
@@ -54,8 +57,14 @@ class Usuario(EstimacionModel, AbstractUser):
 
     def __str__(self):
         """Return username."""
-        return self.username
+        return self.get_full_name()
 
+    def obtener_nombre_apellido(self):
+        return "{} {}".format(self.first_name, self.last_name)
+
+    @classmethod
+    def buscar_por_nombre_y_apellido(cls, nombre_completo:str) -> 'Queryset<Usuario>':
+        return cls.objects.annotate(full_name=Concat('first_name', V(' '), 'last_name')).exclude(pk=88).filter(full_name__icontains=nombre_completo)
 
     @classmethod
     def buscar_por_username(cls, username:str) -> 'Usuario':

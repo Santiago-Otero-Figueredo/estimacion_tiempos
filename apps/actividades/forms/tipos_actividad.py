@@ -6,7 +6,7 @@ class RegistrarTipoActividadForm(forms.ModelForm):
     
     class Meta:
         model = TipoActividad
-        fields = ("nombre", "descripcion", "esta_activo")
+        fields = ("estructura", "nombre", "descripcion", "esta_activo")
         widgets = {
             'descripcion': forms.Textarea(
                 attrs={

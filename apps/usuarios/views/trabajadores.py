@@ -11,7 +11,7 @@ from apps.usuarios.forms import RegistrarTrabajadorForm, ModificarTrabajadorForm
 
 from braces.views import LoginRequiredMixin
 
-class RegistrarTrabajador(MensajeMixin, CreateView):
+class RegistrarTrabajador(LoginRequiredMixin, MensajeMixin, CreateView):
     model = Trabajador
     form_class = RegistrarTrabajadorForm
     success_url = reverse_lazy("usuarios:listado_trabajadores")
@@ -31,7 +31,7 @@ class RegistrarTrabajador(MensajeMixin, CreateView):
         initial['tipo_documento'] = TipoDocumento.obtener_tipo_cedula()
         return initial
 
-class ModificarTrabajador(LoginRequiredMixin, UpdateView):
+class ModificarTrabajador(LoginRequiredMixin, MensajeMixin, UpdateView):
     model = Trabajador
     form_class = ModificarTrabajadorForm
     success_url = reverse_lazy("usuarios:listado_trabajadores")
@@ -40,7 +40,7 @@ class ModificarTrabajador(LoginRequiredMixin, UpdateView):
     mensaje_error = "Error al modificar el trabajador, por favor verificar los datos"
 
 
-class AsignarCargoTrabajador(LoginRequiredMixin, UpdateView):
+class AsignarCargoTrabajador(LoginRequiredMixin, MensajeMixin, UpdateView):
     model = Trabajador
     form_class = AsignarCargoForm
     template_name = "usuarios/trabajadores/asignar_cargo.html"
@@ -65,7 +65,7 @@ class AsignarCargoTrabajador(LoginRequiredMixin, UpdateView):
         return redirect("usuarios:listado_trabajadores")
 
 
-class ListadoTrabajadores(ListView):
+class ListadoTrabajadores(LoginRequiredMixin, ListView):
     model = Trabajador
     context_object_name = "trabajadores"
     template_name = "usuarios/trabajadores/listado.html"

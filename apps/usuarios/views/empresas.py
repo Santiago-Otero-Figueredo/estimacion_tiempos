@@ -10,7 +10,7 @@ from apps.usuarios.forms import RegistrarEmpresaForm
 from braces.views import LoginRequiredMixin
 
 
-class RegistrarEmpresa(MensajeMixin, CreateView):
+class RegistrarEmpresa(LoginRequiredMixin, MensajeMixin, CreateView):
     model = Empresa
     form_class = RegistrarEmpresaForm
     success_url = reverse_lazy("usuarios:listado_empresas")
@@ -32,7 +32,7 @@ class ModificarEmpresa(LoginRequiredMixin, UpdateView):
     mensaje_error = "Error al modificar la empresa, por favor verificar los datos"
 
 
-class ListadoEmpresas(ListView):
+class ListadoEmpresas(LoginRequiredMixin, ListView):
     model = Empresa
     context_object_name = "empresas"
     template_name = "usuarios/empresas/listado.html"

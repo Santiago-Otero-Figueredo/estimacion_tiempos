@@ -1,15 +1,21 @@
 {% url 'actividades:importar_actividades_jira' as importar_actividades_jira %}
 {% url 'actividades:registrar_actividad' as registrar_actividad %}
 {% url 'actividades:listado_actividades' as listado_actividades %}
+{% url 'actividades:asignar_tipos_actividades' as asignar_tipos_actividades %}
 
 
-<li class="has-sub {% if importar_actividades_jira in request.path or registrar_actividad in request.path or listado_actividades in request.path%}active{% endif %}" id="menu_clientes">
+
+
+<li class="has-sub {% if asignar_tipos_actividades in request.path or importar_actividades_jira in request.path or registrar_actividad in request.path or listado_actividades in request.path%}active{% endif %}" id="menu_clientes">
     <a href="javascript:;">
         <b class="caret"></b>
         <i class="fas fa-users"></i>
         <span>Actividades</span>
     </a>
     <ul class="sub-menu">
+        <li class="{% if asignar_tipos_actividades in request.path %}active{% endif %}">
+            <a href="{{asignar_tipos_actividades}}">Asignar tipos</a>
+        </li>
         <li class="{% if importar_actividades_jira in request.path %}active{% endif %}">
             <a href="{{importar_actividades_jira}}">Importar JIRA</a>
         </li>

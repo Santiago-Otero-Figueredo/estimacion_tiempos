@@ -9,7 +9,6 @@ def convertir_elementos_a_lista(*args) -> 'dict':
         for index in range(0, int(len(args)/2)+2, 2):
             lista_opciones.append({'url':args[index], 'nombre':args[index + 1]})
     else:
-        print("----------------->", args)
         lista_opciones.append({'url':args[0], 'nombre':args[1]})
     return lista_opciones
 
@@ -41,3 +40,8 @@ def obtener_icono(nombre_opcion) -> str:
         icono = 'fas fa-angle-double-right'
 
     return icono
+
+
+@register.filter(name='split')
+def split(value):
+    return value.split(' ')
