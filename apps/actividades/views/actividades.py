@@ -1,6 +1,3 @@
-from apps.proyectos.models.proyectos_empleados import ProyectoEmpleado
-from apps.usuarios.models.empleados import Empleado
-from apps.proyectos.models.proyectos import Proyecto
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -16,6 +13,7 @@ from ..forms import (RegistrarActividadForm,
                      AsignarActividadFormSet)
 from ..models.actividades import Actividad
 from ..models.caminos_actividades import CaminoActividad
+from ..utils import crear_slug_tipos_actividad
 
 from apps.utils.clases.pandas.gestor_pandas import (
     GestorLectorQueryset,
@@ -51,7 +49,11 @@ class RegistrarActividad(LoginRequiredMixin, MensajeMixin, CreateView):
         elemento.tipos_actividades.add(tipos_acciones)
         elemento.tipos_actividades.add(tipos_tareas)
 
-        slug_tipos = '{} {} {}'.format(tipos_lugares.nombre, tipos_acciones.nombre, tipos_tareas.nombre)
+        slug_tipos = crear_slug_tipos_actividad(
+                        tipos_lugares.nombre,
+                        tipos_acciones.nombre,
+                        tipos_tareas.nombre,
+                    )
         elemento.slug_tipos = slug_tipos
         elemento.save()
         return super().form_valid(form)
@@ -81,7 +83,12 @@ class ModificarActividad(LoginRequiredMixin, MensajeMixin, UpdateView):
         elemento.tipos_actividades.add(tipos_acciones)
         elemento.tipos_actividades.add(tipos_tareas)
 
-        slug_tipos = '{} {} {}'.format(tipos_lugares.nombre, tipos_acciones.nombre, tipos_tareas.nombre)
+        slug_tipos = crear_slug_tipos_actividad(
+                        tipos_lugares.nombre,
+                        tipos_acciones.nombre,
+                        tipos_tareas.nombre,
+                    )
+
         elemento.slug_tipos = slug_tipos
         elemento.save()
         return super().form_valid(form)
@@ -209,7 +216,12 @@ class AsociarActividadesSinTipos(LoginRequiredMixin, MensajeMixin, FormView):
                 actividad.tipos_actividades.add(tipos_acciones)
                 actividad.tipos_actividades.add(tipos_tareas)
 
-                slug_tipos = '{} {} {}'.format(tipos_lugares.nombre, tipos_acciones.nombre, tipos_tareas.nombre)
+                slug_tipos = crear_slug_tipos_actividad(
+                        tipos_lugares.nombre,
+                        tipos_acciones.nombre,
+                        tipos_tareas.nombre,
+                    )
+
                 actividad.slug_tipos = slug_tipos
                 actividad.save()
             

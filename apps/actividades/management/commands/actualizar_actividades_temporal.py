@@ -1,11 +1,9 @@
 
 from django.core.management.base import BaseCommand
 
-from apps.prueba.utils import GestorLectorExcel
 
 from ...models.actividades import Actividad
-from ...models.tipos_actividades import TipoActividad
-from ...models.caminos_actividades import CaminoActividad
+from ...utils import crear_slug_tipos_actividad
 
 from apps.proyectos.models.proyectos import Proyecto
 from apps.proyectos.models.proyectos_empleados import ProyectoEmpleado
@@ -20,27 +18,23 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
 
-        jira = Jira()
-        proyecto_buscar = 'KT'
-        historias_usuario = jira.consultar_historias_usuarios(proyecto_buscar)
-        for histroia_usuario in historias_usuario:
-            try:
-                proyecto_registrado = Proyecto.buscar_por_identificador_jira(proyecto_buscar)
-                empleado = Empleado.buscar_por_nombre_y_apellido(histroia_usuario['nombre_usuario_asignado'].strip()).first()
-                actividad = Actividad.obtener_por_identificador_jira(histroia_usuario['key'])
-                if empleado and actividad.count() == 0:
-                    proyecto_empleado = ProyectoEmpleado.crear_y_obtener(empleado, proyecto_registrado)
-                    key_historia = str(histroia_usuario['key'])
-                    funcionalidad = funcionalidad
+        actividades = Actividad.obtener_todos()
 
-                    actividad = Actividad.objects.create(
-                            identificador=key_historia,
-                            proyecto_empleado=proyecto_empleado,
-                            funcionalidad=funcionalidad,
-                            tiempo_estimado=histroia_usuario['tiempo_estimado'],
-                            tiempo_real=histroia_usuario['tiempo_total'],
-                            slug_tipos=''
-                        )
-            except Exception as e:
-                print("Errro", e)
+        for actividad in actividades:
+            tipos = actividad.tipos_actividades.all()
+            if len(tipos) >= 3:
+                
+                tipo_1 = tipos[0]
+                tipo_2 = tipos[1]
+                tipo_3 = tipos[2]
+                tipo_adicional = None
 
+                if len(tipos) == 4:
+                    tipo_adicional = tipos[3].nombre
+
+                slug_tipos = crear_slug_tipos_actividad(tipo_1.nombre, tipo_2.nombre, tipo_3.nombre, tipo_adicional)
+                actividad.slug_tipos = slug_tipos
+                actividad.save()
+                print(actividad, "Actualizada", slug_tipos)
+
+       

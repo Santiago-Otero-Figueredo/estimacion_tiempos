@@ -74,6 +74,7 @@ LOCAL_APPS = [
     'apps.proyectos',
     'apps.prueba',
     'apps.estimaciones',
+    'apps.dashboard',
     'apps.extra_tags',
 ]
 

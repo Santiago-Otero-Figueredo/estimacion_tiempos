@@ -6,6 +6,7 @@ from apps.prueba.utils import GestorLectorExcel
 from ...models.actividades import Actividad
 from ...models.tipos_actividades import TipoActividad
 from ...models.caminos_actividades import CaminoActividad
+from ...utils import crear_slug_tipos_actividad
 
 from apps.proyectos.models.proyectos import Proyecto
 from apps.proyectos.models.proyectos_empleados import ProyectoEmpleado
@@ -45,12 +46,16 @@ class Command(BaseCommand):
                         else:
                             actividad_adicional = TipoActividad.objects.create(nombre='Adicional')
 
-
-                   
-                    slug_tipos = '{} {} {}'.format(tipo_actividad_1.nombre, tipo_actividad_2.nombre, tipo_actividad_3.nombre)
+                    tipo_adicional = None
                     if not actividad_adicional is None:
-                        slug_tipos += ' '+actividad_adicional.nombre
-                    
+                        tipo_adicional = actividad_adicional.nombre
+                   
+                    slug_tipos = crear_slug_tipos_actividad(
+                        tipo_actividad_1.nombre,
+                        tipo_actividad_2.nombre,
+                        tipo_actividad_3.nombre,
+                        tipo_adicional
+                    )
                    
                     actividad = Actividad.objects.create(
                         identificador=key_historia,
@@ -58,7 +63,7 @@ class Command(BaseCommand):
                         funcionalidad=funcionalidad,
                         tiempo_estimado=tiempo_estimado,
                         tiempo_real=tiempo_real,
-                        slug_tipos=slug_tipos.lower().strip()
+                        slug_tipos=slug_tipos
                     )
                    
                     actividad.tipos_actividades.add(tipo_actividad_1)

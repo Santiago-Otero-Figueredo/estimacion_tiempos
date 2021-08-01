@@ -125,7 +125,7 @@
             let celda_maximo = document.createElement('td')
             let desviacion_estadar = document.createElement('td')
 
-            elemento.nombre.split(' ').forEach( elemento => {
+            elemento.nombre.split('-').forEach( elemento => {
                 let tipo = document.createElement('b')
                 tipo.style = 'border: none; background-color: lightblue; color: black; font-weight: 500;'
                 tipo.className = 'border rounded py-1 px-2 mx-1'

@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% load bootstrap4 %}
+{% load static %}
+
+{% block titulo %}
+    Dashborad tablero de tiempo de desarrolladores
+{% endblock titulo %}
+
+{% block titulo_pagina %}
+    Dashborad tablero de tiempo de desarrolladores
+{% endblock titulo_pagina %}
+
+{% block css %}
+    <style>
+        #chartdiv {
+            width: 100%;
+            height: 500px;
+        }
+    </style>
+{% endblock css %}
+
+{% block miga_pan %}
+    <li class="breadcrumb-item"><a href="javascript:">Dashboard</a></li>
+    <li class="breadcrumb-item active">Tablero de tiempo de desarrolladores</li>
+{% endblock miga_pan %}
+
+{% block titulo_panel %}
+    Dashborad tablero de tiempo de desarrolladores
+{% endblock titulo_panel %}
+
+{% block contenido_panel %}
+
+    <div class="row px-2 mt-2 justify-content-center">
+        <form method="GET" autocomplete="off" class="row col-12">
+            <div class="col-xl-6">
+                {% bootstrap_field form.proyecto %}
+            </div>
+            <div class="col-xl-6">
+                {% bootstrap_field form.empleado %}
+            </div>
+            <div class="col-xl-4">
+                {% bootstrap_field form.tipos_lugares %}
+            </div>
+            <div class="col-xl-4">
+                {% bootstrap_field form.tipos_acciones %}
+            </div>
+            <div class="col-xl-4">
+                {% bootstrap_field form.tipos_tareas %}
+            </div>
+            <div class="col-xl-12 text-center">
+                {% include 'componentes/botones/boton_accion_formulario.html' with  texto_accion="Aplicar filtros"%}
+            </div>
+        </form>
+        <hr>
+        {% if lista_tiempos_desarrolladores %}
+            <div class="mt-4" id="chartdiv"></div>
+        {% else %}
+            <div class="mt-4 alert alert-warning" role="alert">No se encontraron datos para este conjunto de filtros</div>
+        {% endif %}
+    </div>
+ 
+{% endblock contenido_panel %}
+
+{% block js %}
+    {{block.super}}
+    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+
+    <script>
+        let informacion_grafica = {{lista_tiempos_desarrolladores|safe}}
+    </script>
+    <script src="{% static 'js/graficas/tableros/grafico_diagrama_caja.js' %}"></script>
+    
+{% endblock js %}

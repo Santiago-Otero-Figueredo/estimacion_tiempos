@@ -1,0 +1,83 @@
+{% extends "base_tablas.html" %}
+
+{% load bootstrap4 %}
+{% load static %}
+
+{% block titulo %}
+    Dashborad tablero de participación
+{% endblock titulo %}
+
+{% block titulo_pagina %}
+    Dashborad tablero de participación
+{% endblock titulo_pagina %}
+
+{% block miga_pan %}
+    <li class="breadcrumb-item"><a href="javascript:">Dashboard</a></li>
+    <li class="breadcrumb-item active">Tablero de participación</li>
+{% endblock miga_pan %}
+
+{% block titulo_panel %}
+    Dashborad tablero de participación
+{% endblock titulo_panel %}
+
+{% block contenido_panel %}
+
+    <div class="row px-2 mt-2 justify-content-center">
+        <form method="GET" autocomplete="off" class="row col-12">
+            <div class="col-xl-6">
+                {% bootstrap_field form.proyecto %}
+            </div>
+            <div class="col-xl-6">
+                {% bootstrap_field form.empleado %}
+            </div>
+            <div class="col-xl-12 text-center">
+                {% include 'componentes/botones/boton_accion_formulario.html' with  texto_accion="Aplicar filtros"%}
+            </div>
+        </form>
+        <hr>
+        {% if lista_descripcion_tiempos %}
+
+        <div class="col-12">
+            <table class="table table-bordered table-hover datatable">
+                <thead>
+                    <tr>
+                        <th>Nombre del proyecto</th>
+                        <th>Horas reales (Total)</th>
+                        <th>Horas estimadas (Total)</th>
+                        <th>Numero programadores asignados</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for informacion_proyecto in lista_informacion_proyectos %}
+                        <tr>
+                            <td>{{informacion_proyecto.proyecto_empleado__proyecto__nombre}}</td>
+                            <td>{{informacion_proyecto.tiempo_real|stringformat:".2f"}}</td>
+                            <td>{{informacion_proyecto.tiempo_estimado|stringformat:".2f"}}</td>
+                            <td>{{informacion_proyecto.empleados}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+            <div class="mt-4" id="chartdiv"></div>
+            
+        {% else %}
+            <div class="mt-4 alert alert-warning" role="alert">No se encontraron datos para este conjunto de filtros</div>
+        {% endif %}
+    </div>
+ 
+{% endblock contenido_panel %}
+
+{% block js %}
+    {{block.super}}
+    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+
+    <script>
+        let informacion_grafica = {{lista_descripcion_tiempos|safe}}
+    </script>
+    <script src="{% static 'js/graficas/tableros/grafica_columna_simple.js' %}"></script>
+    
+{% endblock js %}

@@ -22,7 +22,14 @@
     <link href="{% static 'css/estilos_propios.css' %}?v4" rel="stylesheet" />
     <link href="{% static 'plugins/bootstrap-calendar/css/bootstrap_calendar.css'%}" rel="stylesheet" />
 
-    {{ form.media.css }} 
+    <style>
+        #chartdiv {
+            width: 100%;
+            height: 500px;
+        }
+    </style>
+
+    {{ form.media.css }}
     {% block css %}{% endblock css %}
     
 
