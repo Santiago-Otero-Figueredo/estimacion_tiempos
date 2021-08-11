@@ -69,7 +69,7 @@ class Actividad(EstimacionModel):
     def obtener_actividades_sin_tipos() -> 'Actividad':
         return Actividad.objects.filter(tipos_actividades__isnull=True)
 
-
+    @staticmethod
     def obtener_actividades_similares(nombre_actividad:str) -> 'Actividad':
 
         actividades_similares = Actividad.objects.exclude(slug_tipos__isnull=True).exclude(slug_tipos__exact='').filter(

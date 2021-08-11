@@ -235,14 +235,13 @@ class ObtenerActividadesComunes(APIView):
 
         nombre = parametros["nombre"]
         actividades = list(Actividad.obtener_actividades_por_nombre(nombre))
-        
 
         lector = GestorLectorQueryset(actividades)
         df = lector.obtener_dataframe()
         
         df = eliminar_ceros(df)
         df_sin_atipicos = eliminar_valores_atipicos(df, 'tiempo_real')
-        print(df)
+
         lista_de_estimaciones = obtener_describe_dataframe(df_sin_atipicos, ['slug_tipos'], 'tiempo_real')
 
         return Response({

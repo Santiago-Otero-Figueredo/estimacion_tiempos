@@ -18,7 +18,15 @@
     <!-- ================== END BASE CSS STYLE ================== -->
     <link href="{% static 'plugins/toastr/toastr.min.css' %}" rel="stylesheet" />
     <link href="{% static 'css/estilos_propios.css' %}?v4" rel="stylesheet" />
+    <style>
+        .vertical-center {
+            min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+            min-height: 100vh; /* These two lines are counted as one :-)       */
 
+            display: flex;
+            align-items: center;
+        }
+    </style>
 </head>
 <body class="pace-top">
     <!-- begin #page-loader -->
@@ -28,42 +36,29 @@
     <!-- end #page-loader -->
     
     <!-- begin #page-container -->
-    <div id="page-container" class="fade">
+    <div id="page-container" class="fade vertical-center">
         <!-- begin login -->
-        <div class="login login-with-news-feed">
-            <!-- begin news-feed -->
-            <div class="news-feed">
-                <div class="news-image" style="background-image: url({% static 'img/login-bg/login-bg-9.jpg' %})"></div>
-                <div class="news-caption">
+        <div class="login col-xl-5 mt-5 container">
+           
+            <div class="login-header text-center">
+                <img src="{% static 'img/logo/logo-admin-google.png' %}" width="260">
+                <div class="brand">
                 </div>
             </div>
-            <!-- end news-feed -->
-            <!-- begin right-content -->
-            <div class="right-content">
-                <!-- begin login-header -->
-                <div class="login-header">
-                    <img src="{% static 'img/logo/logo-admin-google.png' %}" width="260">
-                    <div class="brand">
+           
+            <div class="login-content">
+                <form class="margin-bottom-0" method="post">{% csrf_token %}
+                    {% bootstrap_form form %}
+
+                    <div class="login-buttons">
+                        <button type="submit" class="btn btn-primary btn-block btn-lg">Iniciar sesión</button>
                     </div>
-                </div>
-                <!-- end login-header -->
-
-                <!-- begin login-content -->
-                <div class="login-content">
-                    <form class="margin-bottom-0" method="post">{% csrf_token %}
-                        {% bootstrap_form form %}
-
-                        <div class="login-buttons">
-                            <button type="submit" class="btn btn-primary btn-block btn-lg">Iniciar sesión</button>
-                        </div>
-                        <hr/>
-                    </form>
-                </div>
-                <!-- end login-content -->
+                    <hr/>
+                </form>
             </div>
-            <!-- end right-container -->
+
         </div>
-        <!-- end login -->
+
         
         <!-- begin scroll to top btn -->
         <a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i class="fa fa-angle-up"></i></a>
