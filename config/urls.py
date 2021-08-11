@@ -27,6 +27,5 @@ urlpatterns = [
     path('actividades/', include('apps.actividades.urls', namespace='actividades')),
     path('proyectos/', include('apps.proyectos.urls', namespace='proyectos')),
     path('estimaciones/', include('apps.estimaciones.urls', namespace='estimaciones')),
-    path('pruebas/', include('apps.prueba.urls', namespace='pruebas')),
     path('dashboard/', include('apps.dashboard.urls', namespace='dashboards')),
 ]

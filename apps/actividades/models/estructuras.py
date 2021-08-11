@@ -1,3 +1,4 @@
+from apps.actividades.models.actividades import Actividad
 from django.db import models
 
 from apps.utils.models import TiposModel
@@ -24,18 +25,30 @@ class Estructura(TiposModel):
 
     @staticmethod
     def obtener_actividades_lugar():
-        return Estructura.obtener_estructura_lugar().tipos_actividades_estructura.all().order_by('nombre')
+        try:
+            return Estructura.obtener_estructura_lugar().tipos_actividades_estructura.all().order_by('nombre')
+        except:
+            return Actividad.objects.none()
 
     @staticmethod
     def obtener_actividades_accion():
-        return Estructura.obtener_estructura_accion().tipos_actividades_estructura.all().order_by('nombre')
+        try:
+            return Estructura.obtener_estructura_accion().tipos_actividades_estructura.all().order_by('nombre')
+        except:
+            return Actividad.objects.none()
 
     @staticmethod
     def obtener_actividades_tarea():
-        return Estructura.obtener_estructura_tarea().tipos_actividades_estructura.all().order_by('nombre')
+        try:
+            return Estructura.obtener_estructura_tarea().tipos_actividades_estructura.all().order_by('nombre')
+        except:
+            return Actividad.objects.none()
 
     @staticmethod
     def obtener_actividades_adicional():
-        return Estructura.obtener_estructura_adicional().tipos_actividades_estructura.all().order_by('nombre')
+        try:
+            return Estructura.obtener_estructura_adicional().tipos_actividades_estructura.all().order_by('nombre')
+        except:
+            return Actividad.objects.none()
 
 

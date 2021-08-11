@@ -72,7 +72,6 @@ LOCAL_APPS = [
     'apps.usuarios',
     'apps.actividades',
     'apps.proyectos',
-    'apps.prueba',
     'apps.estimaciones',
     'apps.dashboard',
     'apps.extra_tags',
