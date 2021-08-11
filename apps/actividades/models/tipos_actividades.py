@@ -1,7 +1,5 @@
 from django.db import models
 
-from .estructuras import Estructura
-
 from apps.utils.models import TiposModel
 
 
