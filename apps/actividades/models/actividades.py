@@ -73,10 +73,10 @@ class Actividad(EstimacionModel):
     def obtener_actividades_similares(nombre_actividad:str) -> 'Actividad':
 
         actividades_similares = Actividad.objects.exclude(slug_tipos__isnull=True).exclude(slug_tipos__exact='').filter(
-            Q(funcionalidad__icontains=nombre_actividad) |
-            Q(funcionalidad__trigram_similar=nombre_actividad) |
-            Q(slug_tipos__icontains=nombre_actividad) |
-            Q(tipos_actividades__nombre__icontains=nombre_actividad)
+            Q(funcionalidad__icontains=str(nombre_actividad)) |
+            Q(funcionalidad__trigram_similar=str(nombre_actividad)) |
+            Q(slug_tipos__icontains=str(nombre_actividad)) |
+            Q(tipos_actividades__nombre__icontains=str(nombre_actividad))
         ).values(
             'slug_tipos'
         ).annotate(total=Count('slug_tipos')).order_by('-total').values('pk', 'slug_tipos', 'total').first()
