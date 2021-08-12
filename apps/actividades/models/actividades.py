@@ -72,17 +72,19 @@ class Actividad(EstimacionModel):
     @staticmethod
     def obtener_actividades_similares(nombre_actividad:str) -> 'Actividad':
 
-        actividades_similares = Actividad.objects.exclude(slug_tipos__isnull=True).exclude(slug_tipos__exact='').exclude(funcionalidad="").filter(
-            #Q(funcionalidad__icontains=str(nombre_actividad)) |
-            #Q(funcionalidad__trigram_similar=str(nombre_actividad)) |
-            Q(slug_tipos__icontains=str(nombre_actividad)) |
-            Q(tipos_actividades__nombre__icontains=str(nombre_actividad))
-        ).values(
-            'slug_tipos'
-        ).annotate(total=Count('slug_tipos')).order_by('-total').values('pk', 'slug_tipos', 'total').first()
         tipo_similares = TipoActividad.objects.none()
-        if actividades_similares:
-            actividad_mayor_similitud = Actividad.objects.get(pk=actividades_similares['pk'])
-            tipo_similares = actividad_mayor_similitud.tipos_actividades.all()
+        if not nombre_actividad is None and nombre_actividad != '':
+            actividades_similares = Actividad.objects.exclude(slug_tipos__isnull=True).exclude(slug_tipos__exact='').exclude(funcionalidad="").filter(
+                Q(funcionalidad__icontains=str(nombre_actividad)) |
+                Q(funcionalidad__trigram_similar=str(nombre_actividad)) |
+                Q(slug_tipos__icontains=str(nombre_actividad)) |
+                Q(tipos_actividades__nombre__icontains=str(nombre_actividad))
+            ).values(
+                'slug_tipos'
+            ).annotate(total=Count('slug_tipos')).order_by('-total').values('pk', 'slug_tipos', 'total').first()
+            
+            if actividades_similares:
+                actividad_mayor_similitud = Actividad.objects.get(pk=actividades_similares['pk'])
+                tipo_similares = actividad_mayor_similitud.tipos_actividades.all()
 
         return tipo_similares
