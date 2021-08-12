@@ -46,7 +46,7 @@ class Actividad(EstimacionModel):
     def obtener_actividades_por_nombre(nombre:str) -> 'Queryset<Actividad>':
         """ Retorna las actividades que contengan el nombre recibido en la funcionalidad """
 
-        return Actividad.objects.Actividad.objects.exclude(funcionalidad__exact="").filter(
+        return Actividad.objects.objects.exclude(funcionalidad__exact="").filter(
             #Q(funcionalidad__icontains=nombre) |
             #Q(funcionalidad__trigram_similar=nombre) |
             Q(slug_tipos__icontains=nombre) |
