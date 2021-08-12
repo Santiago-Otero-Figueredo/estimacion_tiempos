@@ -47,8 +47,8 @@ class Actividad(EstimacionModel):
         """ Retorna las actividades que contengan el nombre recibido en la funcionalidad """
 
         return Actividad.objects.Actividad.objects.exclude(funcionalidad__exact="").filter(
-            Q(funcionalidad__icontains=nombre) |
-            Q(funcionalidad__trigram_similar=nombre) |
+            #Q(funcionalidad__icontains=nombre) |
+            #Q(funcionalidad__trigram_similar=nombre) |
             Q(slug_tipos__icontains=nombre) |
             Q(tipos_actividades__nombre__icontains=nombre)
 
