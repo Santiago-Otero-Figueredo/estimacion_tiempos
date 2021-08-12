@@ -72,7 +72,7 @@ class Actividad(EstimacionModel):
     @staticmethod
     def obtener_actividades_similares(nombre_actividad:str) -> 'Actividad':
 
-        actividades_similares = Actividad.objects.exclude(slug_tipos__isnull=True).exclude(slug_tipos__exact='').filter(
+        actividades_similares = Actividad.objects.exclude(slug_tipos__isnull=True).exclude(slug_tipos__exact='').exclude(funcionalidad="").filter(
             Q(funcionalidad__icontains=str(nombre_actividad)) |
             Q(funcionalidad__trigram_similar=str(nombre_actividad)) |
             Q(slug_tipos__icontains=str(nombre_actividad)) |
