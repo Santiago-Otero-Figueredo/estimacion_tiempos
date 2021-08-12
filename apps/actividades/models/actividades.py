@@ -74,7 +74,7 @@ class Actividad(EstimacionModel):
 
         actividades_similares = Actividad.objects.exclude(slug_tipos__isnull=True).exclude(slug_tipos__exact='').exclude(funcionalidad="").filter(
             #Q(funcionalidad__icontains=str(nombre_actividad)) |
-            Q(funcionalidad__trigram_similar=str(nombre_actividad)) |
+            #Q(funcionalidad__trigram_similar=str(nombre_actividad)) |
             Q(slug_tipos__icontains=str(nombre_actividad)) |
             Q(tipos_actividades__nombre__icontains=str(nombre_actividad))
         ).values(
