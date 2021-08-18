@@ -31,6 +31,7 @@
                         <th>Email</th>
                         <th>Teléfono</th>
                         <th>Cargo actual</th>
+                        <th>Estado</th>
                         <th>Fecha creación</th>
                         <th></th>
                     </tr>
@@ -43,6 +44,9 @@
                             <td>{{trabajador.email}}</td>
                             <td>{{trabajador.phone_number}}</td>
                             <td>{{trabajador.obtener_ultimo_cargo.nombre|default:'-'}}</td>
+                            <td>
+                                {% include 'componentes/estado/estado-texto.html' with  estado=trabajador.esta_activo%}
+                            </td>
                             <td>{{trabajador.creado}}</td>
                             <td class="text-center">
                                 {% url 'usuarios:modificar_trabajador' trabajador.pk as op_1 %}

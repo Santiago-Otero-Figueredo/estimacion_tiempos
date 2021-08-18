@@ -9,13 +9,13 @@ class ProyectoEmpleado(EstimacionModel):
     empleado = models.ForeignKey(
         Empleado,
         related_name='proyectos_empleado_empleado',
-        verbose_name="Empleado",
+        verbose_name="Empleado*",
         on_delete=models.PROTECT
     )
     proyecto = models.ForeignKey(
         Proyecto,
         related_name='proyectos_empleado_proyecto',
-        verbose_name="Proyecto",
+        verbose_name="Proyecto*",
         on_delete=models.PROTECT
     )
     fecha_inicio = models.DateTimeField(

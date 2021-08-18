@@ -20,8 +20,8 @@ class Proyecto(EstimacionModel):
         blank=True,
         verbose_name="Empleados asociados al proyecto"
     )
-    identificador_jira = models.CharField(max_length=80, unique=True, verbose_name="Identificador del proyecto JIRA")
-    nombre = models.CharField(max_length=80, unique=True, verbose_name="Nombre del proyecto")
+    identificador_jira = models.CharField(max_length=80, unique=True, verbose_name="Identificador del proyecto JIRA*")
+    nombre = models.CharField(max_length=80, unique=True, verbose_name="Nombre del proyecto*")
     descripcion = models.TextField(verbose_name='Descripción', null=True, blank=True)
     fecha_inicio = models.DateTimeField(
         'Iniciado a',

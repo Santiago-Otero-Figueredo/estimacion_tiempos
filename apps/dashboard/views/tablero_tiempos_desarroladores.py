@@ -1,16 +1,17 @@
-from apps.actividades.models.estructuras import Estructura
-from braces.views import LoginRequiredMixin
 from django.views.generic.edit import FormView
 
-from apps.actividades.models.actividades import Actividad
-from ..forms import FiltroEstimacionesTiemposForm
+from braces.views import LoginRequiredMixin
 
+from apps.actividades.models.actividades import Actividad
+from apps.actividades.models.estructuras import Estructura
 from apps.utils.clases.pandas.gestor_pandas import (
     GestorLectorQueryset,
     eliminar_ceros,
     eliminar_valores_atipicos,
     obtener_describe_dataframe,
 )
+
+from ..forms import FiltroEstimacionesTiemposForm
 
 
 class TableroTiempos(LoginRequiredMixin, FormView):
@@ -50,6 +51,7 @@ class TableroTiempos(LoginRequiredMixin, FormView):
         lector = GestorLectorQueryset(list(actividades))
         df = lector.obtener_dataframe()
         df = eliminar_ceros(df)
+        df['tiempo_real'] = df['tiempo_real']/60
         df_sin_atipicos = eliminar_valores_atipicos(df, 'tiempo_real')
         
         lista_de_tiempos_reales = obtener_describe_dataframe(df_sin_atipicos, ['proyecto_empleado__empleado__first_name'], 'tiempo_real')

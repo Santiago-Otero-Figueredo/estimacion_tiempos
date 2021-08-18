@@ -5,7 +5,7 @@ from apps.utils.models import TiposModel
 
 
 class TipoActividad(TiposModel):
-    estructura = models.ForeignKey("Estructura", verbose_name="Estructura asociada", related_name="tipos_actividades_estructura", on_delete=models.PROTECT)
+    estructura = models.ForeignKey("Estructura", verbose_name="Estructura asociada*", related_name="tipos_actividades_estructura", on_delete=models.PROTECT)
     descripcion = models.TextField(verbose_name='Descripción', null=True, blank=True)
 
     class Meta:

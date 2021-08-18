@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% load bootstrap4 %}
+{% load static %}
+
+{% block titulo %}
+    Formulario de modificación de cargo
+{% endblock titulo %}
+
+{% block titulo_pagina %}
+Formulario de modificación de cargo
+{% endblock titulo_pagina %}
+
+{% block miga_pan %}
+    <li class="breadcrumb-item"><a href="javascipt:">Usuarios</a></li>
+    <li class="breadcrumb-item"><a href="javascipt:">Cargo</a></li>
+    <li class="breadcrumb-item">Modificar</li>
+    <li class="breadcrumb-item active">{{form.instance}}</li>
+{% endblock miga_pan %}
+
+{% block titulo_panel %}
+    Formulario de modificación de cargo
+{% endblock titulo_panel %}
+
+{% block contenido_panel %}
+    <form class="bloquear-ui-enviar" autocomplete="off" method="post" enctype="multipart/form-data">{% csrf_token %}
+        <div class="row">
+            <div class="col-12">
+                <h4 class="titulo">Información básica del cargo a modificar</h4>
+            </div>
+        </div>
+        <div >
+            {% bootstrap_form form %}
+        </div>
+        <div class="mt-3">
+            {% url 'usuarios:listado_cargos' as url_volver%}
+            <hr>
+            {% include 'componentes/botones/footer_botones.html' with  texto_volver="Volver" texto_accion="Modificar" url_volver=url_volver boton_volver=True boton_accion=True%}
+        </div>
+    </form>
+{% endblock contenido_panel %}

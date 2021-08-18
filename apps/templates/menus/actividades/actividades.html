@@ -3,13 +3,10 @@
 {% url 'actividades:listado_actividades' as listado_actividades %}
 {% url 'actividades:asignar_tipos_actividades' as asignar_tipos_actividades %}
 
-
-
-
 <li class="has-sub {% if asignar_tipos_actividades in request.path or importar_actividades_jira in request.path or registrar_actividad in request.path or listado_actividades in request.path%}active{% endif %}" id="menu_clientes">
     <a href="javascript:;">
         <b class="caret"></b>
-        <i class="fas fa-users"></i>
+        <i class="fas fa-star"></i>
         <span>Actividades</span>
     </a>
     <ul class="sub-menu">

@@ -1,6 +1,5 @@
 from django.db import models
 from django.db.models import Q, Count
-from django.contrib.postgres.fields import ArrayField
 
 from ..models.tipos_actividades import TipoActividad
 
@@ -13,7 +12,7 @@ class Actividad(EstimacionModel):
     tipos_actividades = models.ManyToManyField(
         TipoActividad,
         related_name="actividades_del_tipo_actividad",
-        verbose_name="Tipo de actividad asociado",
+        verbose_name="Tipo de actividad asociado*",
         through=CaminoActividad
     )
     slug_tipos = models.CharField(max_length=255, verbose_name="Descripción de los tipos asociados a la actividad", null=True, blank=True)
@@ -21,23 +20,23 @@ class Actividad(EstimacionModel):
         ProyectoEmpleado,
         on_delete=models.SET_NULL,
         related_name="actividad_proyecto_empleado",
-        verbose_name="Proyecto y empleado asociados",
+        verbose_name="Proyecto y empleado asociados*",
         null=True
     )
     identificador = models.CharField(max_length=20, verbose_name="Identificador único según el tipo de insumo", null=True, blank=True)
-    funcionalidad = models.CharField('Funcionalidad especifica del proyecto', max_length=255)
+    funcionalidad = models.CharField('Funcionalidad especifica del proyecto*', max_length=255)
     fecha_inicio = models.DateTimeField(
-        'Iniciado a',
+        verbose_name='Iniciado a',
         help_text='Fecha y hora en la que se inicio la actividad',
         blank=True, null=True
     )
     fecha_finalizacion = models.DateTimeField(
-        'Finalizado a',
+        verbose_name='Finalizado a',
         help_text='Fecha y hora de finalización de la actividad',
         blank=True, null=True
     )
-    tiempo_estimado = models.PositiveIntegerField('Tiempo estimado (minutos)')
-    tiempo_real = models.PositiveIntegerField('Tiempo real (minutos)')
+    tiempo_estimado = models.PositiveIntegerField('Tiempo estimado (minutos)*')
+    tiempo_real = models.PositiveIntegerField('Tiempo real (minutos)*')
 
     def __str__(self) -> str:
         return "{}".format(self.identificador)
@@ -51,7 +50,6 @@ class Actividad(EstimacionModel):
             Q(funcionalidad__trigram_similar=nombre) |
             Q(slug_tipos__icontains=nombre) |
             Q(tipos_actividades__nombre__icontains=nombre)
-
         ).values(
             'tipos_actividades__nombre', 'tiempo_estimado', 'tiempo_real', 'slug_tipos'
         )

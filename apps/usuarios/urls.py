@@ -15,6 +15,7 @@ from .views import (ListadoEmpleados,
                     ModificarAdministrador,
                     RegistrarCargo,
                     ListadoCargos,
+                    ModificarCargo,
                     InicioSesion,
                     CerrarSesion,
                     ImportarEmpleadosJIRA)
@@ -24,10 +25,8 @@ app_name = 'usuarios'
 
 urlpatterns = [
 
-
     path('iniciar-sesion/', view=InicioSesion.as_view(), name='iniciar_sesion'),
     path('cerrar-sesion/', view=CerrarSesion.as_view(), name='cerrar_sesion'),
-
 
     path('modificar-empleado/<int:pk>', ModificarEmpleado.as_view(), name='modificar_empleado'),
     path('listado-empleado/', ListadoEmpleados.as_view(), name='listado_empleados'),
@@ -48,8 +47,9 @@ urlpatterns = [
 
     path('registrar-cargo/', RegistrarCargo.as_view(), name='registrar_cargo'),
     path('listado-cargos/', ListadoCargos.as_view(), name='listado_cargos'),
+    path('modificar-cargo/<int:pk>', ModificarCargo.as_view(), name='modificar_cargo'),
 
     path('importar-empleados/', ImportarEmpleadosJIRA.as_view(), name='importar_empleados'),
-    
+
 ]
 

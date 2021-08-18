@@ -38,7 +38,9 @@
                         <tr>
                             <td>{{proyecto.empleado}}</td>
                             <td>{{proyecto.proyecto}}</td>
-                            <td>{{proyecto.esta_activo}}</td>
+                            <td>
+                                {% include 'componentes/estado/estado-texto.html' with  estado=proyecto.esta_activo%}
+                            </td>
                             <td class="text-center">
                                 {% url 'proyectos:modificar_proyecto_empleado' proyecto.pk as op_1 %}
                                 

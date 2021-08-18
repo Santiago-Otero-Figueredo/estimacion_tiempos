@@ -40,7 +40,7 @@
                         <tr>
                             <td>{{proyecto.identificador_jira}}</td>
                             <td>{{proyecto.nombre}}</td>
-                            <td>{{proyecto.empresa}}</td>
+                            <td>{{proyecto.empresa|default:"---"}}</td>
                             <td>{{proyecto.fecha_inicio|default_if_none:"---" }}</td>
                             <td>{{proyecto.fecha_finalizacion|default_if_none:"---" }}</td>
                             <td class="text-center">

@@ -11,18 +11,18 @@ class ContactoProyecto(EstimacionModel):
     proyecto = models.ForeignKey(
         Proyecto,
         related_name='contactos_empresa_proyecto',
-        verbose_name="Proyecto",
+        verbose_name="Proyecto*",
         on_delete=models.PROTECT
     )
-    nombres = models.CharField(max_length=75, verbose_name="Nombres del contacto")
-    apellidos = models.CharField(max_length=75, verbose_name="Apellidos del contacto")
-    correo_electronico = models.EmailField('Correo electrónico')
+    nombres = models.CharField(max_length=75, verbose_name="Nombres del contacto*")
+    apellidos = models.CharField(max_length=75, verbose_name="Apellidos del contacto*")
+    correo_electronico = models.EmailField('Correo electrónico*')
     phone_regex = RegexValidator(
         regex=r'\+?1?\d{7,10}$',
         message="El numero de teléfono debe tener entre 7 y 10 digitos:"
     )
     phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True, verbose_name='Teléfono celular')
-    cargo = models.CharField(max_length=100, verbose_name="Cargo del contacto en la empresa a la que pertenece")
+    cargo = models.CharField(max_length=100, verbose_name="Cargo del contacto en la empresa a la que pertenece", default='')
 
     def __str__(self):
         """Return username."""

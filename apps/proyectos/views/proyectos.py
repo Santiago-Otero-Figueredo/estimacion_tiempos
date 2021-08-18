@@ -74,7 +74,7 @@ class ListadoProyecto(LoginRequiredMixin, ListView):
 
 
 
-class ImportarProeyctosJIRA(LoginRequiredMixin, TemplateView):
+class ImportarProyectosJIRA(LoginRequiredMixin, TemplateView):
     success_url = reverse_lazy("proyectos:listado_proyectos")
     template_name = "proyectos/proyectos/importar_jira.html"
 

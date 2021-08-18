@@ -1,5 +1,7 @@
 {% extends "base_tablas.html" %}
 
+{% load extra_tags %}
+
 {% block titulo %}
     Listado de cargos
 {% endblock titulo %}
@@ -26,6 +28,7 @@ Listado de cargos
                     <tr>
                         <th>Nombres</th>
                         <th>Descripción</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,6 +36,12 @@ Listado de cargos
                         <tr>
                             <td>{{cargo.nombre}}</td>
                             <td>{{cargo.descripcion}}</td>
+                            <td class="text-center">
+                                {% url 'usuarios:modificar_cargo' cargo.pk as op_1 %}
+                                
+                                {% convertir_elementos_a_lista op_1 'Modificar' as lista %}
+                                {% include 'componentes/menu_opciones/menu_opciones.html' with  opciones=lista %}
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>

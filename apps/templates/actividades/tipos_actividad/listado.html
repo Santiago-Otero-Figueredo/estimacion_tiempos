@@ -37,7 +37,9 @@
                     {% for tipo_actividad in tipos_actividad %}
                         <tr>
                             <td>{{tipo_actividad.nombre}}</td>
-                            <td>{{tipo_actividad.esta_activo}}</td>
+                            <td>
+                                {% include 'componentes/estado/estado-texto.html' with  estado=tipo_actividad.esta_activo%}
+                            </td>
                             <td>{{tipo_actividad.descripcion|default:'Sin descripción'}}</td>
                             <td class="text-center">
                                 {% url 'actividades:modificar_tipo_actividad' tipo_actividad.pk as op_1 %}

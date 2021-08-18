@@ -8,13 +8,13 @@ class CargoEmpleado(EstimacionModel):
     empleado = models.ForeignKey(
         'Empleado',
         related_name='cargos_empleado_empleado',
-        verbose_name="Empleado",
+        verbose_name="Empleado*",
         on_delete=models.PROTECT
     )
     cargo = models.ForeignKey(
         'TipoCargo',
         related_name='cargos_empleado_proyecto',
-        verbose_name="Proyecto",
+        verbose_name="Cargo en la empresa*",
         on_delete=models.PROTECT
     )
     fecha_asignado = models.DateTimeField(

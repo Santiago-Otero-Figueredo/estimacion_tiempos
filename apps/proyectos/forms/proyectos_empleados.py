@@ -6,4 +6,4 @@ class RegistrarProyectoEmpleadoForm(forms.ModelForm):
     
     class Meta:
         model = ProyectoEmpleado
-        fields = ("empleado", "proyecto")
+        fields = ("empleado", "proyecto", "esta_activo")

@@ -70,7 +70,7 @@ class TiposModel(EstimacionModel):
                     de los posibles cambios de id que puedan generar las migraciones""", 
         default=0,
     )
-    nombre = models.CharField(max_length=100, verbose_name="Nombre del tipo", unique=True)
+    nombre = models.CharField(max_length=100, verbose_name="Nombre del tipo*", unique=True)
 
     class Meta:
         """Meta option."""

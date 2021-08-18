@@ -11,6 +11,13 @@ am4core.ready(function() {
     dateAxis.dataFields.category = "elemento_eje_X";
     dateAxis.renderer.minGridDistance = 40;
     dateAxis.renderer.grid.template.location = 0;
+
+    dateAxis.renderer.labels.template.adapter.add("dy", function(dy, target) {
+        if (target.dataItem && target.dataItem.index & 2 == 2) {
+          return dy + 25;
+        }
+        return dy;
+      });
     
     var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
     valueAxis.tooltip.disabled = true;

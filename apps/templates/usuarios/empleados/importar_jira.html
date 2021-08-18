@@ -25,27 +25,36 @@
         <div class="col-12 row border mx-2 justify-content-center">
             <form method="GET" autocomplete="off" class="row py-3">{% csrf_token %}
                 <div class="col-xl-12 text-center">
-                    {% include 'componentes/botones/boton_accion_formulario.html' with  texto_accion="Importar usuarios"%}
+                    {% include 'componentes/botones/boton_accion_formulario.html' with  texto_accion="Importar usuarios de la tabla"%}
                 </div>
             </form>
         </div>
         <div class="col-12 mt-3">
-            <table class="table table-bordered table-hover datatable">
-                <thead class="text-center">
-                    <tr>
-                        <th>Identificador de JIRA</th>
-                        <th>Nombres y apellidos</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for empleado in empleados %}
-                        <tr class="text-center">
-                            <td >{{empleado.accountId}}</td>
-                            <td >{{empleado.displayName}}</td>
+            <div class="row">
+                <div class="col-12">
+                    <p>A continuación se mostraran los usuarios que se encuentran en la plataforma de JIRA pero no están registrados en esta aplicación.</p>
+                </div>
+            </div>
+            {% if empleados %}
+                <table class="table table-bordered table-hover datatable">
+                    <thead class="text-center">
+                        <tr>
+                            <th>Identificador de JIRA</th>
+                            <th>Nombres y apellidos</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {% for empleado in empleados %}
+                            <tr class="text-center">
+                                <td >{{empleado.accountId}}</td>
+                                <td >{{empleado.displayName}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                {% include 'componentes/alertas/alerta-informativa.html' with  mensaje="No hay nuevos usuarios que importar desde JIRA"%}
+            {% endif %}
         </div>
     </div>
 {% endblock contenido_panel %}

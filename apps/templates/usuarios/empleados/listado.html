@@ -22,40 +22,49 @@ Listado de empleados sin asignar su tipo(Administradores y trabajadores)
 
 {% block contenido_panel %}
     <div class="row">
+        <div class="row">
+            <div class="col-12 mx-2">
+                <p>A continuación se mostraran los usuarios que fueron importados desde JIRA para que puedan completar la información faltante y asignarle un tipo de usuario (Trabajador, Administrador).</p>
+            </div>
+        </div>
         <div class="col-12">
-            <table class="table table-bordered table-hover datatable">
-                <thead>
-                    <tr>
-                        <th>Tipo usuario</th>
-                        <th>Nombres</th>
-                        <th>Apellidos</th>
-                        <th>Email</th>
-                        <th>Teléfono</th>
-                        <th>Cargo actual</th>
-                        <th>Fecha creación</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for empleado in empleados %}
+            {% if empleados%}
+                <table class="table table-bordered table-hover datatable">
+                    <thead>
                         <tr>
-                            <td>{{empleado.tipo_usuario}}</td>
-                            <td>{{empleado.first_name}}</td>
-                            <td>{{empleado.last_name}}</td>
-                            <td>{{empleado.email}}</td>
-                            <td>{{empleado.phone_number}}</td>
-                            <td>{{empleado.obtener_ultimo_cargo.nombre|default:'-'}}</td>
-                            <td>{{empleado.creado}}</td>
-                            <td class="text-center">
-                                {% url 'usuarios:modificar_empleado' empleado.pk as op_1 %}
-
-                                {% convertir_elementos_a_lista op_1 'Modificar' as lista %}
-                                {% include 'componentes/menu_opciones/menu_opciones.html' with  opciones=lista %}
-                            </td>
+                            <th>Tipo usuario</th>
+                            <th>Nombres</th>
+                            <th>Apellidos</th>
+                            <th>Email</th>
+                            <th>Teléfono</th>
+                            <th>Cargo actual</th>
+                            <th>Fecha creación</th>
+                            <th></th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {% for empleado in empleados %}
+                            <tr>
+                                <td>{{empleado.tipo_usuario}}</td>
+                                <td>{{empleado.first_name}}</td>
+                                <td>{{empleado.last_name}}</td>
+                                <td>{{empleado.email}}</td>
+                                <td>{{empleado.phone_number}}</td>
+                                <td>{{empleado.obtener_ultimo_cargo.nombre|default:'-'}}</td>
+                                <td>{{empleado.creado}}</td>
+                                <td class="text-center">
+                                    {% url 'usuarios:modificar_empleado' empleado.pk as op_1 %}
+
+                                    {% convertir_elementos_a_lista op_1 'Modificar' as lista %}
+                                    {% include 'componentes/menu_opciones/menu_opciones.html' with  opciones=lista %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                {% include 'componentes/alertas/alerta-informativa.html' with  mensaje="No hay nuevos usuarios importados sin asignar"%}
+            {% endif %}
         </div>
     </div>
 {% endblock contenido_panel %}

@@ -2,13 +2,10 @@
 {% url 'dashboard:tablero_distribucion' as tablero_distribucion %}
 {% url 'dashboard:tablero_tiempos' as tablero_tiempos %}
 
-
-
-
 <li class="has-sub {% if tablero_participacion in request.path or tablero_distribucion in request.path or tablero_tiempos in request.path%}active{% endif %}" id="menu_clientes">
     <a href="javascript:;">
         <b class="caret"></b>
-        <i class="fas fa-users"></i>
+        <i class="fas fa-chart-bar"></i>
         <span>Tableros de control</span>
     </a>
     <ul class="sub-menu">
@@ -22,6 +19,4 @@
             <a href="{{tablero_tiempos}}">Tiempos desarrolladores</a>
         </li>
     </ul>
-
-
 </li>

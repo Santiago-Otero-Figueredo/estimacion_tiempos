@@ -26,13 +26,13 @@ class Usuario(EstimacionModel, AbstractUser):
     tipo_usuario = models.ForeignKey(
         'TipoUsuario',
         related_name="usuarios_asociados_tipo",
-        verbose_name="Tipo de usuario",
+        verbose_name="Tipo de usuario*",
         on_delete=models.SET_NULL,
         null=True
     )
 
     email = models.EmailField(
-        'Correo electrónico',
+        'Correo electrónico*',
         unique=True,
         error_messages={
             'unique': 'Ya existe un usuario con ese correo.'
