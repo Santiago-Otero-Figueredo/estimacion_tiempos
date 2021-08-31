@@ -3,7 +3,13 @@ from django import template
 register = template.Library()
 
 @register.simple_tag(name='convertir_elementos_a_lista')
-def convertir_elementos_a_lista(*args) -> 'dict':
+def convertir_elementos_a_lista(*args) -> 'list<dict>':
+    """
+        Convierte una listad e strings en una lista de diccionarios
+
+        Retorna:
+            list<dict>: Lista de diccionarios agrupados
+    """
     lista_opciones = []
     if len(args) > 2:
         for index in range(0, int(len(args)/2)+2, 2):
