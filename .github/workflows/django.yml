@@ -28,5 +28,4 @@ jobs:
         pip install -r requirements/test.pip
     - name: Run Tests
       run: |
-        make lint
         make code-checker
