@@ -15,11 +15,8 @@ class PaginaInicio(LoginRequiredMixin, TemplateView):
     template_name = 'usuarios/sesion/pagina_inicio.html'
 
     def dispatch(self, request, *args, **kwargs):
-        print("#-----------------------------")
         jira = Jira()
-        #jira.consultar_historias_usuarios('PRIAL')
         jira.consultar_todos_los_proyectos()
-        print("#-----------------------------")
         return super().dispatch(request, *args, **kwargs)
 
 

@@ -57,7 +57,6 @@ class TableroTiempos(LoginRequiredMixin, FormView):
         lista_de_tiempos_reales = obtener_describe_dataframe(df_sin_atipicos, ['proyecto_empleado__empleado__first_name'], 'tiempo_real')
         lista_tiempos_desarrollador = list()
         for desarrollador, tiempo in lista_de_tiempos_reales.items():
-            print(desarrollador,tiempo)
             lista_tiempos_desarrollador.append(
                 {
                     "elemento_eje_X": desarrollador,

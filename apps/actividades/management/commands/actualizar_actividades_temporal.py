@@ -23,7 +23,7 @@ class Command(BaseCommand):
         for actividad in actividades:
             tipos = actividad.tipos_actividades.all()
             if len(tipos) >= 3:
-                
+
                 tipo_1 = tipos[0]
                 tipo_2 = tipos[1]
                 tipo_3 = tipos[2]
@@ -35,6 +35,4 @@ class Command(BaseCommand):
                 slug_tipos = crear_slug_tipos_actividad(tipo_1.nombre, tipo_2.nombre, tipo_3.nombre, tipo_adicional)
                 actividad.slug_tipos = slug_tipos
                 actividad.save()
-                print(actividad, "Actualizada", slug_tipos)
 
-       

@@ -20,7 +20,6 @@ class FormularioInicioSesion(AuthenticationForm):
     #password = forms.PasswordInput(label="Contraseña")
 
     def _init_(self, *args, **kwargs):
-        print("Hey")
         super()._init_(*args, **kwargs)
         self.fields['username'].widget.attrs['placeholder'] = 'Correo electrónico'
         self.fields['password'].widget.attrs['placeholder'] = 'Contraseña'

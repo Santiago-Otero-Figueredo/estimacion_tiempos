@@ -60,7 +60,6 @@ class TableroParticipacion(LoginRequiredMixin, FormView):
 
         lista_descripcion_tiempos = list()
         for tipo, informacion_real in lista_de_tiempos_reales.items():
-            print(tipo)
             porcentaje_participacion = (informacion_real.pop('tiempo_total', 0)/tiempo_total)*100
             lista_descripcion_tiempos.append(
                 {

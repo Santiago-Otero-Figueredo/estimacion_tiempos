@@ -9,7 +9,6 @@ import requests
 import json
 
 
-
 class JiraException(Exception):
     pass
 
@@ -152,7 +151,6 @@ class Jira:
                 if empleado and actividad.count() == 0:
                     proyecto_empleado = ProyectoEmpleado.crear_y_obtener(empleado, proyecto_registrado)
                     key_historia = str(historia_usuario['key'])
-                    print(historia_usuario)
                     funcionalidad = historia_usuario['nombre_actividad']
 
                     actividad = Actividad.objects.create(
@@ -176,7 +174,6 @@ class Jira:
             headers=self.__headers,
             auth=self.__autenticacion
         )
-        #print(json.dumps(json.loads(response.text), sort_keys=True, indent=4, separators=(",", ": ")))
         return response
 
     def enviar_peticion_get(self, url, params):
@@ -187,6 +184,5 @@ class Jira:
             headers=self.__headers,
             auth=self.__autenticacion
         )
-        #print(json.dumps(json.loads(response.text), sort_keys=True, indent=4, separators=(",", ": ")))
         return response
-        
+
