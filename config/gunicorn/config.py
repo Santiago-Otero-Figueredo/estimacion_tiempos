@@ -1,4 +1,4 @@
-name = 'docker_django'
+name = 'estimacion_tiempos'
 loglevel = 'info'
 errorlog = "-"
 accesslog = "-"

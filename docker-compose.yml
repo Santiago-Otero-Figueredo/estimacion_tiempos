@@ -1,22 +1,22 @@
 version: '3'
 
-services: 
-    db:
-        image: postgres:12
-        environment: 
-            POSTGRES_PASSWORD: ejemplo
-    web:
-        build: .
-        command: bash -c "python manage.py makemigrations && 
-                            python manage.py migrate && 
-                            python manage.py cargar_tipos_documentos &&
-                            python manage.py cargar_tipos_usuarios &&
-                            python manage.py cargar_usuarios &&
-                            python manage.py cargar_estructuras &&
-                            python manage.py runserver 0.0.0.0:8000"
-        volumes: 
-            - .:/aplicacion
-        ports:
-            - '8000:8000'
-        depends_on: 
-            - db
+services:
+  nginx:
+    build:
+      context: '.'
+      dockerfile: 'nginx/Dockerfile'
+    depends_on:
+    - python
+    network_mode: 'service:python' # use network interface of python container to simulate awsvpc network mode
+  python:
+    build:
+      context: '.'
+      dockerfile: 'Dockerfile'
+    ports:
+    - '8080:80' # forwards port of nginx container
+    environment:
+      DATABASE_HOST: mysql
+      DATABASE_NAME: app
+      DATABASE_USER: app
+      DATABASE_PASSWORD: secret
+      SECRET_KEY: secret

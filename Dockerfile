@@ -12,4 +12,8 @@ COPY . /aplicacion
 RUN pip install -r requirements/base.pip
 RUN pip install -r requirements/test.pip
 
-CMD ["gunicorn", "-c", "config/gunicorn/config.py", "--bind", ":8000", "--chdir", "config", "wsgi:application"],
+COPY python/custom-entrypoint /usr/local/bin/
+RUN chmod u+x /usr/local/bin/custom-entrypoint
+ENTRYPOINT ["custom-entrypoint"]
+
+CMD ["gunicorn", "-b", "0.0.0.0", "-w", "2", "config.wsgi"]
