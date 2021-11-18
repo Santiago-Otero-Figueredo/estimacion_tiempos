@@ -138,8 +138,10 @@ class ImportarActividadesJIRA(FormView):
         filtros = self.aplicar_filtros()
         nombre_proyecto = filtros.pop('nombre_proyecto', '')
         if 'filtro' in self.request.GET:
+            print("filtro")
             context['actividades'] = self.jira.consultar_historias_usuarios(nombre_proyecto)
         elif 'importar' in self.request.GET:
+            print("IMPORTAR")
             jira = Jira()
             proyecto = self.request.GET['nombre_proyecto']
             jira.cargar_actividades_de_proyecto(proyecto)
