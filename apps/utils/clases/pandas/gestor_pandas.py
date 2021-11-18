@@ -13,6 +13,28 @@ class GestorLectorArchivo(metaclass=ABCMeta):
     def obtener_dataframe(self) -> 'Dataframe':
         return self._dataframe
 
+class GestorLectorExcel(GestorLectorArchivo):
+
+    def __init__(self, isumo_datos, *args, **kwargs):
+        super().__init__(isumo_datos=isumo_datos)
+       
+        self.obtener_dataframe_de_excel()
+
+    def obtener_dataframe_de_excel(self) -> 'Dataframe':
+        """
+            Retorna un Dataframe usando un archivo de excel como parámetro
+
+            Parámetros:
+                archivo: archivo de excel que contiene la información 
+
+            Retorno:
+                Dataframe: Dataframe
+        """
+
+        self._dataframe = pd.read_excel(self._isumo_datos, engine='openpyxl')        
+        cols = self._dataframe.columns[~self._dataframe.columns.str.startswith('Unnamed:')]
+        self._dataframe = self._dataframe[cols].dropna(how='all')
+
 
 class GestorLectorQueryset(GestorLectorArchivo):
       

@@ -1,7 +1,7 @@
 
 from django.core.management.base import BaseCommand
 
-from apps.prueba.utils import GestorLectorExcel
+from apps.utils.clases.pandas import GestorLectorExcel
 
 from ...models.actividades import Actividad
 from ...models.tipos_actividades import TipoActividad
@@ -19,7 +19,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
 
-        gestor = GestorLectorExcel("F:\\santiago\\Datos Personales\\Documentos pasantia\\proyecto\\estimacion_tiempos\\_data\\jira_actividades.xlsx")
+        gestor = GestorLectorExcel("G:\\santiago\\Datos Personales\\Documentos pasantia\\proyecto\\estimacion_tiempos\\_data\\jira_actividades.xlsx")
 
         data_frame = gestor.obtener_dataframe().fillna(0)
 

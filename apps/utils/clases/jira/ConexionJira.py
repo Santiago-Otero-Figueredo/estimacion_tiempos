@@ -18,7 +18,7 @@ class Jira:
     def __init__(self) -> None:
         self.__url = "https://danalytics.atlassian.net/"
         self.__usuario = 'andres.c.serna@gmail.com'
-        self.__token = '9YpfaX22NIqiFNaFQ27U4501'
+        self.__token = 'bpPxpidvC1kyemgo00kCB87C'
         self.__autenticacion = HTTPBasicAuth(self.__usuario, self.__token)
         self.__headers = {
                 "Accept": "application/json",
@@ -47,13 +47,17 @@ class Jira:
     def consultar_todos_los_usuarios(self) -> 'list<dict>':
 
         url = '{}/rest/api/3/users/search'.format(self.__url)
-        
+           
         lista_usuarios = list()
         query = {}
         response = self.enviar_peticion_get(url, query)
+        
         data = response.json()
+        print(data)
+        
         identificadores_registrados = Empleado.obtener_identificadores()
         for usuario in data:
+            
             if usuario['accountType'] == 'atlassian' and not usuario['accountId'] in identificadores_registrados:
                 lista_usuarios.append(usuario)
 
@@ -68,6 +72,7 @@ class Jira:
         query = {}
         response = self.enviar_peticion_get(url, query)
         data = response.json()
+        
         for proyecto in data:
             lista_proyectos.append(
                 {

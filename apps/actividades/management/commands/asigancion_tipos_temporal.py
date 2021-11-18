@@ -1,7 +1,7 @@
 
 from django.core.management.base import BaseCommand
 from django.db.models import Count, Q
-from apps.prueba.utils import GestorLectorExcel
+
 
 from ...models.actividades import Actividad
 from ...models.tipos_actividades import TipoActividad

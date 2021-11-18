@@ -5,7 +5,7 @@ from apps.usuarios.models.tipos_cargos import TipoCargo
 from apps.usuarios.models.usuarios import Usuario
 
 class Empleado(Usuario):
-    identificador_jira = models.CharField(max_length=80, verbose_name="Identificador único de JIRA", default='')
+    identificador_jira = models.CharField(max_length=80, verbose_name="Identificador único de JIRA", default='', null=True)
     cargos = models.ManyToManyField(
         TipoCargo,
         through='CargoEmpleado',
