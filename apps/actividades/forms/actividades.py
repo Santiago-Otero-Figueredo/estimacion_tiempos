@@ -1,16 +1,18 @@
 from django import forms
 from django.forms import modelformset_factory
 
+from django_select2.forms import ModelSelect2Widget
+
 from ..models.estructuras import Estructura
 from ..models.actividades import Actividad
 from ..models.tipos_actividades import TipoActividad
 
-from django_select2.forms import ModelSelect2Widget
+
 
 class RegistrarActividadForm(forms.ModelForm):
-    
+
     tipos_lugares = forms.ModelChoiceField(
-                label="Tipos actividades lugares", 
+                label="Tipos actividades lugares",
                 queryset=Estructura.obtener_actividades_lugar(),
                 widget=ModelSelect2Widget(
                     model=TipoActividad,
@@ -57,7 +59,8 @@ class RegistrarActividadForm(forms.ModelForm):
         self.fields['tipos_tareas'].empty_label = 'Ninguno'
     class Meta:
         model = Actividad
-        fields = ("tipos_lugares" ,"tipos_acciones" ,"tipos_tareas" , "funcionalidad", "tiempo_estimado", "tiempo_real", "esta_activo")
+        fields = ("tipos_lugares" ,"tipos_acciones" ,"tipos_tareas" ,
+                    "funcionalidad", "tiempo_estimado", "tiempo_real", "esta_activo")
 
 
 class FiltroElementosJIRAForm(forms.Form):
@@ -72,18 +75,12 @@ class FiltroElementosJIRAForm(forms.Form):
         self.fields['nombre_proyecto'].choices = proyectos
 
 
-
-from django import forms
-
-
-
 class AsignarActividadForm(forms.ModelForm):
 
     tipos_lugares = forms.ModelChoiceField(
-                label="Tipos actividades lugares", 
+                label="Tipos actividades lugares",
                 queryset=Estructura.obtener_actividades_lugar(),
                 required=False
-                
             )
     tipos_acciones = forms.ModelChoiceField(
                 label="Tipos actividades acciones",
@@ -115,9 +112,9 @@ class AsignarActividadForm(forms.ModelForm):
         self.fields['tipos_lugares'].empty_label = 'Ninguno'
         self.fields['tipos_acciones'].empty_label = 'Ninguno'
         self.fields['tipos_tareas'].empty_label = 'Ninguno'
-        
+
         tipos = list(Actividad.obtener_actividades_similares(self.instance.funcionalidad))
-       
+
         if tipos and len(tipos) >= 3:
             self.fields['tipos_lugares'].initial = tipos[0]
             self.fields['tipos_acciones'].initial = tipos[1]
@@ -126,6 +123,7 @@ class AsignarActividadForm(forms.ModelForm):
 
     class Meta:
         model = Actividad
-        fields = ("identificador", "tipos_lugares", "tipos_acciones", "tipos_tareas",  "funcionalidad", "registrar")
+        fields = ("identificador", "tipos_lugares", "tipos_acciones",
+                    "tipos_tareas",  "funcionalidad", "registrar")
 
 AsignarActividadFormSet = modelformset_factory(Actividad, form=AsignarActividadForm, extra=0)

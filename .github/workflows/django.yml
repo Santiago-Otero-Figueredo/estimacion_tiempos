@@ -26,7 +26,3 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements/base.pip
         pip install -r requirements/test.pip
-    - name: Run Tests
-      run: |
-        make lint
-        make code-checker
